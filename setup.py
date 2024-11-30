@@ -1,12 +1,11 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="hoat",
-    version="1.0.0",
+    name="haot",
+    version="1.0.0-beta",
     author="Martin E. Liza",
     author_email="mliza1191@gmail.com",
-    description="This package contains tools used for aero-optics post
-    processing",
+    description="Aero-optics post processing tools",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/mliza/HAOT",
