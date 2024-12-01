@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="haot",
-    version="1.0.0-beta",
+    version="1.0.0-b1",
     author="Martin E. Liza",
     author_email="mliza1191@gmail.com",
     description="Hypersonic Aerodynamic Optics Tools",
