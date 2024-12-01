@@ -5,7 +5,7 @@ setup(
     version="1.0.0-beta",
     author="Martin E. Liza",
     author_email="mliza1191@gmail.com",
-    description="Hypersonic Aero Optics Tools",
+    description="Hypersonic Aerodynamic Optics Tools",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/mliza/HAOT",
