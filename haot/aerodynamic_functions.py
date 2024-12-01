@@ -34,7 +34,7 @@ def air_atomic_mass():
 
 
 # Speed of sound 
-def speed_of_sound(temperature_K, adiabatic_indx = 1.4):
+def speed_of_sound(temperature_K, adiabatic_indx=1.4):
     gas_const          = s_consts.R                         # [J/mol*K]
     air_atomic_mass    = air_atomic_mass()                  # [g/mol]
     air_molecular_mass = (0.7803 * air_atomic_mass['N2'] +  # [kg/mol]
