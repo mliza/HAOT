@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="haot",
-    version="1.0.0-b1",
+    version="1.0.0-b2",
     author="Martin E. Liza",
     author_email="mliza1191@gmail.com",
     description="Hypersonic Aerodynamic Optics Tools",
@@ -15,7 +15,8 @@ setup(
     install_requires=[
         "numpy>=1.20.0",
         "scipy>=1.6.0",
-        "molmass>=2024.10.25"
+        "molmass>=2024.10.25",
+        "ambiance>=1.3.1"
     ],
     entry_points={
         "console_scripts": [
