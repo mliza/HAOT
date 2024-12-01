@@ -5,14 +5,14 @@
     File:   aero_optics.py
     Def:    Contains aero optics functions. 
 '''
-import constants_tables 
+from ambiance import Atmosphere
 import numpy as np
 import scipy.constants as s_consts 
-from ambiance import Atmosphere
 
 # My Packages 
-import aerodynamic_functions as aero
-import quantum_mechanics as quantum
+from . import aerodynamic_functions as aero
+from . import constants_tables 
+from . import quantum_mechanics as quantum
 
 def gas_density(density_dict): # density_dict [kg/m^3]
     gas_amu_weight  = aero.air_atomic_mass()  # [g/mol]  

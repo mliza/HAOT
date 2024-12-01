@@ -5,10 +5,10 @@
     Def:    Contains Quantum Mechanics functions.
 '''
 import molmass
-import constants_tables 
 import numpy as np
 import scipy.constants as s_consts 
-import aerodynamic_functions as aero
+from . import aerodynamic_functions as aero
+from . import constants_tables 
 
 # Unit Conversions
 def wavenumber_to_electronvolt(wavenumber_cm):
