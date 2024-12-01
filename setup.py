@@ -1,8 +1,23 @@
 from setuptools import setup, find_packages
+import os
+
+# Function to read the README file (for long description)
+def read_readme():
+    with open("README.md", "r") as f:
+        return f.read()
+
+# Function to gather all documentation files
+def get_docs():
+    docs_files = []
+    for root, _, files in os.walk("docs"):
+        for file in files:
+            docs_files.append(os.path.relpath(os.path.join(root, file), start="docs"))
+    return docs_files
+
 
 setup(
     name="haot",
-    version="1.0.0-b4",
+    version="1.0.0-b5",
     author="Martin E. Liza",
     author_email="mliza1191@gmail.com",
     description="Hypersonic Aerodynamic Optics Tools",
@@ -24,5 +39,8 @@ setup(
         ],
     },
     include_package_data=True,
+    package_data={
+        "haot": get_docs(),  # Include documentation files in the package
+    },
     zip_safe=False,
 )

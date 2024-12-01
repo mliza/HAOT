@@ -15,6 +15,7 @@ documentation for details.
    :maxdepth: 2
    :caption: Contents:
 
+   modules
    aero_optics
    aerodynamic_functions
    constants_tables

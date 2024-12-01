@@ -13,7 +13,7 @@ print("sys.path:", sys.path)
 project = 'haot'
 copyright = '2024, Martin E. Liza'
 author = 'Martin E. Liza'
-release = '1.0.0-b4'
+release = '1.0.0-b5'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

@@ -34,9 +34,10 @@ def polarizability(): #follows SU2 MutationPP format
 def polarizability_derivatives(molecule='N2'):
     # https://link.springer.com/content/pdf/10.1134/BF03355985.pdf
     """
-    Constants below come from Buldakov Paper: 'Temperature Dependence of Polarizability
-of Diatomic Homonuclear Molecules'. Reference for each constant are provided
-below
+    Constants below come from Buldakov Paper:
+    'Temperature Dependence of Polarizability
+    of Diatomic Homonuclear Molecules'. 
+    Reference for each constant are provided below
     """
     dict_out = { }
     if molecule == 'H2':
