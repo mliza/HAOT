@@ -16,7 +16,3 @@ documentation for details.
    :caption: Contents:
 
    modules
-   aero_optics
-   aerodynamic_functions
-   constants_tables
-   quantum_mechanics
