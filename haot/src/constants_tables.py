@@ -1,9 +1,9 @@
-'''
+"""
     Date:   10/26/2024
     Author: Martin E. Liza
     File:   constant_tables.py
     Def:    This file contains spectroscopy data used across the package
-'''
+"""
 
 # Gladstone-Dale constants 
 def karl_2003(): #follows SU2 MutationPP format 

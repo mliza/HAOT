@@ -1,31 +1,44 @@
-'''
+"""
     Date:   11/26/2024
     Author: Martin E. Liza
     File:   quantum_mechanics.py
     Def:    Contains Quantum Mechanics functions.
-'''
+"""
 import molmass
 import numpy as np
 import scipy.constants as s_consts 
 from haot.src import aerodynamic_functions as aero
 from haot.src import constants_tables 
 
-# Unit Conversions
 def wavenumber_to_electronvolt(wavenumber_cm):
     """Convert wavenumber [cm^-1] to energy in Joules [J]."""
-    return wavenumber_to_joules(wavenumber_cm) / s_consts.eV #[eV]
+    return wavenumber_to_joules(wavenumber_cm) / s_consts.eV
 
 def wavenumber_to_joules(wavenumber_cm):
     """Convert wavenumber [cm^-1] to energy in electron volts [eV]."""
-    return wavenumber_cm * s_consts.c * 100 * s_consts.h #[J]
+    return wavenumber_cm * s_consts.c * 100 * s_consts.h
 
 def molarmass_to_kilogram(molarmass_gmol):
-    """Convert molar mass [g/mol] to [kg]."""
+    """Convert molar mass [g/mol] to mass [kg]."""
     return molarmass_gmol * 1E-3 / s_consts.N_A
 
 def zero_point_energy(molecule):
-    """Calculate zero-point energy based on spectroscopy constants. 
-    (Ref: Irikura https://doi.org/10.1063/1.2436891)"""
+    """
+    Calculates zero-point energy (ZPE) using spectroscopy constants for
+    diatomic molecules
+    
+        Parameters:
+            molecule (string): NO+, N2+, O2+, NO, N2, O2
+
+        Reference:
+            Experimental Vibrational Zero-Point Energies: Diatomic Molecules
+
+        Returns:
+            zpe (float): zpe in [cm^-1]
+
+        DOI: 
+            doi.org/10.1063/1.2436891
+    """
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
     scope_var = (spectroscopy_const['alpha_e'] *
                  spectroscopy_const['omega_e'] /
