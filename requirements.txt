@@ -3,3 +3,4 @@ molmass==2024.10.25
 numpy==2.0.0
 scipy==1.13.1
 sphinx-rtd-theme==3.0.2
+sphinx-autodoc-typehints==2.5.0
