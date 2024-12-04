@@ -11,7 +11,7 @@ import scipy.constants as s_consts
 from haot.src import constants_tables
 
 
-def sutherland_law_viscoity(temperature_K, molecule="Air"):
+def sutherland_law_viscosity(temperature_K, molecule="Air"):
     """
     Calculates the Sutherland's law
 

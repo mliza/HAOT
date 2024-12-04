@@ -37,19 +37,18 @@ def zero_point_energy(molecule):
 
     Reference:
         Experimental Vibrational Zero-Point Energies: Diatomic Molecules
+        doi.org/10.1063/1.2436891
 
     Returns:
-        zpe (float): zpe in [cm^-1]
+        zpe (float): zero point energy [cm^-1]
 
-    DOI:
-        doi.org/10.1063/1.2436891
     """
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
-    scope_var = (
-        spectroscopy_const["alpha_e"]
-        * spectroscopy_const["omega_e"]
-        / spectroscopy_const["B_e"]
-    )
+
+    scope_var = spectroscopy_const["alpha_e"]
+    scope_var *= spectroscopy_const["omega_e"]
+    scope_var /= spectroscopy_const["B_e"]
+
     zpe = spectroscopy_const["omega_e"] / 2
     zpe -= spectroscopy_const["omega_xe"] / 2
     zpe += spectroscopy_const["omega_ye"] / 8
