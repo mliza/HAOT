@@ -27,17 +27,17 @@ def zero_point_energy(molecule):
     Calculates zero-point energy (ZPE) using spectroscopy constants for
     diatomic molecules
     
-        Parameters:
-            molecule (string): NO+, N2+, O2+, NO, N2, O2
+    Parameters:
+        molecule (string): NO+, N2+, O2+, NO, N2, O2
 
-        Reference:
-            Experimental Vibrational Zero-Point Energies: Diatomic Molecules
+    Reference:
+        Experimental Vibrational Zero-Point Energies: Diatomic Molecules
 
-        Returns:
-            zpe (float): zpe in [cm^-1]
+    Returns:
+        zpe (float): zpe in [cm^-1]
 
-        DOI: 
-            doi.org/10.1063/1.2436891
+    DOI: 
+        doi.org/10.1063/1.2436891
     """
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
     scope_var = (spectroscopy_const['alpha_e'] *
@@ -52,14 +52,38 @@ def zero_point_energy(molecule):
     return zpe #[1/cm] 
 
 def vibrational_partition_function(vibrational_number, temperature_K, molecule):
-    """Calculates the vibrational partition function, (harmonic terms only)"""
+    """
+    Calculates the vibrational partition function base in the harmonic 
+    terms only for diatomic molecules.
+
+    Parameters:
+        vibrational_number (int): vibrational quantum number
+        temperature_K (float): 
+        molecule (string): NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+        z_vib (float): vibrational partition function
+
+    """
     z_vib = 0.0
     for v in range(vibrational_number + 1):
         z_vib += boltzman_factor(temperature_K, molecule, vibrational_number=v)
     return z_vib
 
 def rotational_partition_function(rotational_number, temperature_K, molecule):
-    """Calculates the rotational partition function, (harmonic terms only)"""
+    """
+    Calculates the rotational partition function base in the harmonic 
+    terms only for diatomic molecules.
+
+    Parameters:
+        rotational_number (int): rotational quantum number
+        temperature_K (float): 
+        molecule (string): NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+        z_rot (float): rotational partition function
+
+    """
     z_rot = 0.0
     for j in range(rotational_number + 1):
         z_rot += boltzman_factor(temperature_K, molecule, rotational_number=j)
