@@ -90,8 +90,6 @@ def speed_of_sound(temperature_K, adiabatic_indx=1.4):
 
 
 def normal_shock_relations(mach_1, adiabatic_indx=1.4):
-    # REF: https://www.grc.nasa.gov/www/k-12/airplane/normal.html
-    # NOTE: var_r = var_2 / var_1 = var_postshock / var_preshock = [ ]
     """
     Calculates normal shock relations
 
