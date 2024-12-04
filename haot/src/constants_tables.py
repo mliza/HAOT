@@ -5,6 +5,37 @@
     Def:    This file contains spectroscopy data used across the package
 """
 
+def sutherland_constants(gas='Air'):
+    #https://doc.comsol.com/5.5/doc/com.comsol.help.cfd/cfd_ug_fluidflow_high_mach.08.27.html
+    dict_out = { }
+    if gas == 'Air':
+        dict_out['temperature_ref'] = 273.0     # [K]
+        dict_out['viscosity_ref'] = 1.716E-5    # [kg/ms]
+        dict_out['sutherland_visc'] = 111.0     # [K]
+        dict_out['conductivity_ref'] = 0.0241   # [W/mK]
+        dict_out['sutherland_cond'] = 194.0     # [K]
+
+    if gas == 'Argon': 
+        dict_out['temperature_ref'] = 273.0     # [K]
+        dict_out['viscosity_ref'] = 2.125E-5    # [kg/ms]
+        dict_out['sutherland_visc'] = 114.0     # [K]
+        dict_out['conductivity_ref'] = 0.0163   # [W/mK]
+        dict_out['sutherland_cond'] = 170.0     # [K]
+    
+    if gas == 'N2': 
+        dict_out['temperature_ref'] = 273.0     # [K]
+        dict_out['viscosity_ref'] = 1.663E-5    # [kg/ms]
+        dict_out['sutherland_visc'] = 107.0     # [K]
+        dict_out['conductivity_ref'] = 0.0242   # [W/mK]
+        dict_out['sutherland_cond'] = 150.0     # [K]
+
+    if gas == 'O2': 
+        dict_out['temperature_ref'] = 273.0     # [K]
+        dict_out['viscosity_ref'] = 1.919E-5    # [kg/ms]
+        dict_out['sutherland_visc'] = 139.0     # [K]
+        dict_out['conductivity_ref'] = 0.0244   # [W/mK]
+        dict_out['sutherland_cond'] = 240.0     # [K]
+
 # Gladstone-Dale constants 
 def karl_2003(): #follows SU2 MutationPP format 
 # https://arc.aiaa.org/doi/pdf/10.2514/6.2003-4252

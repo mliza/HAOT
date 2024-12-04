@@ -1,26 +1,54 @@
 '''
     Date:   08/27/2023
     Author: Martin E. Liza
-    File:   aerodynamics_functions.py
+    File:   aerodynamics.py
     Def:    Contains aerodynamics helper functions. 
 '''
 import os 
 import molmass
 import numpy as np 
 import scipy.constants as s_consts
+from haot.src import constants_tables
 
-# Sutherland law
-def sutherland_law(temperature_K): 
-    # https://doc.comsol.com/5.5/doc/com.comsol.help.cfd/cfd_ug_fluidflow_high_mach.08.27.html
-    viscosity_ref     = 1.716E-5   # [kg/m*s] 
-    temperature_ref   = 273.0      # [K]
-    sutherland_const  = 111.0      # [K] 
-    dynamic_viscosity = ( viscosity_ref * 
-                         (temperature_k / temperature_ref) ** (3/2)  *
-                         (temperature_ref + sutherland_const) / 
-                         (temperature_K + sutherland_const) ) 
+def sutherland_law_viscoity(temperature_K, molecule='Air'):
+    """
+    Calculates the Sutherland's law
 
-    return dynamic_viscosity # [kg/m*s] 
+    Parameters:
+        temperature_K (float): reference temperature
+        molecule (str) : Air (default), Argon, N2, O2 
+    
+    Returns:
+        dynamic_viscosity (float): [kg/ms]
+
+    """
+    const = constants_tables.sutherland_constants(molecule)
+
+    dynamic_viscosity = const['temperature_ref'] + const['sutherland_visc']
+    dynamic_viscosity /= (temperature_K + const['sutherland_visc'])
+    dynamic_viscosity *= (temperature_K / const['temperature_ref'])**(3/2)
+
+    return const['viscosity_ref'] * dynamic_viscosity # [kg/ms]
+
+def sutherland_law_conductivity(temperature_K, molecule='Air'):
+    """
+    Calculates the Sutherland's law
+
+    Parameters:
+        temperature_K (float): reference temperature
+        molecule (str) : Air (default), Argon, N2, O2 
+    
+    Returns:
+        thermal_conductivity (float): [W/mK]
+
+    """
+    const = constants_tables.sutherland_constants(molecule)
+    thermal_conductivity = const['sutherland_cond']
+    thermal_conductivity += const['temperature_ref']
+    thermal_conductivity /= (temperature_K + const['sutherland_cond'])
+    thermal_conductivity *= (temperature_K / const['temperature_ref'])**(3/2)
+
+    return const['conductivity_ref'] * thermal_conductivity # [W/mK]
 
 
 # Air atomic mass

@@ -7,7 +7,7 @@
 import molmass
 import numpy as np
 import scipy.constants as s_consts 
-from haot.src import aerodynamic_functions as aero
+from haot.src import aerodynamics as aero
 from haot.src import constants_tables 
 
 def wavenumber_to_electronvolt(wavenumber_cm):
