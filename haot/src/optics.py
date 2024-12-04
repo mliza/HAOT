@@ -16,7 +16,7 @@ from haot.src import quantum_mechanics as quantum
 
 
 def gas_density(density_dict):  # density_dict [kg/m^3]
-    gas_amu_weight = aero.air_atomic_mass()  # [g/mol]
+    gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
     avogadro_number = s_consts.N_A  # [particles/mol]
     gas_density = {}
 
@@ -230,7 +230,7 @@ def atmospheric_gladstoneDaleConstant(altitude=0.0, gas_composition_dict=None):
 
 
 def Gladstone_Dale(gas_density_dict=None):  # [kg/m3
-    gas_amu_weight = aero.air_atomic_mass()  # [g/mol]
+    gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
     avogadro_number = s_consts.N_A  # [particles/mol]
     dielectric_const = s_consts.epsilon_0  # [F/m]
     gd_consts = constants_tables.karl_2003()  # [m3/kg]

@@ -2,10 +2,9 @@
     Date:   08/27/2023
     Author: Martin E. Liza
     File:   aerodynamics.py
-    Def:    Contains aerodynamics helper functions. 
+    Def:    Contains aerodynamics helper functions.
 """
 
-import os
 import molmass
 import numpy as np
 import scipy.constants as s_consts
@@ -49,13 +48,14 @@ def sutherland_law_conductivity(temperature_K, molecule="Air"):
     thermal_conductivity = const["sutherland_cond"]
     thermal_conductivity += const["temperature_ref"]
     thermal_conductivity /= temperature_K + const["sutherland_cond"]
-    thermal_conductivity *= (temperature_K / const["temperature_ref"]) ** (3 / 2)
+    thermal_conductivity *= temperature_K / const["temperature_ref"]
+    thermal_conductivity **= 3 / 2
 
     return const["conductivity_ref"] * thermal_conductivity  # [W/mK]
 
 
-# Air atomic mass
-def air_atomic_mass():
+def air_atomic_molar_mass():
+    """Returns the atomic molar mass of an 11-species air in [g/mol]"""
     molecules = ["N+", "O+", "NO+", "N2+", "O2+", "N", "O", "NO", "N2", "O2"]
     air_atomic_dict = {}
     for i in molecules:
@@ -64,10 +64,20 @@ def air_atomic_mass():
     return air_atomic_dict  # [g/mol]
 
 
-# Speed of sound
 def speed_of_sound(temperature_K, adiabatic_indx=1.4):
+    """
+    Calculates the speed of sound
+
+    Parameters:
+        temperature_K (float): reference temperature
+        adiabatic_indx (double): adiabatic index, 1.4 (default)
+
+    Returns:
+        spd_of_sound (float): speed of sound in [m/s]
+
+    """
     gas_const = s_consts.R  # [J/mol*K]
-    air_atomic_mass = air_atomic_mass()  # [g/mol]
+    air_atomic_mass = air_atomic_molar_mass()  # [g/mol]
     air_molecular_mass = (
         0.7803 * air_atomic_mass["N2"]  # [kg/mol]
         + 0.2099 * air_atomic_mass["O2"]
@@ -79,23 +89,49 @@ def speed_of_sound(temperature_K, adiabatic_indx=1.4):
     return spd_of_sound  # [m/s]
 
 
-# Normal shock relations
 def normal_shock_relations(mach_1, adiabatic_indx=1.4):
     # REF: https://www.grc.nasa.gov/www/k-12/airplane/normal.html
-    # NOTE: var_r = var_1 / var_2 = var_preshock / var_postshock = [ ]
+    # NOTE: var_r = var_2 / var_1 = var_postshock / var_preshock = [ ]
+    """
+    Calculates normal shock relations
+
+    Reference:
+        https://www.grc.nasa.gov/www/k-12/airplane/normal.html
+
+    Parameters:
+        mach_1 (float): pre-shock mach number
+        adiabatic_indx (double): adiabatic index, 1.4 (default)
+
+    Returns:
+        normal_shock_dic: dictionary with normal shock properties
+            mach_2 (float): post-shock mach number [ ]
+            pressure_r (float): pressure ratio (post-shock / pre-shock) [ ]
+            temperature_r (float): temperature ratio (post-shock / pre-shock) [ ]
+            density_r (float): density ratio (post-shock / pre-shock) [ ]
+            pressure_tr (float): stagnation pressure ratio (post-shock / pre-shock) [ ]
+            temperature_tr (float): stagnation temperature ratio (post-shock / pre-shock) [ ]
+
+    """
     gamma_minus = adiabatic_indx - 1
     gamma_plus = adiabatic_indx + 1
     mach_11 = mach_1**2
-    mach_2 = np.sqrt(
-        (gamma_minus * mach_11 + 2) / (2 * adiabatic_indx * mach_11 - gamma_minus)
-    )
+    mach_2 = gamma_minus * mach_11 + 2
+    mach_2 /= 2 * adiabatic_indx * mach_11 - gamma_minus
+    mach_2 **= 0.5
+
     pressure_r = (2 * adiabatic_indx * mach_11 - gamma_minus) / gamma_plus
-    temperature_r = (
-        (2 * adiabatic_indx * mach_11 - gamma_minus)
-        * (gamma_minus * mach_11 + 2)
-        / (gamma_plus**2 * mach_11)
-    )
+
+    temperature_r = 2 * adiabatic_indx * mach_11 - gamma_minus
+    temperature_r *= gamma_minus * mach_11 + 2
+    temperature_r /= gamma_plus**2 * mach_11
+
     density_r = gamma_plus * mach_11 / (gamma_minus * mach_11 + 2)
+
+    pressure_tr1 = gamma_plus / (2 * adiabatic_indx * mach_11 - gamma_minus)
+    pressure_tr1 **= 1 / gamma_minus
+    pressure_tr2 = gamma_plus * mach_11 / (gamma_minus * mach_11 + 2)
+    pressure_tr2 **= adiabatic_indx / gamma_minus
+    pressure_tr = pressure_tr1 * pressure_tr2
 
     # Return Dictionary
     normal_shock_dict = {
@@ -103,17 +139,19 @@ def normal_shock_relations(mach_1, adiabatic_indx=1.4):
         "pressure_r": pressure_r,
         "temperature_r": temperature_r,
         "density_r": density_r,
+        "pressure_tr": pressure_tr,
+        "temperature_tr": 1.0,
     }
     return normal_shock_dict  # [ ]
 
 
 # Oblique shock relations
+# TODO: Update this doc string on this
 def oblique_shock_relations(mach_1, shock_angle_deg, adiabatic_indx=1.4):
     # REF : Modern Compressible Flows With Historical Ref., eq 4.7 - 4.11
     # NOTE: Equations only work for weak shocks
     # Note ratio = var_1 / var_2
     shock_angle = np.radians(shock_angle_deg)  # radians
-    sin2_shock = np.sin(shock_angle) ** 2
     mach_n1 = mach_1 * np.sin(shock_angle)  # normal mach number
     mach_n11 = mach_n1**2  # normal mach number square
     # Calculates Deflection angle (Eq. 4.17)
