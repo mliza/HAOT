@@ -17,12 +17,11 @@ from haot.src import quantum_mechanics as quantum
 
 def gas_density(density_dict):  # density_dict [kg/m^3]
     gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
-    avogadro_number = s_consts.N_A  # [particles/mol]
     gas_density = {}
 
     for i in density_dict:
         gas_density[i] = (
-            density_dict[i] * 10**3 * avogadro_number / gas_amu_weight[i]
+            density_dict[i] * 10**3 * s_consts.N_A / gas_amu_weight[i]
         )  # [particles/m^3]
 
     return gas_density  # [particles/m^3]
@@ -50,7 +49,6 @@ def index_of_refraction(gas_density_dict):
     n_return["dilute"] = 1 + temp / (2 * dielectric_const_0)
     n_temp = temp / (3 * dielectric_const_0)
     n_return["dense"] = ((2 * n_temp + 1) / (1 - n_temp)) ** 0.5
-    # Note np.sqrt(-1) does not detect complex
 
     return n_return
 
@@ -209,7 +207,7 @@ def atmospheric_index_of_refraction(altitude, vaporPressure=0):
 
 
 def atmospheric_gladstoneDaleConstant(altitude=0.0, gas_composition_dict=None):
-    gladstone_const = Gladstone_Dale()  # [m3/kg]
+    gladstone_const = gladstone_dale()  # [m3/kg]
 
     if gas_composition_dict is None:
         gas_composition_dict = {}
@@ -226,7 +224,7 @@ def atmospheric_gladstoneDaleConstant(altitude=0.0, gas_composition_dict=None):
     return tmp
 
 
-def Gladstone_Dale(gas_density_dict=None):  # [kg/m3
+def gladstone_dale(gas_density_dict=None):  # [kg/m3
     gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
     avogadro_number = s_consts.N_A  # [particles/mol]
     dielectric_const = s_consts.epsilon_0  # [F/m]
