@@ -66,6 +66,8 @@ def optical_path_length(n_solution, distance):
     OPL = {}
     OPL["dilute"] = n_solution["dilute"] * distance
     OPL["dense"] = n_solution["dense"] * distance
+    #TODO: Missing implementation
+
     return OPL
 
 
@@ -74,6 +76,7 @@ def tropina_aproximation(vibrational_number, rotational_number, molecule):
     electron_charge = s_consts.e
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
     # resonance_distance = omega_gi - omega
+    #TODO: Missing implementation
     print("TODO: Missing this implementation")
 
 
@@ -206,7 +209,7 @@ def atmospheric_index_of_refraction(altitude, vaporPressure=0):
     return refractivity + 1
 
 
-def atmospheric_gladstoneDaleConstant(altitude=0.0, gas_composition_dict=None):
+def atmospheric_gladstone_dale(altitude=0.0, gas_composition_dict=None):
     gladstone_const = gladstone_dale()  # [m3/kg]
 
     if gas_composition_dict is None:

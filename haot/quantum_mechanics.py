@@ -21,9 +21,9 @@ def wavenumber_to_joules(wavenumber_cm):
     return wavenumber_cm * s_consts.c * 100 * s_consts.h
 
 
-def molarmass_to_kilogram(molarmass_gmol):
+def molar_mass_to_kilogram(molar_mass_gmol):
     """Convert molar mass [g/mol] to mass [kg]."""
-    return molarmass_gmol * 1e-3 / s_consts.N_A
+    return molar_mass_gmol * 1e-3 / s_consts.N_A
 
 
 def zero_point_energy(molecule):
@@ -280,7 +280,7 @@ def reduced_mass_kg(molecule_1, molecule_2):
     m_2 = molmass.Formula(molecule_2).mass
     mu = m_1 * m_2 / (m_1 + m_2)
 
-    return molarmass_to_kilogram(mu)
+    return molar_mass_to_kilogram(mu)
 
 
 # TODO: Missing Translational Energy
