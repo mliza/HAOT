@@ -1,14 +1,17 @@
 .. haot documentation master file, created by
-   sphinx-quickstart on Mon Dec  2 17:19:15 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-haot documentation
+HAOT documentation
 ==================
+
+Welcome to Hypersonic Aerodynamics Optics Tools documentation.
 
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: Submodules:
 
-   src/modules
+   submodules/aerodynamics
+   submodules/quantum_mechanics
+   submodules/optics
+   submodules/constants_tables
+

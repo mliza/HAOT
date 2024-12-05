@@ -10,9 +10,9 @@ import numpy as np
 import scipy.constants as s_consts
 
 # My Packages
-from haot.src import aerodynamics as aero
-from haot.src import constants_tables
-from haot.src import quantum_mechanics as quantum
+from haot import aerodynamics as aero
+from haot import constants_tables
+from haot import quantum_mechanics as quantum
 
 
 def gas_density(density_dict):  # density_dict [kg/m^3]

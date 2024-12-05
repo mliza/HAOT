@@ -8,16 +8,16 @@
 import molmass
 import numpy as np
 import scipy.constants as s_consts
-from haot.src import constants_tables
+from haot import constants_tables
 
 
 def sutherland_law_viscosity(temperature_K, molecule="Air"):
     """
-    Calculates the Sutherland's law
+    Calculates the Sutherland's law of viscosity
 
     Parameters:
         temperature_K (float): reference temperature
-        molecule (str) : Air (default), Argon, N2, O2
+        molecule (str): Air (default), Argon, N2, O2
 
     Returns:
         dynamic_viscosity (float): [kg/ms]
@@ -34,11 +34,11 @@ def sutherland_law_viscosity(temperature_K, molecule="Air"):
 
 def sutherland_law_conductivity(temperature_K, molecule="Air"):
     """
-    Calculates the Sutherland's law
+    Calculates the Sutherland's law of thermal conductivity
 
     Parameters:
         temperature_K (float): reference temperature
-        molecule (str) : Air (default), Argon, N2, O2
+        molecule (str): Air (default), Argon, N2, O2
 
     Returns:
         thermal_conductivity (float): [W/mK]
