@@ -2,8 +2,9 @@
     Date:   03/26/2023
     Author: Martin E. Liza
     File:   aero_optics.py
-    Def:    Contains aero optics functions. 
+    Def:    Contains aero optics functions.
 """
+
 from ambiance import Atmosphere
 import numpy as np
 import scipy.constants as s_consts
@@ -75,6 +76,7 @@ def tropina_aproximation(vibrational_number, rotational_number, molecule):
     electron_charge = s_consts.e
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
     # resonance_distance = omega_gi - omega
+    print("TODO: Missing this implementation")
 
 
 # Calculate polarizability (uses equation 4 from the paper)
@@ -161,7 +163,7 @@ def buldakov_expansion(vibrational_number, rotational_number, molecule):
 
 # Calculate polarizability as temperature
 """
-    DOI: 10.1002/bbpc.19920960517 
+    DOI: 10.1002/bbpc.19920960517
     DOI: 10.1134/BF03355985
 """
 
@@ -207,13 +209,9 @@ def atmospheric_index_of_refraction(altitude, vaporPressure=0):
 
 
 def atmospheric_gladstoneDaleConstant(altitude=0.0, gas_composition_dict=None):
-    atmospheric_prop = Atmosphere(altitude)
-    density = atmospheric_prop.density * 1e3  # [g/m3]
-    num_density = atmospheric_prop.number_density  # [particles/m3]
     gladstone_const = Gladstone_Dale()  # [m3/kg]
-    avogadro_number = s_consts.N_A  # [particles/mol]
 
-    if gas_composition_dict == None:
+    if gas_composition_dict is None:
         gas_composition_dict = {}
         gas_composition_dict["N"] = 0.0
         gas_composition_dict["O"] = 0.0
@@ -232,7 +230,6 @@ def Gladstone_Dale(gas_density_dict=None):  # [kg/m3
     gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
     avogadro_number = s_consts.N_A  # [particles/mol]
     dielectric_const = s_consts.epsilon_0  # [F/m]
-    gd_consts = constants_tables.karl_2003()  # [m3/kg]
     pol_consts = constants_tables.polarizability()  # [m^3]
 
     # Convert CGS to SI

@@ -14,14 +14,14 @@ def sutherland_constants(gas="Air"):
         https://doc.comsol.com/5.5/doc/com.comsol.help.cfd/cfd_ug_fluidflow_high_mach.08.27.html
 
     Parameters:
-        gas (str): Air (default), Argon, N2, O2 
+        gas (str): Air (default), Argon, N2, O2
 
     Returns:
         dictionary (dict):
             temperature_ref (float): reference temperature [K]
             viscosity_ref (float): reference viscosity [Ns/m2]
-            sutherland_visc (float): Sutherland viscosity constant [K] 
-            conductivity_ref (float): reference thermal conductivity [W/mK] 
+            sutherland_visc (float): Sutherland viscosity constant [K]
+            conductivity_ref (float): reference thermal conductivity [W/mK]
             sutherland_cond (float): Sutherland thermal conductivity [K]
 
     """
@@ -58,7 +58,6 @@ def sutherland_constants(gas="Air"):
     return dict_out
 
 
-
 def karl_2003():
     """
     Constants used in the Karl method
@@ -67,7 +66,7 @@ def karl_2003():
         https://arc.aiaa.org/doi/pdf/10.2514/6.2003-4252
 
     Returns:
-       dict_out (dict): 
+       dict_out (dict):
     """
 
     dict_out = {
@@ -82,7 +81,7 @@ def karl_2003():
 
 # Polarizability
 def polarizability():
-    dict_out = {  #'e-'  : 0.0,
+    dict_out = {
         "N+": 0.559e-30,
         "O+": 0.345e-30,
         "NO+": 1.021e-30,
