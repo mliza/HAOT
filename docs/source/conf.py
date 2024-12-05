@@ -9,11 +9,12 @@ import os
 import sys
 basedir = os.path.abspath(os.path.join(os.path.dirname('HAOT'), '..'))
 sys.path.insert(0, os.path.join(basedir, 'haot', 'src'))
+from importlib.metadata import metadata
 
 project = 'haot'
 copyright = '2024, Martin E. Liza'
 author = 'Martin E. Liza'
-release = '1.0.0-b5'
+release = metadata('haot').get('version')
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
