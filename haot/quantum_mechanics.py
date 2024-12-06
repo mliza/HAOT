@@ -11,32 +11,32 @@ import scipy.constants as s_consts
 from haot import constants_tables
 
 
-def wavenumber_to_electronvolt(wavenumber_cm):
+def wavenumber_to_electronvolt(wavenumber_cm: float) -> float:
     """Convert wavenumber [cm^-1] to energy in Joules [J]."""
     return wavenumber_to_joules(wavenumber_cm) / s_consts.eV
 
 
-def wavenumber_to_joules(wavenumber_cm):
+def wavenumber_to_joules(wavenumber_cm: float) -> float:
     """Convert wavenumber [cm^-1] to energy in electron volts [eV]."""
     return wavenumber_cm * s_consts.c * 100 * s_consts.h
 
 
-def molar_mass_to_kilogram(molar_mass_gmol):
+def molar_mass_to_kilogram(molar_mass_gmol: float) -> float:
     """Convert molar mass [g/mol] to mass [kg]."""
     return molar_mass_gmol * 1e-3 / s_consts.N_A
 
 
-def zero_point_energy(molecule):
+def zero_point_energy(molecule: str) -> float:
     """
     Calculates zero-point energy (ZPE) using spectroscopy constants for
     diatomic molecules
 
-    Parameters:
-        molecule (string): NO+, N2+, O2+, NO, N2, O2
-
     Reference:
-        Experimental Vibrational Zero-Point Energies: Diatomic Molecules
+        Experimental Vibrational Zero-Point Energies Diatomic Molecules
         doi.org/10.1063/1.2436891
+
+    Parameters:
+        molecule: NO+, N2+, O2+, NO, N2, O2
 
     Returns:
         zero point energy in [cm^-1]
@@ -57,18 +57,18 @@ def zero_point_energy(molecule):
     return zpe  # [1/cm]
 
 
-def vibrational_partition_function(vibrational_number, temperature_K, molecule):
+def vibrational_partition_function(vibrational_number: int, temperature_K: float, molecule: str) -> float:
     """
     Calculates the vibrational partition function base in the harmonic
-    terms only for diatomic molecules.
+    terms only for diatomic molecules
 
     Parameters:
-        vibrational_number (int): vibrational quantum number
-        temperature_K (float):
-        molecule (string): NO+, N2+, O2+, NO, N2, O2
+        vibrational_number: vibrational quantum number (has to be positive)
+        temperature_K: reference temperature in [K]
+        molecule: NO+, N2+, O2+, NO, N2, O2
 
     Returns:
-        z_vib (float): vibrational partition function
+        vibrational partition function
 
     """
     z_vib = 0.0
@@ -77,18 +77,18 @@ def vibrational_partition_function(vibrational_number, temperature_K, molecule):
     return z_vib
 
 
-def rotational_partition_function(rotational_number, temperature_K, molecule):
+def rotational_partition_function(rotational_number: int, temperature_K: float, molecule: str) -> float:
     """
     Calculates the rotational partition function base in the harmonic
-    terms only for diatomic molecules.
+    terms only for diatomic molecules
 
     Parameters:
-        rotational_number (int): rotational quantum number
-        temperature_K (float):
-        molecule (string): NO+, N2+, O2+, NO, N2, O2
+        rotational_number: rotational quantum number (has to be positve)
+        temperature_K: reference temperature in [K]
+        molecule: NO+, N2+, O2+, NO, N2, O2
 
     Returns:
-        z_rot (float): rotational partition function
+        rotational partition function
 
     """
     z_rot = 0.0
@@ -98,10 +98,21 @@ def rotational_partition_function(rotational_number, temperature_K, molecule):
 
 
 def born_oppenheimer_partition_function(
-    vibrational_number, rotational_number, temperature_K, molecule
-):
-    """Calculates the partition function using the Born-Oppenheimer
-    approximation"""
+    vibrational_number: int, rotational_number: int, temperature_K: float, molecule: str
+) -> float:
+    """
+    Calculates the partition function using the Born-Oppenheimer approximation
+
+    Parameters:
+        vibrational_number: vibrational quantum number (has to be positive)
+        rotational_number: rotational quantum number (has to be positve)
+        temperature_K: reference temperature in [K]
+        molecule: NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+        partition function using the Born-Oppenheimer approximations
+
+    """
     z_bo = 0.0
     for j in range(rotational_number + 1):
         for v in range(vibrational_number + 1):
@@ -115,7 +126,7 @@ def born_oppenheimer_partition_function(
     return z_bo
 
 
-def potential_dunham_coef_012(molecule):
+def potential_dunham_coef_012(molecule: str) -> tuple[float, float, float]:
     """Calculates the 0th, 1st, and 2nd Dunham potential coefficients.
     Using: Ogilvie (https://doi.org/10.1016/0022-2852(76)90323-4)
     and Herschbach (https://doi.org/10.1063/1.1731952)."""
@@ -133,7 +144,7 @@ def potential_dunham_coef_012(molecule):
     return (a_0, a_1, a_2)
 
 
-def potential_dunham_coeff_m(a_1, a_2, m):
+def potential_dunham_coeff_m(a_1: float, a_2: float, m: int) -> float:
     """Calculates the higher order Dunham potential coefficients, using
     Morizadeh work (https://doi.org/10.1016/j.theochem.2003.12.003)."""
     tmp = (12 / a_1) ** (m - 2)
@@ -180,12 +191,12 @@ def boltzman_factor(
 
 
 def distribution_function(
-    temperature_K,
-    molecule,
-    vibrational_number=None,
-    rotational_number=None,
-    born_opp_flag=False,
-):
+    temperature_K: float,
+    molecule: str,
+    vibrational_number: int = None,
+    rotational_number: int = None,
+    born_opp_flag: bool = False,
+) -> float:
     """Compute the population distribution function."""
     # Calculates partition functions if vibrational or rotational numbers are provided
     if not born_opp_flag:
@@ -233,7 +244,7 @@ def distribution_function(
     return tmp / z_tot
 
 
-def born_oppenheimer_approximation(vibrational_number, rotational_number, molecule):
+def born_oppenheimer_approximation(vibrational_number: int, rotational_number: int, molecule: str) -> float:
     """Calculates the energy at a rotational and vibrational quantum number,
     using the Born-Oppenheimer approximation."""
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)
@@ -255,7 +266,7 @@ def born_oppenheimer_approximation(vibrational_number, rotational_number, molecu
     return harmonic - anharmonic - interaction  # [cm^1]
 
 
-def vibrational_energy_k(vibrational_number, molecule):
+def vibrational_energy_k(vibrational_number: int, molecule: str) -> float:
     """Calculates the vibrational energy at a given vibrational quantum number,
     using for the harmonic terms"""
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)
@@ -264,7 +275,7 @@ def vibrational_energy_k(vibrational_number, molecule):
     return spectroscopy_constants["omega_e"] * vib_levels  # [cm^-1]
 
 
-def rotational_energy_k(rotational_number, molecule):
+def rotational_energy_k(rotational_number: int, molecule: str) -> float:
     """Calculates the rotational energy at a given rotational quantum number,
     using for the harmonic terms"""
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)
@@ -273,7 +284,7 @@ def rotational_energy_k(rotational_number, molecule):
     return spectroscopy_constants["B_e"] * rot_levels  # [cm^-1]
 
 
-def reduced_mass_kg(molecule_1, molecule_2):
+def reduced_mass_kg(molecule_1: float, molecule_2: float) -> float:
     """Calculates the molar reduced mass and returns it in kg of two
     elements"""
     m_1 = molmass.Formula(molecule_1).mass
