@@ -94,17 +94,18 @@ def speed_of_sound(temperature_K: float, adiabatic_indx: float = 1.4) -> float:
         speed of sound in [m/s]
 
     Examples:
-        speed_of_sound(300.0)
+        >> speed_of_sound(300.0)
 
     """
     gas_const = s_consts.R  # [J/mol*K]
-    air_atomic_mass = air_atomic_molar_mass(["N2", "O2", "CO2"])  # [g/mol]
+    air_atomic_mass = air_atomic_molar_mass(["N2", "O2", "Ar", "CO2"])  # [g/mol]
 
     air_molecular_mass = (
-        0.7803 * air_atomic_mass["N2"]  # [kg/mol]
-        + 0.2099 * air_atomic_mass["O2"]
-        + 0.0003 * air_atomic_mass["CO2"]
-    ) * 1e-3
+        78 * air_atomic_mass["N2"]
+        + 21 * air_atomic_mass["O2"]
+        + 0.93 * air_atomic_mass["Ar"]
+        + 0.07 * air_atomic_mass["CO2"]
+    ) * 1e-5 # [kg/mol]
     spd_of_sound = np.sqrt(
         adiabatic_indx * temperature_K * gas_const / air_molecular_mass
     )
