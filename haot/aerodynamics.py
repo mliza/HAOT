@@ -11,16 +11,16 @@ import scipy.constants as s_consts
 from haot import constants_tables
 
 
-def sutherland_law_viscosity(temperature_K, molecule="Air"):
+def sutherland_law_viscosity(temperature_K: float, molecule: str = "Air") -> float:
     """
     Calculates the Sutherland's law of viscosity
 
     Parameters:
-        temperature_K (float): reference temperature
-        molecule (str): Air (default), Argon, N2, O2
+        temperature_K: reference temperature
+        molecule: Air (default), Argon, N2, O2
 
     Returns:
-        dynamic viscosity (float) in [kg/ms]
+        dynamic viscosity in [kg/ms]
 
     """
     const = constants_tables.sutherland_constants(molecule)
@@ -32,16 +32,16 @@ def sutherland_law_viscosity(temperature_K, molecule="Air"):
     return const["viscosity_ref"] * dynamic_viscosity  # [kg/ms]
 
 
-def sutherland_law_conductivity(temperature_K, molecule="Air"):
+def sutherland_law_conductivity(temperature_K: float, molecule: str = "Air") -> float:
     """
     Calculates the Sutherland's law of thermal conductivity
 
     Parameters:
-        temperature_K (float): reference temperature
-        molecule (str): Air (default), Argon, N2, O2
+        temperature_K: reference temperature
+        molecule: Air (default), Argon, N2, O2
 
     Returns:
-        thermal conductivity (float) in [W/mK]
+        thermal conductivity in [W/mK]
 
     """
     const = constants_tables.sutherland_constants(molecule)
@@ -62,13 +62,13 @@ def air_atomic_molar_mass():
     return air_atomic_dict  # [g/mol]
 
 
-def speed_of_sound(temperature_K, adiabatic_indx=1.4):
+def speed_of_sound(temperature_K: float, adiabatic_indx: float = 1.4) -> float:
     """
     Calculates the speed of sound
 
     Parameters:
-        temperature_K (float): reference temperature
-        adiabatic_indx (double): adiabatic index, 1.4 (default)
+        temperature_K: reference temperature
+        adiabatic_indx: adiabatic index, 1.4 (default)
 
     Returns:
         speed of sound in [m/s]
@@ -87,7 +87,7 @@ def speed_of_sound(temperature_K, adiabatic_indx=1.4):
     return spd_of_sound  # [m/s]
 
 
-def normal_shock_relations(mach_1, adiabatic_indx=1.4):
+def normal_shock_relations(mach_1: float, adiabatic_indx: float = 1.4) -> dict[str, float]:
     """
     Calculates normal shock relations
 
@@ -95,17 +95,18 @@ def normal_shock_relations(mach_1, adiabatic_indx=1.4):
         https://www.grc.nasa.gov/www/k-12/airplane/normal.html
 
     Parameters:
-        mach_1 (float): pre-shock mach number
-        adiabatic_indx (double): adiabatic index, 1.4 (default)
+        mach_1: pre-shock mach number
+        adiabatic_indx: adiabatic index, 1.4 (default)
 
     Returns:
-            mach_2 (float): post-shock mach number [ ]
-            pressure_r (float): pressure ratio (post-shock / pre-shock) [ ]
-            temperature_r (float): temperature ratio (post-shock / pre-shock) [ ]
-            density_r (float): density ratio (post-shock / pre-shock) [ ]
-            pressure_tr (float): stagnation pressure ratio (post-shock / pre-shock) [ ]
-            temperature_tr (float): stagnation temperature ratio (post-shock / pre-shock) [ ]
-
+        dict: A dictionary containing:
+            - mach_2: post-shock mach number
+            - pressure_r: pressure ratio (post-shock / pre-shock)
+            - temperature_r: temperature ratio (post-shock / pre-shock)
+            - density_r: density ratio (post-shock / pre-shock)
+            - pressure_tr: stagnation pressure ratio (post-shock / pre-shock)
+            - temperature_tr: stagnation temperature ratio (post-shock / pre-shock)
+        
     """
     gamma_minus = adiabatic_indx - 1
     gamma_plus = adiabatic_indx + 1
