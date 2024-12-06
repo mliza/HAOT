@@ -41,6 +41,7 @@ html_theme = 'sphinx_rtd_theme'
 
 rst_prolog = f"""
     .. _PyPI: https://pypi.org/project/haot/
+    .. _GitHub: https://github.com/mliza/HAOT
     """
 
 latex_elements = {

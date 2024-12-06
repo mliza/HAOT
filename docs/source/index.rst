@@ -3,8 +3,9 @@
 HAOT documentation
 ==================
 
-Hypersonic Aerodynamics Optics Tools (HAOT) documentation. This package
+Hypersonic Aerodynamics Optics Tools (**HAOT**) documentation. This package
 contains many tools used in the analysis of data for Aero-Optics applications.
+The source code can be found in the `GitHub`_.
 
 .. toctree::
    :maxdepth: 1
