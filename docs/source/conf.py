@@ -39,6 +39,10 @@ autodoc_mock_imports = ['setup']
 html_theme = 'sphinx_rtd_theme'
 #html_static_path = ['_static']
 
+rst_prolog = f"""
+    .. _PyPI: https://pypi.org/project/haot/
+    """
+
 latex_elements = {
     'papersize': 'a4paper',  # Set the paper size to A4 (or 'letterpaper' for US Letter)
     'pointsize': '10pt',     # Set the font size
