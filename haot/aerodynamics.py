@@ -20,7 +20,7 @@ def sutherland_law_viscosity(temperature_K, molecule="Air"):
         molecule (str): Air (default), Argon, N2, O2
 
     Returns:
-        dynamic_viscosity (float) in [kg/ms]
+        dynamic viscosity (float) in [kg/ms]
 
     """
     const = constants_tables.sutherland_constants(molecule)
@@ -41,7 +41,7 @@ def sutherland_law_conductivity(temperature_K, molecule="Air"):
         molecule (str): Air (default), Argon, N2, O2
 
     Returns:
-        thermal_conductivity (float) in [W/mK]
+        thermal conductivity (float) in [W/mK]
 
     """
     const = constants_tables.sutherland_constants(molecule)

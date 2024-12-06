@@ -39,7 +39,7 @@ def zero_point_energy(molecule):
         doi.org/10.1063/1.2436891
 
     Returns:
-        zpe (float): zero point energy [cm^-1]
+        zero point energy in [cm^-1]
 
     """
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
