@@ -33,4 +33,5 @@ zip-safe = false
 [tool.setuptools.package-data]
 "haot" = [
     "docs/**/*",
+]
 
