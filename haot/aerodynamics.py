@@ -20,7 +20,7 @@ def sutherland_law_viscosity(temperature_K, molecule="Air"):
         molecule (str): Air (default), Argon, N2, O2
 
     Returns:
-        dynamic_viscosity (float): [kg/ms]
+        dynamic_viscosity (float) in [kg/ms]
 
     """
     const = constants_tables.sutherland_constants(molecule)
@@ -41,7 +41,7 @@ def sutherland_law_conductivity(temperature_K, molecule="Air"):
         molecule (str): Air (default), Argon, N2, O2
 
     Returns:
-        thermal_conductivity (float): [W/mK]
+        thermal_conductivity (float) in [W/mK]
 
     """
     const = constants_tables.sutherland_constants(molecule)
@@ -73,7 +73,7 @@ def speed_of_sound(temperature_K, adiabatic_indx=1.4):
         adiabatic_indx (double): adiabatic index, 1.4 (default)
 
     Returns:
-        spd_of_sound (float): speed of sound in [m/s]
+        speed of sound in [m/s]
 
     """
     gas_const = s_consts.R  # [J/mol*K]
@@ -101,7 +101,6 @@ def normal_shock_relations(mach_1, adiabatic_indx=1.4):
         adiabatic_indx (double): adiabatic index, 1.4 (default)
 
     Returns:
-        normal_shock_dic: dictionary with normal shock properties
             mach_2 (float): post-shock mach number [ ]
             pressure_r (float): pressure ratio (post-shock / pre-shock) [ ]
             temperature_r (float): temperature ratio (post-shock / pre-shock) [ ]
