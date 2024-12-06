@@ -57,10 +57,8 @@ def sutherland_law_conductivity(temperature_K, molecule="Air"):
 def air_atomic_molar_mass():
     """Returns the atomic molar mass of an 11-species air in [g/mol]"""
     molecules = ["N+", "O+", "NO+", "N2+", "O2+", "N", "O", "NO", "N2", "O2"]
-    air_atomic_dict = {}
-    for i in molecules:
-        air_atomic_dict[i] = molmass.Formula(i).mass
-
+    air_atomic_dict = {i: molmass.Formula(i).mass for i in molecules}
+    
     return air_atomic_dict  # [g/mol]
 
 
