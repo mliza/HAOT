@@ -74,7 +74,7 @@ def air_atomic_molar_mass(molecules: str = None) -> dict:
         >> air_atomic_molar_mass()
 
     """
-    if not molecule:
+    if not molecules:
         molecules = ["N+", "O+", "NO+", "N2+", "O2+", "N", "O", "NO", "N2", "O2"]
         
     air_atomic_dict = {i: molmass.Formula(i).mass for i in molecules}
