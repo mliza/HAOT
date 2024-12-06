@@ -60,7 +60,7 @@ def sutherland_law_conductivity(temperature_K: float, molecule: str = "Air") -> 
     return const["conductivity_ref"] * thermal_conductivity  # [W/mK]
 
 
-def air_atomic_molar_mass(molecules: str = None) -> dict:
+def air_atomic_molar_mass(molecules: str = None) -> dict[str, float]:
     """
     Returns the atomic molar mass
 
