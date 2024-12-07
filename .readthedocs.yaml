@@ -6,19 +6,18 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.12"
-  commands:
-    - echo "Stating build"
-    - pip list
-    - pip install -e .
-    - pip install -r docs/requirements.txt
-    - pip list | grep haot
-    - echo "Building complete"
+#  commands:
+#    - pip list
+#    - pip install -e .
+#    - pip install -r docs/requirements.txt
+#    - pip list | grep haot
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
   configuration: docs/source/conf.py
-#python:
-#  install:
-#    - method: pip
-#      path: .
-#    - requirements: docs/requirements.txt
+python:
+  install:
+    - method: pip
+      path: .
+    - requirements: docs/requirements.txt
+    - pip install -e .
