@@ -8,7 +8,7 @@
 import molmass
 import numpy as np
 import scipy.constants as s_consts
-from haot import constants_tables
+from haot import constants
 
 
 def wavenumber_to_electronvolt(wavenumber_cm: float) -> float:
