@@ -31,16 +31,18 @@ def zero_point_energy(molecule: str) -> float:
     Calculates zero-point energy (ZPE) using spectroscopy constants for
     diatomic molecules
 
-    Reference:
-        Experimental Vibrational Zero-Point Energies Diatomic Molecules
-        doi.org/10.1063/1.2436891
-
     Parameters:
         molecule: NO+, N2+, O2+, NO, N2, O2
 
     Returns:
         zero point energy in [cm^-1]
 
+    Examples:
+        >> zero_point_energy('O2')
+
+    Reference:
+        Experimental Vibrational Zero-Point Energies Diatomic Molecules
+        (https://doi.org/10.1063/1.2436891)
     """
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
 
@@ -70,6 +72,8 @@ def vibrational_partition_function(vibrational_number: int, temperature_K: float
     Returns:
         vibrational partition function
 
+    Examples:
+        >> vibrational_partition_function(2, 350.0, 'N2')
     """
     z_vib = 0.0
     for v in range(vibrational_number + 1):
@@ -90,6 +94,8 @@ def rotational_partition_function(rotational_number: int, temperature_K: float, 
     Returns:
         rotational partition function
 
+    Examples:
+        >> rotational_partition_function(2, 350.0, 'N2')
     """
     z_rot = 0.0
     for j in range(rotational_number + 1):
@@ -112,6 +118,8 @@ def born_oppenheimer_partition_function(
     Returns:
         partition function using the Born-Oppenheimer approximations
 
+    Examples:
+        >> born_oppenheimer_partition_function(2, 4, 500.0, 'O2')
     """
     z_bo = 0.0
     for j in range(rotational_number + 1):
@@ -127,9 +135,26 @@ def born_oppenheimer_partition_function(
 
 
 def potential_dunham_coef_012(molecule: str) -> tuple[float, float, float]:
-    """Calculates the 0th, 1st, and 2nd Dunham potential coefficients.
-    Using: Ogilvie (https://doi.org/10.1016/0022-2852(76)90323-4)
-    and Herschbach (https://doi.org/10.1063/1.1731952)."""
+    """
+    Calculates the 0th, 1st, and 2nd Dunham potential coefficients for diatomic
+    molecules
+
+    Parameters:
+        molecule: NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+       Dunham potential coefficients 0, 1, and 2 
+
+    Examples:
+        >> [a_0, a_1, a_2] = potential_dunham_coef_012('N2')
+
+    Reference:
+        Dunham potential energy coefficients of the hydrogen halides and carbon
+        monoxide (https://doi.org/10.1016/0022-2852(76)90323-4)
+
+        Anharmonic Potential Constants and Their Dependence upon Bond Length
+        (https://doi.org/10.1063/1.1731952)
+    """
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
     a_0 = spectroscopy_const["omega_e"] ** 2 / (4 * spectroscopy_const["B_e"])
     a_1 = -(
@@ -145,8 +170,21 @@ def potential_dunham_coef_012(molecule: str) -> tuple[float, float, float]:
 
 
 def potential_dunham_coeff_m(a_1: float, a_2: float, m: int) -> float:
-    """Calculates the higher order Dunham potential coefficients, using
-    Morizadeh work (https://doi.org/10.1016/j.theochem.2003.12.003)."""
+    """
+    Calculates higher order Dunham potential coefficients
+
+    Parameters:
+        a_1: Dunham potential coefficient
+        a_2: Dunham potential coefficient
+        m:   desire Dunham potential coefficient
+
+    Returns:
+       Dunham potential coefficient at m
+
+    Reference:
+        A recursion formula for the coefficients of Dunham potential (https://doi.org/10.1016/j.theochem.2003.12.003)
+    """
+
     tmp = (12 / a_1) ** (m - 2)
     tmp *= 2 ** (m + 1) - 1
     tmp *= (a_2 / 7) ** (m - 1)

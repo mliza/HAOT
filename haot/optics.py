@@ -8,26 +8,42 @@
 from ambiance import Atmosphere
 import numpy as np
 import scipy.constants as s_consts
-
-# My Packages
 from haot import aerodynamics as aero
 from haot import constants_tables
 from haot import quantum_mechanics as quantum
 
 
-def gas_density(density_dict):  # density_dict [kg/m^3]
+def gas_density(density_dict: dict[str, float]) -> dict[str, float]:
+    """
+    Calculates gas density in [particles/m^3]
+
+    Parameters:
+        species in [kg/m^3]
+
+    Returns:
+        species density in [particles/m^3]
+    """
     gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
     gas_density = {}
 
     for i in density_dict:
         gas_density[i] = (
             density_dict[i] * 10**3 * s_consts.N_A / gas_amu_weight[i]
-        )  # [particles/m^3]
+        )
 
     return gas_density  # [particles/m^3]
 
 
-def index_of_refraction(gas_density_dict):
+def index_of_refraction(gas_density_dict: dict[str, float]) -> dict[str, float]:
+    """
+    Calculates index of refraction
+
+    Parameters:
+        species in [kg/m^3]
+
+    Returns:
+        index of refraction
+    """
     pol_consts = constants_tables.polarizability()  # [m^3]
     dielectric_const_0 = s_consts.epsilon_0  # [F/m]
     density = gas_density(gas_density_dict)  # [particles/m3]
@@ -67,8 +83,7 @@ def optical_path_length(n_solution, distance):
     OPL["dilute"] = n_solution["dilute"] * distance
     OPL["dense"] = n_solution["dense"] * distance
     #TODO: Missing implementation
-
-    return OPL
+    print("TODO: Missing this implementation")
 
 
 def tropina_aproximation(vibrational_number, rotational_number, molecule):
@@ -169,16 +184,8 @@ def buldakov_expansion(vibrational_number, rotational_number, molecule):
 """
 
 
-def kerl_polarizability_temperature(*args, **kargs):
-    if args:
-        temperature_K = args[0]
-        molecule = args[1]
-        wavelength_nm = args[2]
-
-    if kargs:
-        temperature_K = kargs["temperature_K"]
-        molecule = kargs["molecule"]
-        wavelength_nm = kargs["wavelength_nm"]
+def kerl_polarizability_temperature(temperature_K: float, molecule: str,
+                                    wavelength_nm: float) -> float:
 
     # Check sizes
     mean_const = constants_tables.kerl_interpolation(molecule)
@@ -246,7 +253,7 @@ def gladstone_dale(gas_density_dict=None):  # [kg/m3
             / (2 * dielectric_const)
             * (avogadro_number / gas_amu_weight[i])
             * 1e3
-        )  # [m3/kg]
+        )  # [m^3/kg]
 
     gladstone_dale_dict = {}
     if not gas_density_dict:
@@ -262,4 +269,4 @@ def gladstone_dale(gas_density_dict=None):  # [kg/m3
             )
         gladstone_dale_dict["gladstone_dale"] /= sum(gas_density_dict.values())
 
-        return gladstone_dale_dict  # [m3/kg]
+        return gladstone_dale_dict  # [m^3/kg]
