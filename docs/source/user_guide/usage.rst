@@ -10,6 +10,7 @@ After installing **HAOT**, you can import it in a python session by:
 Or you can import the sub modules individually as:
 
 .. code::
+
    from haot import aerodynamics
    from haot import quantum_mechanics 
    from haot import optics 
