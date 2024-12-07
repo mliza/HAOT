@@ -8,7 +8,7 @@
 import os
 import sys
 basedir = os.path.abspath(os.path.join(os.path.dirname('HAOT'), '..'))
-sys.path.insert(0, os.path.join(basedir, 'haot', 'src'))
+sys.path.insert(0, os.path.join(basedir, 'haot'))
 from importlib.metadata import metadata
 
 project = 'haot'
