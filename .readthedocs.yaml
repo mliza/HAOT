@@ -1,7 +1,10 @@
 # Required
 version: 2
 
-# Set the OS, Python version and other tools you might need
+# Build documentation in the "docs/" directory with Sphinx
+sphinx:
+  configuration: docs/source/conf.py
+
 build:
   os: ubuntu-22.04
   tools:
@@ -14,12 +17,10 @@ build:
     - echo "Directory Structure"
     - ls -R
 
-# Build documentation in the "docs/" directory with Sphinx
-sphinx:
-  configuration: docs/source/conf.py
 
 python:
   install:
+    - requirements: docs/requirements.txt
     - method: pip
       path: .
-    - requirements: docs/requirements.txt
+  system_packages: true
