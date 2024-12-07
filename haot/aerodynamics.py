@@ -165,38 +165,70 @@ def normal_shock_relations(mach_1: float, adiabatic_indx: float = 1.4) -> dict[s
     return normal_shock_dict  # [ ]
 
 
-# Oblique shock relations
-# TODO: Update this doc string on this
-def oblique_shock_relations(mach_1, shock_angle_deg, adiabatic_indx=1.4):
-    # REF : Modern Compressible Flows With Historical Ref., eq 4.7 - 4.11
-    # NOTE: Equations only work for weak shocks
-    # Note ratio = var_1 / var_2
-    shock_angle = np.radians(shock_angle_deg)  # radians
-    mach_n1 = mach_1 * np.sin(shock_angle)  # normal mach number
-    mach_n11 = mach_n1**2  # normal mach number square
-    # Calculates Deflection angle (Eq. 4.17)
-    tan_deflection_ang = (2 / np.tan(shock_angle)) * (
-        (mach_n11 - 1) / (mach_1**2 * (adiabatic_indx + np.cos(2 * shock_angle)) + 2)
-    )
+def oblique_shock_relations(mach_1: float, shock_angle_deg: float,
+                            adiabatic_indx: float = 1.4) -> dict [str, float]:
+    """
+    Calculates oblique shock relations for weak shocks
+
+    Reference:
+        Moden Compressible Flow With Historic Perspective, 4th (Anderson J.)
+
+    Parameters:
+        mach_1: pre-shock mach number
+        shock_angle_deg: shock angle in degrees
+        adiabatic_indx: adiabatic index, 1.4 (default)
+
+    Returns:
+        dict: A dictionary containing:
+            - mach_2: post-shock mach number
+            - pressure_r: pressure ratio (post-shock / pre-shock)
+            - temperature_r: temperature ratio (post-shock / pre-shock)
+            - density_r: density ratio (post-shock / pre-shock)
+            - deflection_angle_degs: deflection angle in [degs]
+            - mach_n1: normal pre-shock mach number
+            - mach_n2: normal post-shock mach number
+    Examples:
+        >> oblique_shock_relations(2.0, 5.0) 
+    """
+    shock_angle = np.radians(shock_angle_deg)
+    gamma_minus = adiabatic_indx - 1
+    gamma_plus = adiabatic_indx + 1
+
+    # Normal pre-shock mach number (Eq. 4.7)
+    mach_n1 = mach_1 * np.sin(shock_angle)
+    mach_n11 = mach_n1**2 
+
+    # Deflection angle (Eq. 4.17)
+    tan_deflection_ang = 2 / np.tan(shock_angle)
+    tan_deflection_ang *= (mach_n11 - 1)
+    tan_deflection_ang /= (mach_1**2 * (adiabatic_indx + np.cos(2 * shock_angle)) + 2)
     deflection_angle_deg = np.degrees(np.arctan(1 / tan_deflection_ang))
-    # Calculates properties downstream the shock
-    density_r = ((adiabatic_indx + 1) * mach_n1**2) / (
-        (adiabatic_indx - 1) * mach_n1**2 + 2
-    )
-    pressure_r = 1 + 2 * adiabatic_indx * (mach_n1**2 - 1) / (adiabatic_indx + 1)
+
+    # Density ratio (Eq. 4.8)
+    density_r = gamma_plus * mach_n11
+    density_r /= (gamma_minus * mach_n11 + 2)
+
+    # Pressure ratio (Eq. 4.9)
+    pressure_r = 2 * adiabatic_indx * (mach_n11 - 1) / gamma_plus + 1
+
+    # Normal post-shock mach number (Eq. 4.10)
+    mach_n22 = mach_n11 + 2 / gamma_minus
+    mach_n22 /= (2 * adiabatic_indx * mach_n11 / gamma_minus - 1)
+
+    # Temperature ratio (Eq. 4.11)
     temperature_r = pressure_r * 1 / density_r
-    # Calculates mach 2
-    mach_n2 = np.sqrt(
-        (mach_n1**2 + (2 / (adiabatic_indx - 1)))
-        / ((2 * adiabatic_indx / (adiabatic_indx - 1)) * mach_n1**2 - 1)
-    )
-    mach_2 = mach_n2 / np.sin(np.radians(shock_angle_deg - deflection_angle_deg))
-    # Dictionary
+
+    # Post-shock mach number (Eq. 4.12)
+    mach_2 = mach_n22 ** 0.5
+    mach_2 /= np.sin(np.radians(shock_angle_deg - deflection_angle_deg))
+
     oblique_shock_dict = {
         "mach_2": mach_2,
         "pressure_r": pressure_r,
         "temperature_r": temperature_r,
         "density_r": density_r,
         "deflection_angle_degs": deflection_angle_deg,
+        "mach_n2": mach_n22 ** 0.5,
+        "mach_n1": mach_n1, 
     }
     return oblique_shock_dict
