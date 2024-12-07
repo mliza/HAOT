@@ -23,8 +23,8 @@ def sutherland_constants(gas: str) -> dict[str, float]:
             - sutherland_cond: Sutherland thermal conductivity in [K]
 
     Reference:
-        Viscous Fluid Flow, International Edition, 4th (ISBN 978 1 260
-        59786) Table 1.1 and Table 1.2
+        Viscous Fluid Flow, International Edition, 4th (White F., ISBN 978 1 260
+        59786). Table 1.1 and Table 1.2
     """
 
     dict_out = {}

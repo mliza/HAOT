@@ -9,6 +9,8 @@ Aerodynamics
 
 .. autofunction:: haot.speed_of_sound
 
+.. autofunction:: haot.isentropic_relations
+
 .. autofunction:: haot.normal_shock_relations
 
 .. autofunction:: haot.oblique_shock_relations 
