@@ -24,12 +24,7 @@ def gas_density(density_dict: dict[str, float]) -> dict[str, float]:
         species density in [particles/m^3]
     """
     gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
-    gas_density = {}
-
-    for i in density_dict:
-        gas_density[i] = (
-            density_dict[i] * 10**3 * s_consts.N_A / gas_amu_weight[i]
-        )
+    gas_density = {i: (density_dict[i] * 10**3 * s_consts.N_A / gas_amu_weight[i]) for i in density_dict
 
     return gas_density  # [particles/m^3]
 

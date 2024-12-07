@@ -15,4 +15,6 @@ sphinx:
   configuration: docs/source/conf.py
 python:
   install:
+    - method: pip
+      path: .
     - requirements: docs/requirements.txt
