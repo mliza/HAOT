@@ -12,6 +12,7 @@ The source code can be found in the `GitHub`_.
    :caption: User Guide:
 
    user_guide/installation
+   user_guide/usage
 
 .. toctree::
    :maxdepth: 1
@@ -20,4 +21,4 @@ The source code can be found in the `GitHub`_.
    submodules/aerodynamics
    submodules/quantum_mechanics
    submodules/optics
-   submodules/constants_tables
+   submodules/constants

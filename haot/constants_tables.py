@@ -1,8 +1,8 @@
 """
     Date:   10/26/2024
     Author: Martin E. Liza
-    File:   constants_tables.py
-    Def:    This file contains spectroscopy data used across the package
+    File:   constants.py
+    Def:    This file contains constants used across the package 
 """
 
 
