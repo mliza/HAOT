@@ -87,7 +87,7 @@ def rotational_partition_function(rotational_number: int, temperature_K: float, 
     terms only for diatomic molecules
 
     Parameters:
-        rotational_number: rotational quantum number (has to be positve)
+        rotational_number: rotational quantum number (has to be positive)
         temperature_K: reference temperature in [K]
         molecule: NO+, N2+, O2+, NO, N2, O2
 
@@ -111,7 +111,7 @@ def born_oppenheimer_partition_function(
 
     Parameters:
         vibrational_number: vibrational quantum number (has to be positive)
-        rotational_number: rotational quantum number (has to be positve)
+        rotational_number: rotational quantum number (has to be positive)
         temperature_K: reference temperature in [K]
         molecule: NO+, N2+, O2+, NO, N2, O2
 
@@ -176,10 +176,13 @@ def potential_dunham_coeff_m(a_1: float, a_2: float, m: int) -> float:
     Parameters:
         a_1: Dunham potential coefficient
         a_2: Dunham potential coefficient
-        m:   desire Dunham potential coefficient
+        m:   desired Dunham potential coefficient
 
     Returns:
        Dunham potential coefficient at m
+
+    Examples:
+        >> a_3 = potential_dunham_coef_m(a_1, a_2, 3)
 
     Reference:
         A recursion formula for the coefficients of Dunham potential (https://doi.org/10.1016/j.theochem.2003.12.003)
@@ -195,15 +198,33 @@ def potential_dunham_coeff_m(a_1: float, a_2: float, m: int) -> float:
 
 
 def boltzman_factor(
-    temperature_K,
-    molecule,
-    vibrational_number=None,
-    rotational_number=None,
-    born_opp_flag=False,
-):
-    """Calculates the Boltzman factor at a given vibrational_number and/or
-    rotational_number. If the born_opp_flag is provided, it will calculate the
-    total energy using the Born-Oppenheimer approximation"""
+        temperature_K: float,
+        molecule: str,
+        vibrational_number: int = None,
+        rotational_number: int = None,
+        born_opp_flag: bool = False,
+) -> float:
+    """
+    Calculates the Boltzman factor at a given vibrational quantum number,
+    and/or rotational quantum number. If the born_opp_flag is provided, it will
+    calculate the Boltzman factor using the Born-Oppenheimer approximation
+
+    Parameters:
+        temperature_K: reference temperature in [K]
+        molecule: NO+, N2+, O2+, NO, N2, O2
+        vibrational_number: vibrational quantum number (has to be positive)
+        rotational_number: rotational quantum number (has to be positive)
+        born_opp_flag: uses the Born-Oppenheimer approximation, False (default)
+
+    Returns:
+        Bolzman factor at given temperature, rotational and/or vibrational quantum number
+
+    Examples:
+        >> boltzman_factor(500.0, 'O2', 3)
+        >> boltzman_factor(500.0, 'O2', 3, 2)
+        >> boltzman_factor(500.0, 'O2', 3, 1, True)
+
+    """
     # Initialize energy terms, degeneracy and thermal beta
     energy_vib_k = 0
     energy_rot_k = 0
@@ -322,9 +343,22 @@ def rotational_energy_k(rotational_number: int, molecule: str) -> float:
     return spectroscopy_constants["B_e"] * rot_levels  # [cm^-1]
 
 
-def reduced_mass_kg(molecule_1: float, molecule_2: float) -> float:
-    """Calculates the molar reduced mass and returns it in kg of two
-    elements"""
+def reduced_mass_kg(molecule_1: str, molecule_2: str) -> float:
+    """
+    Calculates the reduced mass in [kg]
+
+    Parameters:
+        molecule_1: name of molecule one
+
+        molecule_2: name of molecule two
+
+    Returns:
+        reduced mass in [kg]
+
+    Examples:
+        >> reduced_mass_kg('N2', 'N2')
+
+    """
     m_1 = molmass.Formula(molecule_1).mass
     m_2 = molmass.Formula(molecule_2).mass
     mu = m_1 * m_2 / (m_1 + m_2)

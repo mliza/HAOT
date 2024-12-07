@@ -70,14 +70,14 @@ def air_atomic_molar_mass(molecules: str = None) -> dict[str, float]:
     """
     Returns the atomic molar mass
 
-    Paremeters:
+    Parameters:
         molecule: Molecules that need the molar mass (11 species air is the default)
 
     Returns:
         species in [g/mol]
 
     Examples:
-        >> air_atomic_molar_mass()
+        >> air_atomic_molar_mass(["N+", "N2"])
 
     """
     if not molecules:
