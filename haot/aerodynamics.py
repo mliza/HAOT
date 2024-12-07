@@ -116,9 +116,6 @@ def normal_shock_relations(mach_1: float, adiabatic_indx: float = 1.4) -> dict[s
     """
     Calculates normal shock relations
 
-    Reference:
-        Normal Shock Wave - NASA (https://www.grc.nasa.gov/www/k-12/airplane/normal.html)
-
     Parameters:
         mach_1: pre-shock mach number
         adiabatic_indx: adiabatic index, 1.4 (default)
@@ -132,6 +129,8 @@ def normal_shock_relations(mach_1: float, adiabatic_indx: float = 1.4) -> dict[s
             - pressure_tr: stagnation pressure ratio (post-shock / pre-shock)
             - temperature_tr: stagnation temperature ratio (post-shock / pre-shock)
         
+    Reference:
+        Normal Shock Wave - NASA (https://www.grc.nasa.gov/www/k-12/airplane/normal.html)
     """
     gamma_minus = adiabatic_indx - 1
     gamma_plus = adiabatic_indx + 1

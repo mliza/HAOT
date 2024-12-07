@@ -7,7 +7,7 @@ Constants
 
 .. autofunction:: haot.polarizability
 
-.. autofunction:: haot.polarizability_derivatives
+.. autofunction:: haot.buldakov_polarizability_derivatives_2016
 
 .. autofunction:: haot.kerl_interpolation
 

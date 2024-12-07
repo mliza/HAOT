@@ -23,48 +23,49 @@ def sutherland_constants(gas: str) -> dict[str, float]:
             - sutherland_cond: Sutherland thermal conductivity in [K]
 
     Reference:
-        https://doc.comsol.com/5.5/doc/com.comsol.help.cfd/cfd_ug_fluidflow_high_mach.08.27.html
+        Viscous Fluid Flow, International Edition, 4th (ISBN 978 1 260
+        59786) Table 1.1 and Table 1.2
     """
 
     dict_out = {}
     if gas == "Air":
-        dict_out["temperature_ref"] = 273.0     # [K]
-        dict_out["viscosity_ref"] = 1.716e-5    # [kg/ms]
-        dict_out["sutherland_visc"] = 111.0     # [K]
-        dict_out["conductivity_ref"] = 0.0241   # [W/mK]
-        dict_out["sutherland_cond"] = 194.0     # [K]
+        dict_out["temperature_ref"] = 273.0  # [K]
+        dict_out["viscosity_ref"] = 1.716e-5  # [kg/ms]
+        dict_out["sutherland_visc"] = 111.0  # [K]
+        dict_out["conductivity_ref"] = 0.0241  # [W/mK]
+        dict_out["sutherland_cond"] = 194.0  # [K]
 
     if gas == "Argon":
-        dict_out["temperature_ref"] = 273.0     # [K]
-        dict_out["viscosity_ref"] = 2.125e-5    # [kg/ms]
-        dict_out["sutherland_visc"] = 114.0     # [K]
-        dict_out["conductivity_ref"] = 0.0163   # [W/mK]
-        dict_out["sutherland_cond"] = 170.0     # [K]
+        dict_out["temperature_ref"] = 273.0  # [K]
+        dict_out["viscosity_ref"] = 2.125e-5  # [kg/ms]
+        dict_out["sutherland_visc"] = 114.0  # [K]
+        dict_out["conductivity_ref"] = 0.0163  # [W/mK]
+        dict_out["sutherland_cond"] = 170.0  # [K]
 
     if gas == "N2":
-        dict_out["temperature_ref"] = 273.0     # [K]
-        dict_out["viscosity_ref"] = 1.663e-5    # [kg/ms]
-        dict_out["sutherland_visc"] = 107.0     # [K]
-        dict_out["conductivity_ref"] = 0.0242   # [W/mK]
-        dict_out["sutherland_cond"] = 150.0     # [K]
+        dict_out["temperature_ref"] = 273.0  # [K]
+        dict_out["viscosity_ref"] = 1.663e-5  # [kg/ms]
+        dict_out["sutherland_visc"] = 107.0  # [K]
+        dict_out["conductivity_ref"] = 0.0242  # [W/mK]
+        dict_out["sutherland_cond"] = 150.0  # [K]
 
     if gas == "O2":
-        dict_out["temperature_ref"] = 273.0     # [K]
-        dict_out["viscosity_ref"] = 1.919e-5    # [kg/ms]
-        dict_out["sutherland_visc"] = 139.0     # [K]
-        dict_out["conductivity_ref"] = 0.0244   # [W/mK]
-        dict_out["sutherland_cond"] = 240.0     # [K]
+        dict_out["temperature_ref"] = 273.0  # [K]
+        dict_out["viscosity_ref"] = 1.919e-5  # [kg/ms]
+        dict_out["sutherland_visc"] = 139.0  # [K]
+        dict_out["conductivity_ref"] = 0.0244  # [W/mK]
+        dict_out["sutherland_cond"] = 240.0  # [K]
 
     return dict_out
 
 
 def karl_2003() -> dict[str, float]:
     """
-    Constants used in the Karl method
+    Gladstone-Dale constants used in Karl's experiments
 
     Returns:
         dict: A dictionary containing
-            - species in units of [m^3/kg] 
+            - species in units of [m^3/kg]
 
     Reference:
         High Enthalpy Cylinder Flow in HEG, A Basis for CFD Validation (https://arc.aiaa.org/doi/pdf/10.2514/6.2003-4252)
@@ -89,6 +90,21 @@ def polarizability() -> dict[str, float]:
             - specie polarizability in units of [m^3]
 
     Reference:
+        Handbook of Chemistry and Physics, 95th edition
+        (https://doi.org/10.1201/b17118)
+
+        Optical spectroscopy of high L n=10 Rydberg states of nitrogen
+        (https://doi.org/10.1103/PhysRevA.54.314)
+
+        A numerical study of coupled Hartree-Fock theory for open-shell systems
+        (https://doi.org/10.1080/00268977500102811)
+
+        Ab initio calculations of the properties of NO+ in its ground
+        electronic state X 1Sigma+
+        (https://doi.org/10.1016/0009-2614(93)89356-M)
+
+        Analysis of the 8f, 9f, and 10f, v=1 Rydberg states of N2
+        (https://doi.org/10.1103/PhysRevA.44.3007)
     """
     dict_out = {
         "N+": 0.559e-30,
@@ -152,30 +168,46 @@ def buldakov_polarizability_derivatives_2016(molecule: str) -> dict[str, float]:
     return dict_out  # [m^3]
 
 
-def kerl_interpolation(molecule="N2"):
-    # https://onlinelibrary.wiley.com/doi/10.1002/bbpc.19920960517
-    # Check reference in paper
+def kerl_interpolation(molecule: str) -> dict[str, float]:
+    """
+    Constants used in Kerl's extrapolation method
+
+    Parameters:
+        molecules: H2, N2, O2, Air
+
+    Returns:
+        dict: A dictionary containing
+            - groundPolarizability: polarizability at ground level in [m^3]
+            - groundFrequency: frequency at ground level in [Hz]
+            - b: extrapolation constant in [1/K]
+            - c: extrapolation constant in [1/K^2]
+
+    Reference:
+        Polarizability a(w,T,rho) of Small Molecules in the Gas Phase
+        (https://doi.org/10.1002/bbpc.19920960517)
+    """
+
     dict_out = {}
     if molecule == "H2":
         dict_out["groundPolarizability"] = 0.80320e-30  # [m^3]
-        dict_out["groundFrequency"] = 2.1399e16         # [1/s]
-        dict_out["b"] = 5.87e-6                         # [1/K]
-        dict_out["c"] = 7.544e-9                        # [1/K^2]
+        dict_out["groundFrequency"] = 2.1399e16  # [1/s]
+        dict_out["b"] = 5.87e-6  # [1/K]
+        dict_out["c"] = 7.544e-9  # [1/K^2]
     if molecule == "N2":
-        dict_out["groundPolarizability"] = 1.7406e-30   # [m^3]
-        dict_out["groundFrequency"] = 2.6049e16         # [1/s]
-        dict_out["b"] = 1.8e-6                          # [1/K]
-        dict_out["c"] = 0.0                             # [1/K^2]
+        dict_out["groundPolarizability"] = 1.7406e-30  # [m^3]
+        dict_out["groundFrequency"] = 2.6049e16  # [1/s]
+        dict_out["b"] = 1.8e-6  # [1/K]
+        dict_out["c"] = 0.0  # [1/K^2]
     if molecule == "O2":
-        dict_out["groundPolarizability"] = 1.5658e-30   # [m^3]
-        dict_out["groundFrequency"] = 2.1801e16         # [1/s]
-        dict_out["b"] = -2.369e-6                       # [1/K]
-        dict_out["c"] = 8.687e-9                        # [1/K^2]
+        dict_out["groundPolarizability"] = 1.5658e-30  # [m^3]
+        dict_out["groundFrequency"] = 2.1801e16  # [1/s]
+        dict_out["b"] = -2.369e-6  # [1/K]
+        dict_out["c"] = 8.687e-9  # [1/K^2]
     if molecule == "Air":
-        dict_out["groundPolarizability"] = 1.6970e-30   # [m^3]
-        dict_out["groundFrequency"] = 2.47044e16        # [1/s]
-        dict_out["b"] = 10.6e-6                         # [1/K]
-        dict_out["c"] = 7.909e-9                        # [1/K^2]
+        dict_out["groundPolarizability"] = 1.6970e-30  # [m^3]
+        dict_out["groundFrequency"] = 2.47044e16  # [1/s]
+        dict_out["b"] = 10.6e-6  # [1/K]
+        dict_out["c"] = 7.909e-9  # [1/K^2]
 
     return dict_out
 
@@ -185,31 +217,30 @@ def spectroscopy_constants(molecule: str) -> dict[str, float]:
     Returns spectroscopy constants
 
     Parameters:
-        molecule: NO+, N2+, O2+, NO, N2, O2 
+        molecule: NO+, N2+, O2+, NO, N2, O2
 
     Returns:
-        dict: A dictionary containing spectroscopy constants 
-            - omega_e: vibrational constant - first term in [cm^-1] 
+        dict: A dictionary containing spectroscopy constants
+            - omega_e: vibrational constant - first term in [cm^-1]
             - omega_xe: vibrational constant – second term in [cm^-1]
             - omega_ye: vibrational constant – third term in [cm^-1]
-            - B_e: equilibrium rotational constant in [cm^-1] 
+            - B_e: equilibrium rotational constant in [cm^-1]
             - alpha_e: rotational constant in [cm^-1]
             - D_e: centrifugal distortion in [cm^-1]
             - r_e: internuclear distance in [m]
 
     Reference:
+        NO+ https://webbook.nist.gov/cgi/cbook.cgi?Name=NO%2B&Units=SI&cDI=on
 
-    NO+ https://webbook.nist.gov/cgi/cbook.cgi?Name=NO%2B&Units=SI&cDI=on
+        N2+ https://webbook.nist.gov/cgi/cbook.cgi?Name=N2%2B&Units=SI&cDI=on
 
-    N2+ https://webbook.nist.gov/cgi/cbook.cgi?Name=N2%2B&Units=SI&cDI=on
+        O2+ https://webbook.nist.gov/cgi/cbook.cgi?Name=O2%2B&Units=SI&cDI=on
 
-    O2+ https://webbook.nist.gov/cgi/cbook.cgi?Name=O2%2B&Units=SI&cDI=on
+        NO https://webbook.nist.gov/cgi/cbook.cgi?ID=C10102439&Units=SI&Mask=1000
 
-    NO https://webbook.nist.gov/cgi/cbook.cgi?ID=C10102439&Units=SI&Mask=1000
+        N2 https://webbook.nist.gov/cgi/cbook.cgi?Name=N2&Units=SI&cDI=on
 
-    N2 https://webbook.nist.gov/cgi/cbook.cgi?Name=N2&Units=SI&cDI=on
-
-    O2 https://webbook.nist.gov/cgi/cbook.cgi?Name=O2&Units=SI&cDI=on
+        O2 https://webbook.nist.gov/cgi/cbook.cgi?Name=O2&Units=SI&cDI=on
     """
     dict_out = {}
 
@@ -220,7 +251,7 @@ def spectroscopy_constants(molecule: str) -> dict[str, float]:
         dict_out["B_e"] = 1.997195
         dict_out["alpha_e"] = 0.018790
         dict_out["D_e"] = 6.64e-6
-        dict_out["r_e"] = 1.06322e-10  # [m]
+        dict_out["r_e"] = 1.06322e-10
 
     if molecule == "N2+":
         dict_out["omega_e"] = 2207.0115
