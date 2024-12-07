@@ -7,11 +7,19 @@ build:
   tools:
     python: "3.12"
   commands:
-    - pip install -e .
+    - echo "Installing Packages:"
+    - pip list
+    - echo "Current Working Directory:"
+    - pwd
+    - echo "Directory Structure"
+    - ls -R
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
   configuration: docs/source/conf.py
+
 python:
   install:
+    - method: pip
+      path: .
     - requirements: docs/requirements.txt
