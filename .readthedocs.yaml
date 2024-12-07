@@ -9,13 +9,9 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.12"
-  commands:
-    - echo "Installing Packages:"
-    - pip list
-    - pip install -e .
-    - pip list
-    - echo "Installed HAOT"
 
 python:
   install:
     - requirements: docs/requirements.txt
+    - method: pip
+      path: .
