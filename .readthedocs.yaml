@@ -12,14 +12,10 @@ build:
   commands:
     - echo "Installing Packages:"
     - pip list
-    - echo "Current Working Directory:"
-    - pwd
-    - echo "Directory Structure"
-    - ls -R
+    - pip install -e .
+    - pip list
+    - echo "Installed HAOT"
 
 python:
   install:
     - requirements: docs/requirements.txt
-    - method: pip
-      path: .
-  #system_packages: true
