@@ -16,9 +16,9 @@ The source code can be found in the `GitHub`_.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Submodules:
+   :caption: Modules:
 
-   submodules/aerodynamics
-   submodules/quantum_mechanics
-   submodules/optics
-   submodules/constants
+   modules/aerodynamics
+   modules/optics
+   modules/quantum_mechanics
+   modules/constants

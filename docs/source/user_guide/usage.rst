@@ -7,7 +7,7 @@ After installing **HAOT**, you can import it in a python session by:
 
     import haot
 
-Or you can import the sub modules individually as:
+Or you can import the modules individually as:
 
 .. code::
 

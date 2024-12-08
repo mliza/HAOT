@@ -9,7 +9,7 @@ from ambiance import Atmosphere
 import numpy as np
 import scipy.constants as s_consts
 from haot import aerodynamics as aero
-from haot import constants as constants_tables 
+from haot import constants as constants_tables
 from haot import quantum_mechanics as quantum
 
 
@@ -22,10 +22,13 @@ def gas_density(density_dict: dict[str, float]) -> dict[str, float]:
 
     Returns:
         species density in [particles/m^3]
+
     """
     gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
-    gas_density = {i: (density_dict[i] * 10**3 * s_consts.N_A /
-                       gas_amu_weight[i]) for i in density_dict}
+    gas_density = {
+        i: (density_dict[i] * 10**3 * s_consts.N_A / gas_amu_weight[i])
+        for i in density_dict
+    }
 
     return gas_density  # [particles/m^3]
 
@@ -78,7 +81,7 @@ def optical_path_length(n_solution, distance):
     OPL = {}
     OPL["dilute"] = n_solution["dilute"] * distance
     OPL["dense"] = n_solution["dense"] * distance
-    #TODO: Missing implementation
+    # TODO: Missing implementation
     print("TODO: Missing this implementation")
 
 
@@ -87,7 +90,7 @@ def tropina_aproximation(vibrational_number, rotational_number, molecule):
     electron_charge = s_consts.e
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
     # resonance_distance = omega_gi - omega
-    #TODO: Missing implementation
+    # TODO: Missing implementation
     print("TODO: Missing this implementation")
 
 
@@ -173,15 +176,27 @@ def buldakov_expansion(vibrational_number, rotational_number, molecule):
     return derivative_const["zeroth"] + tmp_1 + tmp_2 + tmp_3 + tmp_4
 
 
-# Calculate polarizability as temperature
-"""
-    DOI: 10.1002/bbpc.19920960517
-    DOI: 10.1134/BF03355985
-"""
+def kerl_polarizability_temperature(
+    temperature_K: float, molecule: str, wavelength_nm: float
+) -> float:
+    """
+    Calculates the polarizability using Kerl's extrapolation
 
+    Parameters:
+        temperature_K: reference temperature in [K]
+        molecule: H2, N2, O2, Air
+        wavelength_nm: signal's wavelength in [nm]
 
-def kerl_polarizability_temperature(temperature_K: float, molecule: str,
-                                    wavelength_nm: float) -> float:
+    Returns:
+        polarizability in [m^3]
+
+    Reference:
+        Polarizability a(w,T,rho) of Small Molecules in the Gas Phase
+        (https://doi.org/10.1002/bbpc.19920960517)
+
+    Examples:
+        >> kerl_polarizability_temperature(600.0, 'N2', 533.0)
+    """
 
     # Check sizes
     mean_const = constants_tables.kerl_interpolation(molecule)
@@ -193,18 +208,36 @@ def kerl_polarizability_temperature(temperature_K: float, molecule: str,
     tmp *= mean_const["groundPolarizability"]
     tmp /= 1 - (angular_frequency / mean_const["groundFrequency"]) ** 2
 
-    return tmp
+    return tmp  # [m^3]
 
 
-# http://walter.bislins.ch/bloge/index.asp?page=Deriving+Equations+for+Atmospheric+Refraction
-def atmospheric_index_of_refraction(altitude, vaporPressure=0):
-    atmospheric_prop = Atmosphere(altitude)
+def atmospheric_index_of_refraction(
+    altitude_m: float, vapor_pressure: float = 0.0
+) -> float:
+    """
+        Calculates the atmospheric index of refraction as a function of altitude
+
+        Parameters:
+            altitude_m: altitude in [m]
+            vapor_pressure: vapor pressure at given altitude in [mbar], 0.0 (default)
+            temperature_K: reference temperature in [K]
+
+        Returns:
+            index of refraction in [ ]
+
+        References:
+            The constants in the equation for atmospheric
+    refractive index at radio frequencies
+    (https://ieeexplore.ieee.org/document/4051437)
+
+    """
+    atmospheric_prop = Atmosphere(altitude_m)
     temperature = atmospheric_prop.temperature  # [K]
     pressure = atmospheric_prop.pressure * 0.01  # [mbar]
     K_1 = 79  # [K/mbar]
     K_2 = 4800  # [K]
 
-    refractivity = K_2 * vaporPressure / temperature
+    refractivity = K_2 * vapor_pressure / temperature
     refractivity += pressure
     refractivity *= K_1 / temperature
     refractivity *= 10**-6

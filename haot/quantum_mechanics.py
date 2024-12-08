@@ -221,9 +221,10 @@ def boltzman_factor(
 
     Examples:
         >> boltzman_factor(500.0, 'O2', 3)
-        >> boltzman_factor(500.0, 'O2', 3, 2)
-        >> boltzman_factor(500.0, 'O2', 3, 1, True)
 
+        >> boltzman_factor(500.0, 'O2', 3, 2)
+
+        >> boltzman_factor(500.0, 'O2', 3, 1, True)
     """
     # Initialize energy terms, degeneracy and thermal beta
     energy_vib_k = 0
