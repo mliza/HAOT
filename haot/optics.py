@@ -20,7 +20,7 @@ def polarizability_cgs_to_si(polarizability_cgs: float) -> float:
     Parameters:
         polarizability_cgs: volumetric polarizability in [cm^3]
 
-    Returns
+    Returns:
         atomic polarizability in [Fm^2]
     """
     return polarizability_cgs * 4 * np.pi * s_consts.epsilon_0 * 1e-6
