@@ -13,6 +13,33 @@ from haot import constants as constants_tables
 from haot import quantum_mechanics as quantum
 
 
+def polarizability_cgs_to_si(polarizability_cgs: float) -> float:
+    """
+    Converts volumetric polarizability (CGS) to atomic polarizability (SI)
+
+    Parameters:
+        polarizability_cgs: volumetric polarizability in [cm^3]
+
+    Returns
+        atomic polarizability in [Fm^2]
+    """
+    return polarizability_cgs * 4 * np.pi * s_consts.epsilon_0 * 1e-6
+
+
+def polarizability_si_to_cgs(polarizability_si: float) -> float:
+    """
+    Converts atomic polarizability (SI) to volumetric polarizability (CGS)
+
+    Parameters:
+        polarizability_si: atomic polarizability in [Fm^2]
+
+    Returns:
+        volumetric polarizability in [cm^3]
+
+    """
+    return polarizability_si * 1e6 / (4 * np.pi * s_consts.epsilon_0)
+
+
 def gas_density(density_dict: dict[str, float]) -> dict[str, float]:
     """
     Calculates gas density in [particles/m^3]
@@ -41,18 +68,17 @@ def index_of_refraction(gas_density_dict: dict[str, float]) -> dict[str, float]:
         species in [kg/m^3]
 
     Returns:
-        index of refraction
+        dict: A dictionary containing
+            - dilute: dilute index of refraction
+            - dense: dense index of refraction
     """
     pol_consts = constants_tables.polarizability()  # [m^3]
-    dielectric_const_0 = s_consts.epsilon_0  # [F/m]
     density = gas_density(gas_density_dict)  # [particles/m3]
     n_const = {}  # [ ]
-    # Convert cgs to SI
-    alpha_si = lambda x: x * (4 * np.pi * dielectric_const_0)  # [F m2]
 
     for i in gas_density_dict:
-        # Convert alpha_cgs to alpha_si
-        alpha = alpha_si(pol_consts[i])
+        # Pol constants are in m^3
+        alpha = polarizability_cgs_to_si(pol_consts[i] * 1e6)
         n_const[i] = alpha * density[i]  # (a_i N_i)
 
     # add all n_i
@@ -61,8 +87,8 @@ def index_of_refraction(gas_density_dict: dict[str, float]) -> dict[str, float]:
         temp += i
 
     n_return = {}
-    n_return["dilute"] = 1 + temp / (2 * dielectric_const_0)
-    n_temp = temp / (3 * dielectric_const_0)
+    n_return["dilute"] = 1 + temp / (2 * s_consts.epsilon_0)
+    n_temp = temp / (3 * s_consts.epsilon_0)
     n_return["dense"] = ((2 * n_temp + 1) / (1 - n_temp)) ** 0.5
 
     return n_return
