@@ -1,6 +1,10 @@
 Optics
 ======
 
+.. autofunction:: haot.polarizability_cgs_to_si
+
+.. autofunction:: haot.polarizability_si_to_cgs
+
 .. autofunction:: haot.gas_density
 
 .. autofunction:: haot.index_of_refraction
