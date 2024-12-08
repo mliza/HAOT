@@ -215,21 +215,18 @@ def atmospheric_index_of_refraction(
     altitude_m: float, vapor_pressure: float = 0.0
 ) -> float:
     """
-        Calculates the atmospheric index of refraction as a function of altitude
+    Calculates the atmospheric index of refraction as a function of altitude
 
-        Parameters:
-            altitude_m: altitude in [m]
-            vapor_pressure: vapor pressure at given altitude in [mbar], 0.0 (default)
-            temperature_K: reference temperature in [K]
+    Parameters:
+        altitude_m: altitude in [m]
+        vapor_pressure: vapor pressure at given altitude in [mbar], 0.0 (default)
+        temperature_K: reference temperature in [K]
 
-        Returns:
-            index of refraction in [ ]
+    Returns:
+        index of refraction in [ ]
 
-        References:
-            The constants in the equation for atmospheric
-    refractive index at radio frequencies
-    (https://ieeexplore.ieee.org/document/4051437)
-
+    Reference:
+        The constants in the equation for atmospheric refractive index at radio frequencies (https://ieeexplore.ieee.org/document/4051437)
     """
     atmospheric_prop = Atmosphere(altitude_m)
     temperature = atmospheric_prop.temperature  # [K]

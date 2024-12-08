@@ -25,9 +25,8 @@ def sutherland_law_viscosity(temperature_K: float, molecule: str = "Air") -> flo
     Examples:
         >> sutherland_law_viscosity(300.0)
 
-    References:
-
-    Viscous Fluid Flow, International Edition, 4th (White F., ISBN 978 1 260 59786)
+    Reference:
+        Viscous Fluid Flow, International Edition, 4th (White F., ISBN 978 1 260 59786)
     """
     const = constants_tables.sutherland_constants(molecule)
 
