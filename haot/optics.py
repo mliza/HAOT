@@ -35,7 +35,6 @@ def polarizability_si_to_cgs(polarizability_si: float) -> float:
 
     Returns:
         volumetric polarizability in [cm^3]
-
     """
     return polarizability_si * 1e6 / (4 * np.pi * s_consts.epsilon_0)
 
@@ -49,7 +48,6 @@ def gas_density(density_dict: dict[str, float]) -> dict[str, float]:
 
     Returns:
         species density in [particles/m^3]
-
     """
     gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
     gas_density = {

@@ -2,7 +2,7 @@
     Date:   10/26/2024
     Author: Martin E. Liza
     File:   constants.py
-    Def:    This file contains constants used across the package 
+    Def:    This file contains constants used across the package
 """
 
 
