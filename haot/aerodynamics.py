@@ -101,7 +101,6 @@ def speed_of_sound(temperature_K: float, adiabatic_indx: float = 1.4) -> float:
 
     Examples:
         >> speed_of_sound(300.0)
-
     """
     gas_const = s_consts.R  # [J/mol*K]
     air_atomic_mass = air_atomic_molar_mass(["N2", "O2", "Ar", "CO2"])  # [g/mol]
