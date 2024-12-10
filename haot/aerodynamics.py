@@ -1,8 +1,8 @@
 """
-    Date:   08/27/2023
-    Author: Martin E. Liza
-    File:   aerodynamics.py
-    Def:    Contains aerodynamics helper functions.
+Date:   08/27/2023
+Author: Martin E. Liza
+File:   aerodynamics.py
+Def:    Contains aerodynamics helper functions.
 """
 
 import molmass
@@ -51,7 +51,9 @@ def sutherland_law_conductivity(temperature_K: float, molecule: str = "Air") -> 
 
     Examples:
         >> sutherland_law_conductivity(300.0)
-
+        
+    Reference:
+        Viscous Fluid Flow, International Edition, 4th (White F., ISBN 978 1 260 59786)
     """
     const = constants_tables.sutherland_constants(molecule)
 
@@ -77,7 +79,6 @@ def air_atomic_molar_mass(molecules: str = None) -> dict[str, float]:
 
     Examples:
         >> air_atomic_molar_mass(["N+", "N2"])
-
     """
     if not molecules:
         molecules = ["N+", "O+", "NO+", "N2+", "O2+", "N", "O", "NO", "N2", "O2"]
