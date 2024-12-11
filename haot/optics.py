@@ -13,6 +13,7 @@ from haot import constants as constants_tables
 from haot import quantum_mechanics as quantum
 from haot import conversions
 
+
 def gas_density(density_dict: dict[str, float]) -> dict[str, float]:
     """
     Calculates gas density in [particles/m^3]

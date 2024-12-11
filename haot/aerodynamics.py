@@ -51,7 +51,7 @@ def sutherland_law_conductivity(temperature_K: float, molecule: str = "Air") -> 
 
     Examples:
         >> sutherland_law_conductivity(300.0)
-        
+
     Reference:
         Viscous Fluid Flow, International Edition, 4th (White F., ISBN 978 1 260 59786)
     """

@@ -11,6 +11,7 @@ import scipy.constants as s_consts
 from haot import constants as constants_tables
 from haot import conversions
 
+
 def zero_point_energy(molecule: str) -> float:
     """
     Calculates zero-point energy (ZPE) using spectroscopy constants for
@@ -44,7 +45,9 @@ def zero_point_energy(molecule: str) -> float:
     return zpe  # [1/cm]
 
 
-def vibrational_partition_function(vibrational_number: int, temperature_K: float, molecule: str) -> float:
+def vibrational_partition_function(
+    vibrational_number: int, temperature_K: float, molecule: str
+) -> float:
     """
     Calculates the vibrational partition function base in the harmonic
     terms only for diatomic molecules
@@ -66,7 +69,9 @@ def vibrational_partition_function(vibrational_number: int, temperature_K: float
     return z_vib
 
 
-def rotational_partition_function(rotational_number: int, temperature_K: float, molecule: str) -> float:
+def rotational_partition_function(
+    rotational_number: int, temperature_K: float, molecule: str
+) -> float:
     """
     Calculates the rotational partition function base in the harmonic
     terms only for diatomic molecules
@@ -128,7 +133,7 @@ def potential_dunham_coef_012(molecule: str) -> tuple[float, float, float]:
         molecule: NO+, N2+, O2+, NO, N2, O2
 
     Returns:
-       Dunham potential coefficients 0, 1, and 2 
+       Dunham potential coefficients 0, 1, and 2
 
     Examples:
         >> [a_0, a_1, a_2] = potential_dunham_coef_012('N2')
@@ -183,11 +188,11 @@ def potential_dunham_coeff_m(a_1: float, a_2: float, m: int) -> float:
 
 
 def boltzman_factor(
-        temperature_K: float,
-        molecule: str,
-        vibrational_number: int = None,
-        rotational_number: int = None,
-        born_opp_flag: bool = False,
+    temperature_K: float,
+    molecule: str,
+    vibrational_number: int = None,
+    rotational_number: int = None,
+    born_opp_flag: bool = False,
 ) -> float:
     """
     Calculates the Boltzman factor at a given vibrational quantum number,
@@ -289,7 +294,9 @@ def distribution_function(
     return tmp / z_tot
 
 
-def born_oppenheimer_approximation(vibrational_number: int, rotational_number: int, molecule: str) -> float:
+def born_oppenheimer_approximation(
+    vibrational_number: int, rotational_number: int, molecule: str
+) -> float:
     """Calculates the energy at a rotational and vibrational quantum number,
     using the Born-Oppenheimer approximation."""
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)

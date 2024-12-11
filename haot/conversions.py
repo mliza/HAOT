@@ -8,6 +8,7 @@
 import numpy as np
 import scipy.constants as s_consts
 
+
 def polarizability_cgs_to_si(polarizability_cgs: float) -> float:
     """
     Converts volumetric polarizability (CGS) to atomic polarizability (SI)
@@ -32,6 +33,7 @@ def polarizability_si_to_cgs(polarizability_si: float) -> float:
         volumetric polarizability in [cm^3]
     """
     return polarizability_si * 1e6 / (4 * np.pi * s_consts.epsilon_0)
+
 
 def wavenumber_to_electronvolt(wavenumber_cm: float) -> float:
     """
