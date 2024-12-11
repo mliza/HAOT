@@ -4,7 +4,7 @@
     File:   constants.py
     Def:    This file contains constants used across the package
 """
-def smith_atmospheric_constants() -> tuple[float, float]
+def smith_atmospheric_constants() -> tuple[float, float]:
     """
     Constants used to calculate the atmospheric index of refraction
 
