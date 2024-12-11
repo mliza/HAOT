@@ -4,6 +4,18 @@
     File:   constants.py
     Def:    This file contains constants used across the package
 """
+def smith_atmospheric_constants() -> tuple[float, float]
+    """
+    Constants used to calculate the atmospheric index of refraction
+
+    Returns:
+        K_1 in [K]
+        K_2 in [K/mbar]
+
+    Reference:
+        The constants in the equation for atmospheric refractive index at radio frequencies (https://ieeexplore.ieee.org/document/4051437)
+    """
+    return [79.0, 4800.0]
 
 
 def sutherland_constants(gas: str) -> dict[str, float]:

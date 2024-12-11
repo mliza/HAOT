@@ -22,3 +22,4 @@ The source code can be found in the `GitHub`_.
    modules/optics
    modules/quantum_mechanics
    modules/constants
+   modules/conversions

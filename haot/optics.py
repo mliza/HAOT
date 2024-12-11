@@ -1,7 +1,7 @@
 """
     Date:   03/26/2023
     Author: Martin E. Liza
-    File:   aero_optics.py
+    File:   optics.py
     Def:    Contains aero optics functions.
 """
 
@@ -11,33 +11,7 @@ import scipy.constants as s_consts
 from haot import aerodynamics as aero
 from haot import constants as constants_tables
 from haot import quantum_mechanics as quantum
-
-
-def polarizability_cgs_to_si(polarizability_cgs: float) -> float:
-    """
-    Converts volumetric polarizability (CGS) to atomic polarizability (SI)
-
-    Parameters:
-        polarizability_cgs: volumetric polarizability in [cm^3]
-
-    Returns:
-        atomic polarizability in [Fm^2]
-    """
-    return polarizability_cgs * 4 * np.pi * s_consts.epsilon_0 * 1e-6
-
-
-def polarizability_si_to_cgs(polarizability_si: float) -> float:
-    """
-    Converts atomic polarizability (SI) to volumetric polarizability (CGS)
-
-    Parameters:
-        polarizability_si: atomic polarizability in [Fm^2]
-
-    Returns:
-        volumetric polarizability in [cm^3]
-    """
-    return polarizability_si * 1e6 / (4 * np.pi * s_consts.epsilon_0)
-
+from haot import conversions
 
 def gas_density(density_dict: dict[str, float]) -> dict[str, float]:
     """
@@ -76,7 +50,7 @@ def index_of_refraction(gas_density_dict: dict[str, float]) -> dict[str, float]:
 
     for i in gas_density_dict:
         # Pol constants are in m^3
-        alpha = polarizability_cgs_to_si(pol_consts[i] * 1e6)
+        alpha = conversions.polarizability_cgs_to_si(pol_consts[i] * 1e6)
         n_const[i] = alpha * density[i]  # (a_i N_i)
 
     # add all n_i
@@ -255,8 +229,7 @@ def atmospheric_index_of_refraction(
     atmospheric_prop = Atmosphere(altitude_m)
     temperature = atmospheric_prop.temperature  # [K]
     pressure = atmospheric_prop.pressure * 0.01  # [mbar]
-    K_1 = 79  # [K/mbar]
-    K_2 = 4800  # [K]
+    [K_1, K_2] = constants_tables.smith_atmospheric_constants()
 
     refractivity = K_2 * vapor_pressure / temperature
     refractivity += pressure

@@ -1,6 +1,8 @@
 Constants
 =========
 
+.. autofunction:: haot.smith_atmospheric_constants
+
 .. autofunction:: haot.sutherland_constants
 
 .. autofunction:: haot.karl_2003

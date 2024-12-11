@@ -1,12 +1,6 @@
 Quantum Mechanics
 =================
 
-.. autofunction:: haot.wavenumber_to_electronvolt
-
-.. autofunction:: haot.wavenumber_to_joules
-
-.. autofunction:: haot.molar_mass_to_kilogram
-
 .. autofunction:: haot.zero_point_energy
 
 .. autofunction:: haot.vibrational_partition_function

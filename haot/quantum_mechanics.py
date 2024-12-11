@@ -9,22 +9,7 @@ import molmass
 import numpy as np
 import scipy.constants as s_consts
 from haot import constants as constants_tables
-
-
-def wavenumber_to_electronvolt(wavenumber_cm: float) -> float:
-    """Convert wavenumber [cm^-1] to energy in Joules [J]."""
-    return wavenumber_to_joules(wavenumber_cm) / s_consts.eV
-
-
-def wavenumber_to_joules(wavenumber_cm: float) -> float:
-    """Convert wavenumber [cm^-1] to energy in electron volts [eV]."""
-    return wavenumber_cm * s_consts.c * 100 * s_consts.h
-
-
-def molar_mass_to_kilogram(molar_mass_gmol: float) -> float:
-    """Convert molar mass [g/mol] to mass [kg]."""
-    return molar_mass_gmol * 1e-3 / s_consts.N_A
-
+from haot import conversions
 
 def zero_point_energy(molecule: str) -> float:
     """
@@ -239,10 +224,10 @@ def boltzman_factor(
         if rotational_number is not None:
             energy_rot_k = rotational_energy_k(rotational_number, molecule)
             degeneracy_rotation = 2 * rotational_number + 1
-        tot_energy = wavenumber_to_joules(energy_vib_k + energy_rot_k)
+        tot_energy = conversions.wavenumber_to_joules(energy_vib_k + energy_rot_k)
     else:
         degeneracy_rotation = 2 * rotational_number + 1
-        tot_energy = wavenumber_to_joules(
+        tot_energy = conversions.wavenumber_to_joules(
             born_oppenheimer_approximation(
                 vibrational_number, rotational_number, molecule
             )
@@ -364,7 +349,7 @@ def reduced_mass_kg(molecule_1: str, molecule_2: str) -> float:
     m_2 = molmass.Formula(molecule_2).mass
     mu = m_1 * m_2 / (m_1 + m_2)
 
-    return molar_mass_to_kilogram(mu)
+    return conversions.molar_mass_to_kilogram(mu)
 
 
 # TODO: Missing Translational Energy
