@@ -240,7 +240,7 @@ def boltzmann_factor(
     return degeneracy_rotation * np.exp(-tot_energy * thermal_beta)
 
 
-def distribution_function(
+def boltzmann_distribution_function(
     temperature_K: float,
     molecule: str,
     vibrational_number: int = None,
@@ -263,7 +263,7 @@ def distribution_function(
         Boltzmann distribution
 
     Examples:
-        >> boltzmann_distribution(500.0, 'O2', 3, 2, true)
+        >> boltzmann_distribution_function(500.0, 'O2', 3, 2, true)
     """
     # Calculates partition functions if vibrational or rotational numbers are provided
     if not born_opp_flag:
