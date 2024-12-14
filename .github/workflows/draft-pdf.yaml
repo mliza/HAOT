@@ -4,7 +4,7 @@ on: [push]
 jobs:
   paper:
     runs-on: ubuntu-latest
-    permission:
+    permissions:
       contents: write
     name: Paper Draft
     steps:
