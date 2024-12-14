@@ -246,7 +246,7 @@ def boltzmann_distribution(
     vibrational_number: int = None,
     rotational_number: int = None,
     born_opp_flag: bool = False,
-) -> float:
+) -> np.ndarray:
     """
     Calculates the Boltzmann distribution function at a given vibrational quantum number,
     and/or rotational quantum number. If the born_opp_flag is provided, it will
@@ -260,7 +260,7 @@ def boltzmann_distribution(
         born_opp_flag: uses the Born-Oppenheimer approximation, False (default)
 
     Returns:
-        Boltzmann distribution
+        Boltzmann distribution [vibrational_number, rotational_number]
 
     Examples:
         >> boltzmann_distribution(500.0, 'O2', 3, 2, true)
