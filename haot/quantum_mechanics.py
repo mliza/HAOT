@@ -319,8 +319,20 @@ def born_oppenheimer_approximation(
 
 
 def vibrational_energy_k(vibrational_number: int, molecule: str) -> float:
-    """Calculates the vibrational energy at a given vibrational quantum number,
-    using for the harmonic terms"""
+    """
+    Calculates the vibrational energy at a given vibrational quantum number,
+    using for the harmonic terms
+
+    Parameters:
+        vibrational_number: vibrational quantum number (has to be positive)
+        molecule: NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+        harmonic terms of the vibrational energy in [cm^-1]
+
+    Examples:
+        >> vibrational_energy_k(2, 'N2')
+    """
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)
     # Calculates the vibrational energy in units of wave number
     vib_levels = vibrational_number + 1 / 2
@@ -328,8 +340,20 @@ def vibrational_energy_k(vibrational_number: int, molecule: str) -> float:
 
 
 def rotational_energy_k(rotational_number: int, molecule: str) -> float:
-    """Calculates the rotational energy at a given rotational quantum number,
-    using for the harmonic terms"""
+    """
+    Calculates the rotational energy at a given rotational quantum number,
+    using for the harmonic terms
+
+    Parameters:
+        rotational_number: rotational quantum number (has to be positive)
+        molecule: NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+        harmonic terms of the rotational energy in [cm^-1]
+
+    Examples:
+        >> rotational_energy_k(2, 'N2')
+    """
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)
     # Calculates the rotational energy in units of wave number
     rot_levels = rotational_number * (rotational_number + 1)
