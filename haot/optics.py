@@ -97,7 +97,7 @@ def tropina_aproximation(vibrational_number, rotational_number, molecule):
 def buldakov_expansion(vibrational_number, rotational_number, molecule):
     # Load constants
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
-    derivative_const = constants_tables.polarizability_derivatives(molecule)
+    derivative_const = constants_tables.buldakov_polarizability_derivatives_2016(molecule)
     be_we = spectroscopy_const["B_e"] / spectroscopy_const["omega_e"]
 
     # Dunham potential energy constants
