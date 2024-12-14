@@ -140,7 +140,7 @@ def buldakov_polarizability_derivatives_2016(molecule: str) -> dict[str, float]:
     Polarizability derivative constants
 
     Parameters:
-        molecule: N2, N2, O2
+        molecule: H2, N2, O2
 
     Reference:
         Temperature dependence of polarizability of diatomic homonuclear

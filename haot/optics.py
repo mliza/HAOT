@@ -93,8 +93,23 @@ def tropina_aproximation(vibrational_number, rotational_number, molecule):
     print("TODO: Missing this implementation")
 
 
-# Calculate polarizability (uses equation 4 from the paper)
-def buldakov_expansion(vibrational_number, rotational_number, molecule):
+def buldakov_expansion(vibrational_number: int, rotational_number: int, molecule: str) ->
+float:
+    """
+    Calculates the Buldakov expansion
+
+    Parameters:
+        vibrational_number: vibrational quantum number (has to be positive)
+        rotational_number: rotational quantum number (has to be positive)
+        molecule: H2, N2, O2
+
+    Returns:
+        buldakov expansion in [m^3]
+
+    Reference:
+        Temperature Dependence of Polarizability of Diatomic Homonuclear
+        Molecules (https://doi.org/10.1134/BF03355985)
+    """
     # Load constants
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
     derivative_const = constants_tables.buldakov_polarizability_derivatives_2016(molecule)
