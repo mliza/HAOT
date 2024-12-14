@@ -39,7 +39,7 @@ properly documented and added to the package.
 # Algorithms
 The `HAOT` package, contains five  modules:
 
-- Modules:
+    - Modules:
     - Aerodynamics
     - Optics
     - Quantum Mechanics
@@ -74,7 +74,6 @@ Gladstone-Dale constant.
 ![Index of Refraction for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_refractionIndex.png)
 
 
-and referenced from text using \autoref{fig:diluteIndexOfRefraction}.
 
 
 
