@@ -1,6 +1,7 @@
 import haot
 import os
 import numpy as np
+import panfas as pd
 from ambiance import Atmosphere
 import matplotlib.pyplot as plt
 
@@ -75,7 +76,12 @@ if __name__ == "__main__":
     fig_config["axis_label_size"] = 16
     fig_config["title_size"] = 18
     output_png = "figures"
+    altitude_m = np.linspace(0, 81e3, 1000)
 
-    altitude = np.linspace(0, 81e3, 1000)
-    blue_sky = haot.atmospheric_index_of_refraction(altitude)
+    # Calculates index of refraction for dry air
+    blue_sky = haot.atmospheric_index_of_refraction(altitude_m)
+
+    # Generate paper plot
     plot_index(blue_sky, altitude, output_png, fig_config)
+
+
