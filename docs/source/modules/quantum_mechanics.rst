@@ -15,7 +15,7 @@ Quantum Mechanics
 
 .. autofunction:: haot.boltzmann_factor
 
-.. autofunction:: haot.boltzmann_distribution_function
+.. autofunction:: haot.boltzmann_distribution
 
 .. autofunction:: haot.born_oppenheimer_approximation
 
