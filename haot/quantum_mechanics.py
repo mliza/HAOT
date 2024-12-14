@@ -247,7 +247,31 @@ def distribution_function(
     rotational_number: int = None,
     born_opp_flag: bool = False,
 ) -> float:
-    """Compute the population distribution function."""
+    """
+    Calculates the Boltzman factor at a given vibrational quantum number,
+    and/or rotational quantum number. If the born_opp_flag is provided, it will
+    calculate the Boltzman factor using the Born-Oppenheimer approximation
+    Compute the population distribution function at a given temperature
+
+    Parameters:
+        temperature_K: reference temperature in [K]
+        molecule: NO+, N2+, O2+, NO, N2, O2
+        vibrational_number: vibrational quantum number (has to be positive),
+        None (default)
+        rotational_number: rotational quantum number (has to be positive), None
+        (default)
+        born_opp_flag: uses the Born-Oppenheimer approximation, False (default)
+
+    Returns:
+        Bolzman factor at given temperature, rotational and/or vibrational quantum number
+
+    Examples:
+        >> boltzman_factor(500.0, 'O2', 3)
+
+        >> boltzman_factor(500.0, 'O2', 3, 2)
+
+        >> boltzman_factor(500.0, 'O2', 3, 1, True)
+    """
     # Calculates partition functions if vibrational or rotational numbers are provided
     if not born_opp_flag:
         z_rot = 1
@@ -297,8 +321,22 @@ def distribution_function(
 def born_oppenheimer_approximation(
     vibrational_number: int, rotational_number: int, molecule: str
 ) -> float:
-    """Calculates the energy at a rotational and vibrational quantum number,
-    using the Born-Oppenheimer approximation."""
+    """
+    Calculates the energy at a rotational and vibrational quantum number,
+    using the Born-Oppenheimer approximation
+
+    Parameters:
+        molecule: NO+, N2+, O2+, NO, N2, O2
+        vibrational_number: vibrational quantum number (has to be positive),
+        rotational_number: rotational quantum number (has to be positive)
+
+    Returns:
+        Vibro-rotational energy at given vibrational and rotational quantum
+        numbers in [cm^-1]
+
+    Examples:
+        >> born_oppenheimer_approximation(2,3,'N2')
+    """
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)
 
     vib_levels = vibrational_number + 1 / 2
@@ -374,7 +412,6 @@ def reduced_mass_kg(molecule_1: str, molecule_2: str) -> float:
 
     Examples:
         >> reduced_mass_kg('N2', 'N2')
-
     """
     m_1 = molmass.Formula(molecule_1).mass
     m_2 = molmass.Formula(molecule_2).mass
