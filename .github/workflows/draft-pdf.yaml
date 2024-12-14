@@ -4,6 +4,8 @@ on: [push]
 jobs:
   paper:
     runs-on: ubuntu-latest
+    permission:
+      contents: write
     name: Paper Draft
     steps:
       - name: Checkout
