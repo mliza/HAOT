@@ -13,9 +13,9 @@ Quantum Mechanics
 
 .. autofunction:: haot.potential_dunham_coeff_m
 
-.. autofunction:: haot.boltzman_factor
+.. autofunction:: haot.boltzmann_factor
 
-.. autofunction:: haot.distribution_function
+.. autofunction:: haot.boltzmann_distribution
 
 .. autofunction:: haot.born_oppenheimer_approximation
 
@@ -25,4 +25,4 @@ Quantum Mechanics
 
 .. autofunction:: haot.reduced_mass_kg
 
-.. autofunction:: haot.tranlational_energy
+.. .. autofunction:: haot.tranlational_energy

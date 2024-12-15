@@ -65,7 +65,10 @@ def vibrational_partition_function(
     """
     z_vib = 0.0
     for v in range(vibrational_number + 1):
-        z_vib += boltzman_factor(temperature_K, molecule, vibrational_number=v)
+        z_vib += boltzmann_factor(temperature_K, molecule,
+                                  vibrational_number=v,
+                                  rotational_number=None,
+                                  born_opp_flag=False)
     return z_vib
 
 
@@ -89,7 +92,10 @@ def rotational_partition_function(
     """
     z_rot = 0.0
     for j in range(rotational_number + 1):
-        z_rot += boltzman_factor(temperature_K, molecule, rotational_number=j)
+        z_rot += boltzmann_factor(temperature_K, molecule,
+                                  vibrational_number=None,
+                                  rotational_number=j,
+                                  born_opp_flag=False)
     return z_rot
 
 
@@ -114,7 +120,7 @@ def born_oppenheimer_partition_function(
     z_bo = 0.0
     for j in range(rotational_number + 1):
         for v in range(vibrational_number + 1):
-            z_bo += boltzman_factor(
+            z_bo += boltzmann_factor(
                 temperature_K,
                 molecule,
                 vibrational_number=v,
@@ -187,7 +193,7 @@ def potential_dunham_coeff_m(a_1: float, a_2: float, m: int) -> float:
     return tmp
 
 
-def boltzman_factor(
+def boltzmann_factor(
     temperature_K: float,
     molecule: str,
     vibrational_number: int = None,
@@ -195,9 +201,9 @@ def boltzman_factor(
     born_opp_flag: bool = False,
 ) -> float:
     """
-    Calculates the Boltzman factor at a given vibrational quantum number,
+    Calculates the Boltzmann factor at a given vibrational quantum number,
     and/or rotational quantum number. If the born_opp_flag is provided, it will
-    calculate the Boltzman factor using the Born-Oppenheimer approximation
+    calculate the Boltzmann factor using the Born-Oppenheimer approximation
 
     Parameters:
         temperature_K: reference temperature in [K]
@@ -207,14 +213,14 @@ def boltzman_factor(
         born_opp_flag: uses the Born-Oppenheimer approximation, False (default)
 
     Returns:
-        Bolzman factor at given temperature, rotational and/or vibrational quantum number
+        Boltzmann factor at given temperature, rotational and/or vibrational quantum number
 
     Examples:
-        >> boltzman_factor(500.0, 'O2', 3)
+        >> boltzmann_factor(500.0, 'O2', 3)
 
-        >> boltzman_factor(500.0, 'O2', 3, 2)
+        >> boltzmann_factor(500.0, 'O2', 3, 2)
 
-        >> boltzman_factor(500.0, 'O2', 3, 1, True)
+        >> boltzmann_factor(500.0, 'O2', 3, 1, True)
     """
     # Initialize energy terms, degeneracy and thermal beta
     energy_vib_k = 0
@@ -240,14 +246,31 @@ def boltzman_factor(
     return degeneracy_rotation * np.exp(-tot_energy * thermal_beta)
 
 
-def distribution_function(
+def boltzmann_distribution(
     temperature_K: float,
     molecule: str,
     vibrational_number: int = None,
     rotational_number: int = None,
     born_opp_flag: bool = False,
-) -> float:
-    """Compute the population distribution function."""
+) -> np.ndarray:
+    """
+    Calculates the Boltzmann distribution function at a given vibrational quantum number,
+    and/or rotational quantum number. If the born_opp_flag is provided, it will
+    calculate the Boltzmann factor using the Born-Oppenheimer approximation
+
+    Parameters:
+        temperature_K: reference temperature in [K]
+        molecule: NO+, N2+, O2+, NO, N2, O2
+        vibrational_number: vibrational quantum number (has to be positive)
+        rotational_number: rotational quantum number (has to be positive)
+        born_opp_flag: uses the Born-Oppenheimer approximation, False (default)
+
+    Returns:
+        Boltzmann distribution [vibrational_number, rotational_number]
+
+    Examples:
+        >> boltzmann_distribution(500.0, 'O2', 3, 2, true)
+    """
     # Calculates partition functions if vibrational or rotational numbers are provided
     if not born_opp_flag:
         z_rot = 1
@@ -271,7 +294,7 @@ def distribution_function(
         tmp = np.zeros([vibrational_number + 1, rotational_number + 1])
         for j in range(rotational_number + 1):
             for v in range(vibrational_number + 1):
-                tmp[v][j] = boltzman_factor(
+                tmp[v][j] = boltzmann_factor(
                     temperature_K=temperature_K,
                     molecule=molecule,
                     vibrational_number=v,
@@ -281,24 +304,41 @@ def distribution_function(
     elif vibrational_number:
         tmp = np.zeros(vibrational_number + 1)
         for v in range(vibrational_number + 1):
-            tmp[v] = boltzman_factor(
-                temperature_K=temperature_K, molecule=molecule, vibrational_number=v
-            )
-
+            tmp[v] = boltzmann_factor(temperature_K=temperature_K,
+                                      molecule=molecule, 
+                                      vibrational_number=v,
+                                      rotational_number=None,
+                                      born_opp_flag=False)
     elif rotational_number:
         tmp = np.zeros(rotational_number + 1)
         for j in range(rotational_number + 1):
-            tmp[j] = boltzman_factor(
-                temperature_K=temperature_K, molecule=molecule, rotational_number=j
-            )
+            tmp[j] = boltzmann_factor(temperature_K=temperature_K,
+                                      molecule=molecule, 
+                                      vibrational_number=None,
+                                      rotational_number=j,
+                                      born_opp_flag=False)
     return tmp / z_tot
 
 
 def born_oppenheimer_approximation(
     vibrational_number: int, rotational_number: int, molecule: str
 ) -> float:
-    """Calculates the energy at a rotational and vibrational quantum number,
-    using the Born-Oppenheimer approximation."""
+    """
+    Calculates the energy at a rotational and vibrational quantum number,
+    using the Born-Oppenheimer approximation
+
+    Parameters:
+        molecule: NO+, N2+, O2+, NO, N2, O2
+        vibrational_number: vibrational quantum number (has to be positive),
+        rotational_number: rotational quantum number (has to be positive)
+
+    Returns:
+        Vibro-rotational energy at given vibrational and rotational quantum
+        numbers in [cm^-1]
+
+    Examples:
+        >> born_oppenheimer_approximation(2,3,'N2')
+    """
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)
 
     vib_levels = vibrational_number + 1 / 2
@@ -319,8 +359,20 @@ def born_oppenheimer_approximation(
 
 
 def vibrational_energy_k(vibrational_number: int, molecule: str) -> float:
-    """Calculates the vibrational energy at a given vibrational quantum number,
-    using for the harmonic terms"""
+    """
+    Calculates the vibrational energy at a given vibrational quantum number,
+    using for the harmonic terms
+
+    Parameters:
+        vibrational_number: vibrational quantum number (has to be positive)
+        molecule: NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+        harmonic terms of the vibrational energy in [cm^-1]
+
+    Examples:
+        >> vibrational_energy_k(2, 'N2')
+    """
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)
     # Calculates the vibrational energy in units of wave number
     vib_levels = vibrational_number + 1 / 2
@@ -328,8 +380,20 @@ def vibrational_energy_k(vibrational_number: int, molecule: str) -> float:
 
 
 def rotational_energy_k(rotational_number: int, molecule: str) -> float:
-    """Calculates the rotational energy at a given rotational quantum number,
-    using for the harmonic terms"""
+    """
+    Calculates the rotational energy at a given rotational quantum number,
+    using for the harmonic terms
+
+    Parameters:
+        rotational_number: rotational quantum number (has to be positive)
+        molecule: NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+        harmonic terms of the rotational energy in [cm^-1]
+
+    Examples:
+        >> rotational_energy_k(2, 'N2')
+    """
     spectroscopy_constants = constants_tables.spectroscopy_constants(molecule)
     # Calculates the rotational energy in units of wave number
     rot_levels = rotational_number * (rotational_number + 1)
@@ -350,7 +414,6 @@ def reduced_mass_kg(molecule_1: str, molecule_2: str) -> float:
 
     Examples:
         >> reduced_mass_kg('N2', 'N2')
-
     """
     m_1 = molmass.Formula(molecule_1).mass
     m_2 = molmass.Formula(molecule_2).mass

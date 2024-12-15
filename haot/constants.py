@@ -140,7 +140,7 @@ def buldakov_polarizability_derivatives_2016(molecule: str) -> dict[str, float]:
     Polarizability derivative constants
 
     Parameters:
-        molecule: N2, N2, O2
+        molecule: H2, N2, O2
 
     Reference:
         Temperature dependence of polarizability of diatomic homonuclear
@@ -231,7 +231,7 @@ def spectroscopy_constants(molecule: str) -> dict[str, float]:
     Returns spectroscopy constants
 
     Parameters:
-        molecule: NO+, N2+, O2+, NO, N2, O2
+        molecule: NO+, N2+, O2+, NO, N2, O2, H2
 
     Returns:
         dict: A dictionary containing spectroscopy constants
@@ -250,11 +250,13 @@ def spectroscopy_constants(molecule: str) -> dict[str, float]:
 
         O2+ https://webbook.nist.gov/cgi/cbook.cgi?Name=O2%2B&Units=SI&cDI=on
 
-        NO https://webbook.nist.gov/cgi/cbook.cgi?ID=C10102439&Units=SI&Mask=1000
+        NO https://webbook.nist.gov/cgi/cbook.cgi?Name=NO&Units=SI&cDI=on
 
         N2 https://webbook.nist.gov/cgi/cbook.cgi?Name=N2&Units=SI&cDI=on
 
         O2 https://webbook.nist.gov/cgi/cbook.cgi?Name=O2&Units=SI&cDI=on
+
+        H2 https://webbook.nist.gov/cgi/cbook.cgi?Name=H2&Units=SI&cDI=on
     """
     dict_out = {}
 
@@ -311,5 +313,14 @@ def spectroscopy_constants(molecule: str) -> dict[str, float]:
         dict_out["alpha_e"] = 0.0159305
         dict_out["D_e"] = 4.839e-6
         dict_out["r_e"] = 1.20752e-10
+
+    if molecule == "H2":
+        dict_out["omega_e"] = 4401.21 
+        dict_out["omega_xe"] = 121.33 
+        dict_out["omega_ye"] = 0.0 
+        dict_out["B_e"] = 60.853
+        dict_out["alpha_e"] = 3.062 
+        dict_out["D_e"] = 0.0471 
+        dict_out["r_e"] = 0.74144 
 
     return dict_out
