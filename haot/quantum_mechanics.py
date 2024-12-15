@@ -65,7 +65,10 @@ def vibrational_partition_function(
     """
     z_vib = 0.0
     for v in range(vibrational_number + 1):
-        z_vib += boltzmann_factor(temperature_K, molecule, vibrational_number=v)
+        z_vib += boltzmann_factor(temperature_K, molecule,
+                                  vibrational_number=v,
+                                  rotational_number=None,
+                                  born_opp_flag=False)
     return z_vib
 
 
@@ -89,7 +92,10 @@ def rotational_partition_function(
     """
     z_rot = 0.0
     for j in range(rotational_number + 1):
-        z_rot += boltzmann_factor(temperature_K, molecule, rotational_number=j)
+        z_rot += boltzmann_factor(temperature_K, molecule,
+                                  vibrational_number=None,
+                                  rotational_number=j,
+                                  born_opp_flag=False)
     return z_rot
 
 
@@ -298,16 +304,19 @@ def boltzmann_distribution(
     elif vibrational_number:
         tmp = np.zeros(vibrational_number + 1)
         for v in range(vibrational_number + 1):
-            tmp[v] = boltzmann_factor(
-                temperature_K=temperature_K, molecule=molecule, vibrational_number=v
-            )
-
+            tmp[v] = boltzmann_factor(temperature_K=temperature_K,
+                                      molecule=molecule, 
+                                      vibrational_number=v,
+                                      rotational_number=None,
+                                      born_opp_flag=False)
     elif rotational_number:
         tmp = np.zeros(rotational_number + 1)
         for j in range(rotational_number + 1):
-            tmp[j] = boltzmann_factor(
-                temperature_K=temperature_K, molecule=molecule, rotational_number=j
-            )
+            tmp[j] = boltzmann_factor(temperature_K=temperature_K,
+                                      molecule=molecule, 
+                                      vibrational_number=None,
+                                      rotational_number=j,
+                                      born_opp_flag=False)
     return tmp / z_tot
 
 
