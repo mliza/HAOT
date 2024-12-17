@@ -55,9 +55,9 @@ Where: $\rho_s$ is the species density, $\rho$ is the flow's density, and $K_s$ 
 
 Results for this equation are provided in the figure below. This particular
 results required the use of a Computational Fluid Dynamics (CFD) tool, SU2 [@Maier2021], [@Maier2023a], to calculate the fluid properties used by the `HAOT` tool. 
-![Species Gladstone-Dale constants for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_speciesGladstoneDale.png){height="5pt"}
+![Species Gladstone-Dale constants for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_speciesGladstoneDale.png){height="1pt"}
 
-![Index of Refraction for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_refractionIndex.png){height="9pt"} 
+![Index of Refraction for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_refractionIndex.png){height="2pt"} 
 
 A more extensive work showing the results of this package was done by [@Liza2023]
 
