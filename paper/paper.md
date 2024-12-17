@@ -47,7 +47,7 @@ Results for this equation are provided in the figure below.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{atmosphericOptics.png}
+    \includegraphics[width=0.8\textwidth]{atmosphericOptics.png}
     \caption{Atmospheric index of refraction for dry air. \label{fig:atmosphericIndexOfRefraction}}
 \end{figure}
 
@@ -59,9 +59,27 @@ Where: $\rho_s$ is the species density, $\rho$ is the flow's density, and $K_s$ 
 
 Results for this equation are provided in the figure below. This particular
 results required the use of a Computational Fluid Dynamics (CFD) tool, SU2 [@Maier2021], [@Maier2023a], to calculate the fluid properties used by the `HAOT` tool. 
-![Species Gladstone-Dale constants for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_speciesGladstoneDale.png)
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{3C_speciesGladstoneDale.png}
+    \caption{Species Gladstone-Dale constants for a five-species gas.\label{fig:speciesGladstoneDale}}
+\end{figure}
 
-![Index of Refraction for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_refractionIndex.png)
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{kerlPolarizability_O2_633nm.png}
+    \caption{Polarizability of $O2$ using Kerl's method
+    [@Kerl1991].\label{fig:kerlPolarizability}}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{boltzmannDistribution_N2.png}
+    \caption{Boltzmann Distribution for $N2$.\label{fig:boltzmannDistribution}}
+\end{figure}
+    
+
+
 
 A more extensive work showing the results of this package was done by [@Liza2023]
 
