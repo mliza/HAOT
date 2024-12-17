@@ -45,7 +45,11 @@ Where: $K_1$ and $K_2$ are constants, $T$ is the temperature as a function of al
 
 Results for this equation are provided in the figure below.
 
-![Atmospheric index of refraction for dry air.\label{fig:atmosphericIndexOfRefraction}](atmosphericOptics.png)
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{atmosphericOptics.png}
+    \caption{Atmospheric index of refraction for dry air. \label{fig:atmosphericIndexOfRefraction}}
+\end{figure}
 
 The equation below shows the formula used to calculate the dilute index of refraction.
 
@@ -55,9 +59,9 @@ Where: $\rho_s$ is the species density, $\rho$ is the flow's density, and $K_s$ 
 
 Results for this equation are provided in the figure below. This particular
 results required the use of a Computational Fluid Dynamics (CFD) tool, SU2 [@Maier2021], [@Maier2023a], to calculate the fluid properties used by the `HAOT` tool. 
-![Species Gladstone-Dale constants for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_speciesGladstoneDale.png){height="1pt"}
+![Species Gladstone-Dale constants for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_speciesGladstoneDale.png)
 
-![Index of Refraction for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_refractionIndex.png){height="2pt"} 
+![Index of Refraction for a 5 species gas.\label{fig:indexOfRefraction5Species}](3C_refractionIndex.png)
 
 A more extensive work showing the results of this package was done by [@Liza2023]
 
