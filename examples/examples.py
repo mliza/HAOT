@@ -1,7 +1,7 @@
 import haot
 import os
 import numpy as np
-import panfas as pd
+import pandas as pd
 from ambiance import Atmosphere
 import matplotlib.pyplot as plt
 
@@ -68,8 +68,8 @@ def plot_index(blue_sky, altitude, output_png_path, fig_config):
 if __name__ == "__main__":
     fig_config = {}
     fig_config["line_width"] = 3
-    fig_config["fig_width"] = 6
-    fig_config["fig_height"] = 5
+    fig_config["fig_width"] = 4
+    fig_config["fig_height"] = 3
     fig_config["dpi_size"] = 600
     fig_config["ticks_size"] = 12
     fig_config["legend_size"] = 14
@@ -82,6 +82,6 @@ if __name__ == "__main__":
     blue_sky = haot.atmospheric_index_of_refraction(altitude_m)
 
     # Generate paper plot
-    plot_index(blue_sky, altitude, output_png, fig_config)
+    plot_index(blue_sky, altitude_m, output_png, fig_config)
 
 
