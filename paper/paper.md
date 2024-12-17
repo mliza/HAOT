@@ -45,7 +45,7 @@ Where: $K_1$ and $K_2$ are constants, $T$ is the temperature as a function of al
 
 Results for this equation are provided in the figure below.
 
-![Atmospheric index of refraction for dry air.\label{fig:atmosphericIndexOfRefraction}](atmosphericOptics.png)
+<img src="atmosphericOptics.png" alt="Atmospheric index of refraction for dry air" width="500" height="300">
 
 The equation below shows the formula used to calculate the dilute index of refraction.
 
