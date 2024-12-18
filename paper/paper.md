@@ -47,7 +47,7 @@ This section provide some of the capabilities of the packages but not all of the
 
 Equation \ref{eq:indexAtmosphere} was introduced by [@Smith1953], and it provides approximation and approximation for the index of refraction as a function of atmospheric altitude.
 \begin{equation}\label{eq:indexAtmosphere}
-$$ n(h) \approx 1 + \frac{K_1}{T(h)} \left( p(h) + K_2\frac{e(h)}{T(h)} \right) \label{eq:atmosphericIndex} 
+n(h) \approx 1 + \frac{K_1}{T(h)} \left( p(h) + K_2\frac{e(h)}{T(h)} \right) \label{eq:atmosphericIndex} 
 \end{equation}
 
 Where: $K_1$ and $K_2$ are constants, $T$ is the temperature as a function of altitude, $p$ is pressure as a function of altitude, and $e(h)$ is the partial pressure of water vapor. \\
