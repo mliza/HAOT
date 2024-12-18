@@ -28,6 +28,12 @@ def sutherland_law_viscosity(temperature_K: float, molecule: str = "Air") -> flo
     Reference:
         Viscous Fluid Flow, International Edition, 4th (White F., ISBN 978 1 260 59786)
     """
+    # Checking cases
+    if temperature_K <= 0:
+        raise ValueError("Temperature must be greater than 0 Kelvin!")
+    if molecule not in ["Air", "Argon", "N2", "O2"]:
+        raise ValueError("This function only supports Air, Argon, N2 or O2")
+
     const = constants_tables.sutherland_constants(molecule)
 
     # Eq 1-34
@@ -55,6 +61,12 @@ def sutherland_law_conductivity(temperature_K: float, molecule: str = "Air") -> 
     Reference:
         Viscous Fluid Flow, International Edition, 4th (White F., ISBN 978 1 260 59786)
     """
+    # Checking cases
+    if temperature_K <= 0:
+        raise ValueError("Temperature must be greater than 0 Kelvin!")
+    if molecule not in ["Air", "Argon", "N2", "O2"]:
+        raise ValueError("This function only supports Air, Argon, N2 or O2")
+
     const = constants_tables.sutherland_constants(molecule)
 
     # Eq 1-41b
@@ -102,6 +114,10 @@ def speed_of_sound(temperature_K: float, adiabatic_indx: float = 1.4) -> float:
     Examples:
         >> speed_of_sound(300.0)
     """
+    # Checking cases
+    if temperature_K <= 0:
+        raise ValueError("Temperature must be greater than 0 Kelvin!")
+
     gas_const = s_consts.R  # [J/mol*K]
     air_atomic_mass = air_atomic_molar_mass(["N2", "O2", "Ar", "CO2"])  # [g/mol]
 
@@ -138,6 +154,9 @@ def isentropic_relations(
         Modern Compressible Flow With Historic Perspective, International
         Edition 4th (Anderson J., ISBN 978 1 260 57082 3)
     """
+    # Checking cases
+    if mach_1 <= 0:
+        raise ValueError("Mach number has to be greater than 0!")
     gamma_minus = adiabatic_indx - 1
     gamma_ratio = gamma_minus / 2
 
