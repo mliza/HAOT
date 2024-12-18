@@ -95,29 +95,30 @@ work.
 \begin{equation}\label{eq:kerlExtrapolation}
 \alpha(\omega, T) = \frac{\alpha(0,0)}{1 - \left(\frac{\omega}{\omega_0}\right)^2} \left( 1 + bT + cT^2\right)
 \end{equation}
-Where:
+Where: $\alpha$ is the polarizability as a function of laser's frequency
+$\omega$, and temperature $T$. $b$ and $c$ are extrapolation constants, all
+these constants are implemented in the `HAOT` package; and $\omega_0$ is the
+oscillation's frequency of the diatomic molecule.
 
-
+Figure \ref{fig:kerlPolarizability} shows the change of polarizability as a
+function of temperature.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{kerlPolarizability_O2_633nm.png}
-    \caption{Polarizability of $O2$ using Kerl's method
-    [@Kerl1992].\label{fig:kerlPolarizability}}
+    \caption{Polarizability of $O2$ using Kerl's method for a laser of
+    $633[nm]$.\label{fig:kerlPolarizability}}
 \end{figure}
 
+Results up to here show some of the capabilities of the aerodynamics and optics
+module. Figure \ref{fig:boltzmannDistribution} shows the results of the
+Boltzmann Distribution for $N2$, some aero-optics calculations [@Buldakov2000],
+[@Tropina2018] required a Boltzmann Distribution to calculate the
+polarizability and index of refraction for diatomic molecules.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{boltzmannDistribution_N2.png}
     \caption{Boltzmann Distribution for $N2$.\label{fig:boltzmannDistribution}}
 \end{figure}
-    
-
-
-
-
-# Acknowledgements
-The author gratefully thank Kyle Hanquist, who supported with the tool
-verification.
 
 # References
