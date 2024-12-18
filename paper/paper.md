@@ -39,7 +39,7 @@ The `HAOT` package, contains five modules:
     - Constants
     - Conversions
 
-Each module can be imported independently. The [documentation](https://haot.readthedocs.io/en/latest/) explains he functions in each module as well as their usage. Docstrings were used, so the function prototypes and usage are also available in an interactive Python session. Results from these algorithms were compared with literature and a unit test was developed and it is located under test.  \\
+Each module can be imported independently. The [documentation](https://haot.readthedocs.io/en/latest/) explains he functions in each module as well as their usage. Docstrings were used, so the function prototypes and usage are also available in an interactive Python session. Results from these algorithms were compared with literature and a unit test was developed and it is located under test.  
 
 This section provide some of the capabilities of the packages but not all of them. For instance the package can calculate some compressible flow properties such as isentropic, normal shock, and oblique shock relations. Please refer to the [documentation](https://haot.readthedocs.io/en/latest/) to see the complete list of available functions.
 
@@ -51,7 +51,7 @@ Equation \ref{eq:indexAtmosphere} was introduced by [@Smith1953], and it provide
 n(h) \approx 1 + \frac{K_1}{T(h)} \left( p(h) + K_2\frac{e(h)}{T(h)} \right) 
 \end{equation}
 
-Where: $K_1$ and $K_2$ are constants, $T$ is the temperature as a function of altitude, $p$ is pressure as a function of altitude, and $e(h)$ is the partial pressure of water vapor. \\
+Where: $K_1$ and $K_2$ are constants, $T$ is the temperature as a function of altitude, $p$ is pressure as a function of altitude, and $e(h)$ is the partial pressure of water vapor. 
 
 Results for equation \ref{eq:indexAtmosphere} are provided in the figure \ref{fig:atmosphericIndexOfRefraction}. This approximation is a useful way of seen the region in which the index of refraction will have a higher impact in a seeker's performance. As expected the critical region is between $20[km]$ to $30[km]$ above sea level, which is a region where seeker's performance is very important.
 
@@ -69,15 +69,33 @@ n - 1 = \sum\limits_{s = 1}^{N} K_s \rho_s
 \end{equation}
 
 Where: $n$ is the index of refraction, $K_s$ is the species Gladstone-Dale
-constants, and $\rho_s$ is the species density. \\
+constants, and $\rho_s$ is the species density. 
 
 Figure \ref{fig:speciesGladstoneDale} shows the Gladstone-Dale constants for a
-five-species gas. The species density was calculated using Computational Fluid Dynamics (CFD) tool, SU2 [@Maier2021], [@Maier2023a]. These densities where then loaded into the `HAOT` tool to calculated those figures.
+five-species gas. The species density was calculated using Computational Fluid Dynamics (CFD) tool, SU2 [@Maier2021], [@Maier2023a]. These densities where then loaded into the `HAOT` tool calculate figure \ref{fig:speciesGladstoneDale}. 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{3C_speciesGladstoneDale.png}
     \caption{Species Gladstone-Dale constants for a five-species gas.\label{fig:speciesGladstoneDale}}
 \end{figure}
+
+Another way of calculating the index of refraction is using the Polarizability,
+equation \ref{eq:indexPolarizability}. 
+\begin{equation}\label{eq:indexPolarizability}
+    n - 1 = \frac{1}{2\epsilon_0}\sum\limits_{s = 1}\alpha_s N_s
+\end{equation}
+Where: $\epsilon_0$ is the dielectric constant in vacuum, $\alpha_s$ is the
+species polarizability constants, and $N_s$ is the partial species mass
+fraction.
+
+Figure \ref{fig:kerlPolarizability} uses the extrapolation (equation
+\ref{eq:kerlExtrapolation}) developed by [@Kerl1992], based on [@Hohm1986]
+work.
+
+\begin{equation}\label{eq:kerlExtrapolation}
+\alpha(\omega, T) = \frac{\alpha(0,0)}{1 - \left(\frac{\omega}{\omega_0}\right)^2} \left( 1 + bT + cT^2\right)
+\end{equation}
+Where:
 
 
 \begin{figure}[h!]
