@@ -39,21 +39,20 @@ The `HAOT` package, contains five modules:
     - Constants
     - Conversions
 
-Each module can be imported independently. The [documentation](https://haot.readthedocs.io/en/latest/) explains he functions in each module as well as their usage. Docstrings were used, so the function prototypes and usage are also available in an interactive Python session. Results from these algorithms were compared with literature and a unit test was developed and it is located under test. 
+Each module can be imported independently. The [documentation](https://haot.readthedocs.io/en/latest/) explains he functions in each module as well as their usage. Docstrings were used, so the function prototypes and usage are also available in an interactive Python session. Results from these algorithms were compared with literature and a unit test was developed and it is located under test.  \\
 
 This section provide some of the capabilities of the packages but not all of them. For instance the package can calculate some compressible flow properties such as isentropic, normal shock, and oblique shock relations. Please refer to the [documentation](https://haot.readthedocs.io/en/latest/) to see the complete list of available functions.
 
 # Results 
 
-The equation below was introduced by [@Smith1953], and it is crude approximation
-for the change in the index of refraction as a function of altitude.
+Equation \ref{eq:indexAtmosphere} was introduced by [@Smith1953], and it provides approximation and approximation for the index of refraction as a function of atmospheric altitude.
+\begin{equation}\label{eq:indexAtmosphere}
+$$ n(h) \approx 1 + \frac{K_1}{T(h)} \left( p(h) + K_2\frac{e(h)}{T(h)} \right) \label{eq:atmosphericIndex} 
+\end{equation}
 
-$$ n(h) \approx 1 + \frac{K_1}{T(h)} \left( p(h) + K_2\frac{e(h)}{T(h)} \right) \label{eq:atmosphericIndex} $$
+Where: $K_1$ and $K_2$ are constants, $T$ is the temperature as a function of altitude, $p$ is pressure as a function of altitude, and $e(h)$ is the partial pressure of water vapor. \\
 
-Where: $K_1$ and $K_2$ are constants, $T$ is the temperature as a function of altitude, $p$ is pressure as a function of altitude, and $e(h)$ is the partial pressure of water vapor.
-
-Results for this equation are provided in the figure below. As expected the
-index of refraction and the atmospheric density have a close relationship.
+Results for equation \ref{eq:indexAtmosphere} are provided in the figure \ref{fig:atmosphericIndexOfRefraction}. This approximation is a useful way of seen the region in which the index of refraction will have a higher impact in a seeker's performance. As expected the critical region is between $20[km]$ to $30[km]$ above sea level, which is a region where seeker's performance is very important.
 
 \begin{figure}[h!]
     \centering
@@ -62,18 +61,18 @@ index of refraction and the atmospheric density have a close relationship.
 \end{figure}
 
 The Gladstone-Dale constant is an important constant used to calculate the
-index of refraction, for a dilute gas, the index of refraction can be
-approximated as:
+index of refraction (equation \ref{eq:indexGD}). For a dilute gas, the index of refraction can be approximated as:
 
-$$ n -1 = \frac{1}{2\epsilon_0}\sum\limits_{i=1}^N \alpha_i N_i $$
+\begin{equation}\label{eq:indexGD}
+n - 1 = \sum\limits_{s = 1}^{N} K_s \rho_s
 
-Where: $n$ is the index of refraction, $\epsilon_0$ is the dielectric constant
-in vacuum, $\alpha_i$ is the species polarizability, and $N_i$ is the species
-partial fraction.
+\end{equation}
 
-Figure \ref{fig:speciesGladstoneDale}
-Results for this equation are provided in the figure below. This particular
-results required the use of a Computational Fluid Dynamics (CFD) tool, SU2 [@Maier2021], [@Maier2023a], to calculate the fluid properties used by the `HAOT` tool. 
+Where: $n$ is the index of refraction, $K_s$ is the species Gladstone-Dale
+constants, and $\rho_s$ is the species density. \\
+
+Figure \ref{fig:speciesGladstoneDale} shows the Gladstone-Dale constants for a
+five-species gas. The species density was calculated using Computational Fluid Dynamics (CFD) tool, SU2 [@Maier2021], [@Maier2023a]. These densities where then loaded into the `HAOT` tool to calculated those figures.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{3C_speciesGladstoneDale.png}
