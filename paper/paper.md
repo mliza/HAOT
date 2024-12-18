@@ -65,7 +65,7 @@ The Gladstone-Dale constant is an important constant used to calculate the
 index of refraction, for a dilute gas, the index of refraction can be
 approximated as:
 
-$$ n -1 = \frac{1}{2\epsion_0}\sum\limits_{i=1}^N \alpha_i N_i $$
+$$ n -1 = \frac{1}{2\epsilon_0}\sum\limits_{i=1}^N \alpha_i N_i $$
 
 Where: $n$ is the index of refraction, $\epsilon_0$ is the dielectric constant
 in vacuum, $\alpha_i$ is the species polarizability, and $N_i$ is the species
