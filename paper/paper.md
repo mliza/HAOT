@@ -41,7 +41,7 @@ The `HAOT` package, contains five modules:
     - Constants
     - Conversions
 
-Each module can be imported independently. The [documentation](https://haot.readthedocs.io/en/latest/) explains the functions in each module as well as their usage. Docstrings are include, so the function prototypes and usage can also be accessible in an interactive Python session. Results from these algorithms were compared with the literature, and a unit test was developed, which is located under the test directory. 
+Each module can be imported independently. The [documentation](https://haot.readthedocs.io/en/latest/) explains the functions in each module as well as their usage. Docstrings are include, so the function prototypes and usage can also be accessible in an interactive Python session. Results from these algorithms were compared with the literature, and a unit test was developed, which is located under the unit_test directory. 
 
 This section highlights some of the capabilities of the package but not all of them. For instance, the package can calculate various compressible flow properties, such as isentropic, normal shock, and oblique shock relations. Please refer to the [documentation](https://haot.readthedocs.io/en/latest) for a complete list of available functions.
 
