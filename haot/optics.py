@@ -214,7 +214,13 @@ def kerl_polarizability_temperature(
     Examples:
         >> kerl_polarizability_temperature(600.0, 'N2', 533.0)
     """
-
+    # Checking cases
+    if temperature_K <= 0:
+        raise ValueError("Temperature must be greater than 0 Kelvin!")
+    if wavelength_nm <= 0:
+        raise ValueError("Wavelength must be greater than 0 nanometers!")
+    if molecule not in ["Air", "H2", "N2", "O2"]:
+        raise ValueError("This function only supports Air, H2, N2 or O2")
     # Check sizes
     mean_const = constants_tables.kerl_interpolation(molecule)
     angular_frequency = 2 * np.pi * s_consts.speed_of_light / (wavelength_nm * 1e-9)
