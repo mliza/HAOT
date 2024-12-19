@@ -53,7 +53,7 @@ Equation \ref{eq:indexAtmosphere} was introduced by [@Smith1953], and it provide
 n(h) \approx 1 + \frac{K_1}{T(h)} \left( p(h) + K_2\frac{e(h)}{T(h)} \right) 
 \end{equation}
 
-Where: $K_1$ and $K_2$ are constants, $T$ is the temperature as a function of altitude, $p$ is pressure as a function of altitude, and $e(h)$ is the partial pressure of water vapor.
+Where: $K_1$ and $K_2$ are constants, $T(h)$ is the temperature as a function of altitude, $p(h)$ is pressure as a function of altitude, and $e(h)$ is the partial pressure of water vapor.
 
 Results for Equation \ref{eq:indexAtmosphere} are provided in Figure \ref{fig:atmosphericIndexOfRefraction}. This approximation is a useful way of analyzing the region in which the index of refraction has the greatest impact on a seeker's performance. As expected, the critical region is between $20~\mathrm{[km]}$ and $30~\mathrm{[km]}$ above sea level, which is a region where a seeker's performance is particularly important.
 
