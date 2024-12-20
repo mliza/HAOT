@@ -215,7 +215,9 @@ def kerl_polarizability_temperature(
         >> kerl_polarizability_temperature(600.0, 'N2', 533.0)
     """
     # Checking cases
-    if (temperature_K <= 0).any():
+    if type(temperature_K) is float and temperature_K < 0:
+        raise ValueError("Temperature must be greater than 0 Kelvin!")
+    if type(temperature_K) is np.ndarray and (temperature_K < 0).any():
         raise ValueError("Temperature must be greater than 0 Kelvin!")
     if wavelength_nm <= 0:
         raise ValueError("Wavelength must be greater than 0 nanometers!")
