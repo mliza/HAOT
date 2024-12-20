@@ -29,7 +29,7 @@ def sutherland_law_viscosity(temperature_K: float, molecule: str = "Air") -> flo
         Viscous Fluid Flow, International Edition, 4th (White F., ISBN 978 1 260 59786)
     """
     # Checking cases
-    if temperature_K.any() <= 0:
+    if temperature_K <= 0:
         raise ValueError("Temperature must be greater than 0 Kelvin!")
     if molecule not in ["Air", "Argon", "N2", "O2"]:
         raise ValueError("This function only supports Air, Argon, N2 or O2")
