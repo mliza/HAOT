@@ -31,8 +31,7 @@ def zero_point_energy(molecule: str) -> float:
         (https://doi.org/10.1063/1.2436891)
     """
     if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
-        raise ValueError("This function only supports NO+, N2+, O2+, NO, N2,
-                         O2, H2")
+        raise ValueError("This function only supports NO+, N2+, O2+, NO, N2, O2, H2")
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
 
     scope_var = spectroscopy_const["alpha_e"]
