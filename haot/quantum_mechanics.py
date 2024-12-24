@@ -418,20 +418,44 @@ def reduced_mass_kg(molecule_1: str, molecule_2: str) -> float:
 
     Parameters:
         molecule_1: name of molecule one
-
         molecule_2: name of molecule two
 
     Returns:
         reduced mass in [kg]
 
     Examples:
-        >> reduced_mass_kg('N2', 'N2')
+        >> reduced_mass_kg('N', 'O')
     """
     m_1 = molmass.Formula(molecule_1).mass
     m_2 = molmass.Formula(molecule_2).mass
     mu = m_1 * m_2 / (m_1 + m_2)
 
     return conversions.molar_mass_to_kilogram(mu)
+
+
+def molecular_spring_constant(molecule: str) -> float:
+    """
+    Calculates the molecular spring constant in [N/m]
+
+    Parameters:
+        molecule: NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+        spring force constant [N/m]
+
+    Examples:
+        >> calculate_molecular_spring_constant('N2')
+    """
+    # Split masses
+    m_1 = molecule[0]
+    m_2 = m_1 if molecule[1] == str(2) else molecule[1]
+    spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
+    mass_kg = reduced_mass_kg(m_1, m_2)
+    freq_rps = conversions.wavenumber_to_angular_frequency(
+        spectroscopy_const["omega_e"]
+    )
+
+    return mass_kg * freq_rps**2
 
 
 # TODO: Missing Translational Energy

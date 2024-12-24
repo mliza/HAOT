@@ -61,6 +61,19 @@ def wavenumber_to_joules(wavenumber_cm: float) -> float:
     return wavenumber_cm * s_consts.c * 100 * s_consts.h
 
 
+def wavenumber_to_angular_frequency(wavenumber_cm: float) -> float:
+    """
+    Converts wavenumber to [rads/seconds]
+
+    Parameters:
+        wavenumber_cm: energy in [cm^-1]
+
+    Returns:
+        frequency in [rads/seconds]
+    """
+    return 2 * np.pi * s_consts.c * wavenumber_cm * 100
+
+
 def molar_mass_to_kilogram(molar_mass_gmol: float) -> float:
     """
     Converts molar mass [g/mol] to mass [kg]

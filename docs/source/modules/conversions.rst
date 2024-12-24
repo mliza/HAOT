@@ -9,4 +9,6 @@ Conversions
 
 .. autofunction:: haot.wavenumber_to_joules
 
+.. autofunction:: haot.wavenumber_to_angular_frequency
+
 .. autofunction:: haot.molar_mass_to_kilogram

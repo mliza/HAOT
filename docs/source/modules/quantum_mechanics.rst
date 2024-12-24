@@ -25,4 +25,5 @@ Quantum Mechanics
 
 .. autofunction:: haot.reduced_mass_kg
 
-.. .. autofunction:: haot.tranlational_energy
+.. autofunction:: haot.molecular_spring_constant
+
