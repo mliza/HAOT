@@ -441,10 +441,10 @@ def molecular_spring_constant(molecule: str) -> float:
         molecule: NO+, N2+, O2+, NO, N2, O2
 
     Returns:
-        spring force constant [N/m]
+        spring force constant in [N/m]
 
     Examples:
-        >> calculate_molecular_spring_constant('N2')
+        >> molecular_spring_constant('N2')
     """
     # Split masses
     m_1 = molecule[0]
