@@ -299,10 +299,10 @@ def spectroscopy_constants(molecule: str) -> dict[str, float]:
     if molecule == "N2":
         dict_out["omega_e"] = 2358.57
         dict_out["omega_xe"] = 14.324
-        dict_out["omega_ye"] = -0.00226
+        dict_out["omega_ye"] = -2.26e-3
         dict_out["B_e"] = 1.998241
         dict_out["alpha_e"] = 0.017318
-        dict_out["D_e"] = 5.9e-6
+        dict_out["D_e"] = 5.76e-6
         dict_out["r_e"] = 1.2126e-10
 
     if molecule == "O2":
@@ -315,12 +315,12 @@ def spectroscopy_constants(molecule: str) -> dict[str, float]:
         dict_out["r_e"] = 1.20752e-10
 
     if molecule == "H2":
-        dict_out["omega_e"] = 4401.21 
-        dict_out["omega_xe"] = 121.33 
-        dict_out["omega_ye"] = 0.0 
+        dict_out["omega_e"] = 4401.21
+        dict_out["omega_xe"] = 121.33
+        dict_out["omega_ye"] = 0.0
         dict_out["B_e"] = 60.853
-        dict_out["alpha_e"] = 3.062 
-        dict_out["D_e"] = 0.0471 
-        dict_out["r_e"] = 0.74144 
+        dict_out["alpha_e"] = 3.062
+        dict_out["D_e"] = 0.0471
+        dict_out["r_e"] = 0.74144
 
     return dict_out

@@ -14,65 +14,55 @@ from haot import quantum_mechanics as quantum
 from haot import conversions
 
 
-def gas_density(density_dict: dict[str, float]) -> dict[str, float]:
+def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]:
     """
-    Calculates gas density in [particles/m^3]
+    Calculates dilute and dense index of refraction
 
     Parameters:
-        species in [kg/m^3]
-
-    Returns:
-        species density in [particles/m^3]
-    """
-    gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
-    gas_density = {
-        i: (density_dict[i] * 10**3 * s_consts.N_A / gas_amu_weight[i])
-        for i in density_dict
-    }
-
-    return gas_density  # [particles/m^3]
-
-
-def index_of_refraction(gas_density_dict: dict[str, float]) -> dict[str, float]:
-    """
-    Calculates index of refraction
-
-    Parameters:
-        species in [kg/m^3]
+        mass density dictionary in [kg/m^3]
 
     Returns:
         dict: A dictionary containing
             - dilute: dilute index of refraction
             - dense: dense index of refraction
     """
-    pol_consts = constants_tables.polarizability()  # [m^3]
-    density = gas_density(gas_density_dict)  # [particles/m3]
-    n_const = {}  # [ ]
+    pol_consts = constants_tables.polarizability()  # [m3]
+    molar_density = {
+        key: conversions.mass_density_to_molar_density(value, key)
+        for key, value in mass_density_dict.items()
+    }
+    # a_i * N_i
+    n_const = {
+        key: conversions.polarizability_cgs_to_si(pol_consts[key] * 1e6)
+        * molar_density[key]
+        for key in mass_density_dict.keys()
+    }
+    # Sum (a_i N_i)
+    tot_pol_molar = sum(n_const.values())
 
-    for i in gas_density_dict:
-        # Pol constants are in m^3
-        alpha = conversions.polarizability_cgs_to_si(pol_consts[i] * 1e6)
-        n_const[i] = alpha * density[i]  # (a_i N_i)
-
-    # add all n_i
-    temp = 0.0
-    for i in n_const.values():
-        temp += i
-
+    # Calculates dilute and dense index of refraction
     n_return = {}
-    n_return["dilute"] = 1 + temp / (2 * s_consts.epsilon_0)
-    n_temp = temp / (3 * s_consts.epsilon_0)
+    n_return["dilute"] = 1 + tot_pol_molar / (2 * s_consts.epsilon_0)
+    n_temp = tot_pol_molar / (3 * s_consts.epsilon_0)
     n_return["dense"] = ((2 * n_temp + 1) / (1 - n_temp)) ** 0.5
 
     return n_return
 
 
-def dielectric_material_const(n_const):
+def dielectric_material_const(n_dict: dict[str, float]) -> dict[str, float]:
+    """
+    Calculates the dielectric medium's constant
+
+    Parameters:
+        n_dict: dilute and dense formulation
+
+    Returns:
+        dict: A dictionary containing
+            - dilute: dilute dielectric constant
+            - dense: dense dielectric constant
+    """
     # n ~ sqrt(e_r)
-    dielectric_const_0 = s_consts.epsilon_0  # [F/m]
-    dielectric = {}
-    dielectric["dilute"] = dielectric_const_0 * n_const["dilute"] ** 2
-    dielectric["dense"] = dielectric_const_0 * n_const["dense"] ** 2
+    dielectric = {key: s_consts.epsilon_0 * n_dict[key] ** 2 for key in n_dict.keys()}
     return dielectric
 
 
@@ -215,7 +205,9 @@ def kerl_polarizability_temperature(
         >> kerl_polarizability_temperature(600.0, 'N2', 533.0)
     """
     # Checking cases
-    if temperature_K <= 0:
+    if type(temperature_K) is float and temperature_K < 0:
+        raise ValueError("Temperature must be greater than 0 Kelvin!")
+    if type(temperature_K) is np.ndarray and (temperature_K < 0).any():
         raise ValueError("Temperature must be greater than 0 Kelvin!")
     if wavelength_nm <= 0:
         raise ValueError("Wavelength must be greater than 0 nanometers!")
@@ -264,25 +256,7 @@ def atmospheric_index_of_refraction(
     return refractivity + 1
 
 
-def atmospheric_gladstone_dale(altitude=0.0, gas_composition_dict=None):
-    gladstone_const = gladstone_dale()  # [m3/kg]
-
-    if gas_composition_dict is None:
-        gas_composition_dict = {}
-        gas_composition_dict["N"] = 0.0
-        gas_composition_dict["O"] = 0.0
-        gas_composition_dict["NO"] = 0.0
-        gas_composition_dict["N2"] = 0.79
-        gas_composition_dict["O2"] = 0.21
-
-    tmp = 0
-    for i in gas_composition_dict.keys():
-        tmp += gas_composition_dict[i] * gladstone_const[i]
-
-    return tmp
-
-
-def gladstone_dale(gas_density_dict=None):  # [kg/m3
+def gladstone_dale(gas_density_dict=None):  # [kg/m3]
     gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
     avogadro_number = s_consts.N_A  # [particles/mol]
     dielectric_const = s_consts.epsilon_0  # [F/m]

@@ -18,7 +18,7 @@ def zero_point_energy(molecule: str) -> float:
     diatomic molecules
 
     Parameters:
-        molecule: NO+, N2+, O2+, NO, N2, O2
+        molecule: NO+, N2+, O2+, NO, N2, O2, H2
 
     Returns:
         zero point energy in [cm^-1]
@@ -30,8 +30,8 @@ def zero_point_energy(molecule: str) -> float:
         Experimental Vibrational Zero-Point Energies Diatomic Molecules
         (https://doi.org/10.1063/1.2436891)
     """
-    if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2"]:
-        raise ValueError("This function only supports NO+, N2+, O2+, NO, N2, O2")
+    if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
+        raise ValueError("This function only supports NO+, N2+, O2+, NO, N2, O2, H2")
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
 
     scope_var = spectroscopy_const["alpha_e"]
@@ -67,10 +67,13 @@ def vibrational_partition_function(
     """
     z_vib = 0.0
     for v in range(vibrational_number + 1):
-        z_vib += boltzmann_factor(temperature_K, molecule,
-                                  vibrational_number=v,
-                                  rotational_number=None,
-                                  born_opp_flag=False)
+        z_vib += boltzmann_factor(
+            temperature_K,
+            molecule,
+            vibrational_number=v,
+            rotational_number=None,
+            born_opp_flag=False,
+        )
     return z_vib
 
 
@@ -94,10 +97,13 @@ def rotational_partition_function(
     """
     z_rot = 0.0
     for j in range(rotational_number + 1):
-        z_rot += boltzmann_factor(temperature_K, molecule,
-                                  vibrational_number=None,
-                                  rotational_number=j,
-                                  born_opp_flag=False)
+        z_rot += boltzmann_factor(
+            temperature_K,
+            molecule,
+            vibrational_number=None,
+            rotational_number=j,
+            born_opp_flag=False,
+        )
     return z_rot
 
 
@@ -306,19 +312,23 @@ def boltzmann_distribution(
     elif vibrational_number:
         tmp = np.zeros(vibrational_number + 1)
         for v in range(vibrational_number + 1):
-            tmp[v] = boltzmann_factor(temperature_K=temperature_K,
-                                      molecule=molecule, 
-                                      vibrational_number=v,
-                                      rotational_number=None,
-                                      born_opp_flag=False)
+            tmp[v] = boltzmann_factor(
+                temperature_K=temperature_K,
+                molecule=molecule,
+                vibrational_number=v,
+                rotational_number=None,
+                born_opp_flag=False,
+            )
     elif rotational_number:
         tmp = np.zeros(rotational_number + 1)
         for j in range(rotational_number + 1):
-            tmp[j] = boltzmann_factor(temperature_K=temperature_K,
-                                      molecule=molecule, 
-                                      vibrational_number=None,
-                                      rotational_number=j,
-                                      born_opp_flag=False)
+            tmp[j] = boltzmann_factor(
+                temperature_K=temperature_K,
+                molecule=molecule,
+                vibrational_number=None,
+                rotational_number=j,
+                born_opp_flag=False,
+            )
     return tmp / z_tot
 
 
@@ -408,20 +418,44 @@ def reduced_mass_kg(molecule_1: str, molecule_2: str) -> float:
 
     Parameters:
         molecule_1: name of molecule one
-
         molecule_2: name of molecule two
 
     Returns:
         reduced mass in [kg]
 
     Examples:
-        >> reduced_mass_kg('N2', 'N2')
+        >> reduced_mass_kg('N', 'O')
     """
     m_1 = molmass.Formula(molecule_1).mass
     m_2 = molmass.Formula(molecule_2).mass
     mu = m_1 * m_2 / (m_1 + m_2)
 
     return conversions.molar_mass_to_kilogram(mu)
+
+
+def molecular_spring_constant(molecule: str) -> float:
+    """
+    Calculates the molecular spring constant in [N/m]
+
+    Parameters:
+        molecule: NO+, N2+, O2+, NO, N2, O2
+
+    Returns:
+        spring force constant in [N/m]
+
+    Examples:
+        >> molecular_spring_constant('N2')
+    """
+    # Split masses
+    m_1 = molecule[0]
+    m_2 = m_1 if molecule[1] == str(2) else molecule[1]
+    spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
+    mass_kg = reduced_mass_kg(m_1, m_2)
+    freq_rps = conversions.wavenumber_to_angular_frequency(
+        spectroscopy_const["omega_e"]
+    )
+
+    return mass_kg * freq_rps**2
 
 
 # TODO: Missing Translational Energy

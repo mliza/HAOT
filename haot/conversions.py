@@ -6,6 +6,7 @@
 """
 
 import numpy as np
+import molmass
 import scipy.constants as s_consts
 
 
@@ -59,6 +60,32 @@ def wavenumber_to_joules(wavenumber_cm: float) -> float:
         energy in [J]
     """
     return wavenumber_cm * s_consts.c * 100 * s_consts.h
+
+
+def wavenumber_to_angular_frequency(wavenumber_cm: float) -> float:
+    """
+    Converts wavenumber to [rads/seconds]
+
+    Parameters:
+        wavenumber_cm: energy in [cm^-1]
+
+    Returns:
+        frequency in [rads/seconds]
+    """
+    return 2 * np.pi * s_consts.c * wavenumber_cm * 100
+
+def mass_density_to_molar_density(mass_density: float, molecule: str) -> float:
+    """
+    Converts mass_density [kg/m3] to molar density [particles/m3]
+
+    Parameters:
+        mass_density: density in [kg/m3]
+        molecule: molecule of the mass density
+
+    Returns:
+        molar density in [particles/m3]
+    """
+    return  mass_density * s_consts.N_A / molmass.Formula(molecule).mass * 1e3
 
 
 def molar_mass_to_kilogram(molar_mass_gmol: float) -> float:
