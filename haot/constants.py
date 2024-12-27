@@ -101,7 +101,7 @@ def polarizability() -> dict[str, float]:
 
     Returns:
         dict: A dictionary of polarizabilities
-            - specie polarizability in units of [m^3]
+            - specie polarizability in units of [cm^3]
 
     Reference:
         Handbook of Chemistry and Physics, 95th edition
@@ -121,16 +121,16 @@ def polarizability() -> dict[str, float]:
         (https://doi.org/10.1103/PhysRevA.44.3007)
     """
     dict_out = {
-        "N+": 0.559e-30,
-        "O+": 0.345e-30,
-        "NO+": 1.021e-30,
-        "N2+": 2.386e-30,
-        "O2+": 0.238e-30,
-        "N": 1.100e-30,
-        "O": 0.802e-30,
-        "NO": 1.700e-30,
-        "N2": 1.7403e-30,
-        "O2": 1.5689e-30,
+        "N+": 0.559e-24,
+        "O+": 0.345e-24,
+        "NO+": 1.021e-24,
+        "N2+": 2.386e-24,
+        "O2+": 0.238e-24,
+        "N": 1.100e-24,
+        "O": 0.802e-24,
+        "NO": 1.700e-24,
+        "N2": 1.7403e-24,
+        "O2": 1.5689e-24,
     }  # [m^3]
     return dict_out
 

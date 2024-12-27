@@ -74,6 +74,7 @@ def wavenumber_to_angular_frequency(wavenumber_cm: float) -> float:
     """
     return 2 * np.pi * s_consts.c * wavenumber_cm * 100
 
+
 def mass_density_to_molar_density(mass_density: float, molecule: str) -> float:
     """
     Converts mass_density [kg/m3] to molar density [particles/m3]
@@ -85,7 +86,7 @@ def mass_density_to_molar_density(mass_density: float, molecule: str) -> float:
     Returns:
         molar density in [particles/m3]
     """
-    return  mass_density * s_consts.N_A / molmass.Formula(molecule).mass * 1e3
+    return mass_density * s_consts.N_A / molmass.Formula(molecule).mass * 1e3
 
 
 def molar_mass_to_kilogram(molar_mass_gmol: float) -> float:
