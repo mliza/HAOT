@@ -11,4 +11,4 @@ Optics
 
 .. autofunction:: haot.atmospheric_index_of_refraction
 
-.. autofunction:: haot.gladstone_dale
+.. autofunction:: haot.gladstone_dale_constant

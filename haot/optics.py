@@ -6,9 +6,9 @@
 """
 
 from ambiance import Atmosphere
+import molmass
 import numpy as np
 import scipy.constants as s_consts
-from haot import aerodynamics as aero
 from haot import constants as constants_tables
 from haot import quantum_mechanics as quantum
 from haot import conversions
@@ -26,15 +26,14 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
             - dilute: dilute index of refraction
             - dense: dense index of refraction
     """
-    pol_consts = constants_tables.polarizability()  # [m3]
+    pol_consts = constants_tables.polarizability()  # [cm3]
     molar_density = {
         key: conversions.mass_density_to_molar_density(value, key)
         for key, value in mass_density_dict.items()
     }
     # a_i * N_i
     n_const = {
-        key: conversions.polarizability_cgs_to_si(pol_consts[key] * 1e6)
-        * molar_density[key]
+        key: conversions.polarizability_cgs_to_si(pol_consts[key]) * molar_density[key]
         for key in mass_density_dict.keys()
     }
     # Sum (a_i N_i)
@@ -256,39 +255,42 @@ def atmospheric_index_of_refraction(
     return refractivity + 1
 
 
-def gladstone_dale(gas_density_dict=None):  # [kg/m3]
-    gas_amu_weight = aero.air_atomic_molar_mass()  # [g/mol]
-    avogadro_number = s_consts.N_A  # [particles/mol]
-    dielectric_const = s_consts.epsilon_0  # [F/m]
-    pol_consts = constants_tables.polarizability()  # [m^3]
+def gladstone_dale_constant(
+    mass_density_dict: dict[str, float] = None
+) -> dict[str, float]:
+    """
+    Calculates Gladstone-Dale constants, returns constants haot.constants if
+    mass_density_dict is not provided
 
-    # Convert CGS to SI
-    pol_consts.update(
-        {n: 4 * np.pi * dielectric_const * pol_consts[n] for n in pol_consts.keys()}
-    )  # [Fm^2]
+    Parameters:
+        mass density dictionary in [kg/m^3], None (default)
 
-    # Calculate Gladstone dale
-    gladstone_dale_const = {}
-    for i in pol_consts:
-        gladstone_dale_const[i] = (
-            pol_consts[i]
-            / (2 * dielectric_const)
-            * (avogadro_number / gas_amu_weight[i])
-            * 1e3
-        )  # [m^3/kg]
+    Returns:
+        dict: A dictionary containing
+            - Species Gladstone-Dale constants in [m3/kg]
+    """
+    pol_consts = constants_tables.polarizability()  # [cm^3]
 
-    gladstone_dale_dict = {}
-    if not gas_density_dict:
-        return gladstone_dale_const  # [m^3/kg]
+    # Convert polarizability CGS to SI
+    pol_SI = {
+        key: conversions.polarizability_cgs_to_si(pol_consts[key])
+        for key in pol_consts.keys()
+    }
+    species_GD = {}
+
+    # Calculates species GD
+    for key, val in pol_SI.items():
+        species_GD[key] = val * s_consts.N_A / molmass.Formula(key).mass
+        species_GD[key] /= 2 * s_consts.epsilon_0
+        species_GD[key] *= 1e3  # converts [1/g] to [1/kg]
+
+    # Calculate total GD
+    if not mass_density_dict:
+        return species_GD
     else:
-        gladstone_dale_dict["gladstone_dale"] = 0.0
-        for i in gas_density_dict:
-            gladstone_dale_dict[i] = (
-                gladstone_dale_const[i] * gas_density_dict[i]
-            ) / sum(gas_density_dict.values())
-            gladstone_dale_dict["gladstone_dale"] += (
-                gladstone_dale_const[i] * gas_density_dict[i]
-            )
-        gladstone_dale_dict["gladstone_dale"] /= sum(gas_density_dict.values())
+        tot_density = sum(mass_density_dict.values())
+        for key in mass_density_dict.keys():
+            species_GD[key] *= mass_density_dict[key] / tot_density
 
-        return gladstone_dale_dict  # [m^3/kg]
+        species_GD["gladstone_dale"] = sum(species_GD.values())
+        return species_GD  # [m3/kg]
