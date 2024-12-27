@@ -101,7 +101,7 @@ def polarizability() -> dict[str, float]:
 
     Returns:
         dict: A dictionary of polarizabilities
-            - specie polarizability in units of [cm^3]
+            - Volumetric species polarizability in CGS units of [cm^3]
 
     Reference:
         Handbook of Chemistry and Physics, 95th edition
@@ -131,7 +131,7 @@ def polarizability() -> dict[str, float]:
         "NO": 1.700e-24,
         "N2": 1.7403e-24,
         "O2": 1.5689e-24,
-    }  # [m^3]
+    }  # [cm^3]
     return dict_out
 
 
