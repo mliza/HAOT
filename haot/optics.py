@@ -114,12 +114,24 @@ def dielectric_material_const(n_dict: dict[str, float]) -> dict[str, float]:
     return dielectric
 
 
-def optical_path_length(n_solution, distance):
+def optical_path_length(n_dict: float, distance: float) -> dict[str, float]:
+    """
+    Calculates dilute and dense optical path length
+
+    Parameters:
+        n_dict: dilute and dense formulation
+        distance: length
+
+    Returns:
+        dict: A dictionary containing
+            - dilute: dilute index of refraction
+            - dense: dense index of refraction
+    """
     OPL = {}
-    OPL["dilute"] = n_solution["dilute"] * distance
-    OPL["dense"] = n_solution["dense"] * distance
-    # TODO: Missing implementation
-    print("TODO: Missing this implementation")
+    OPL["dilute"] = n_dict["dilute"] * distance
+    OPL["dense"] = n_dict["dense"] * distance
+
+    return OPL
 
 
 def tropina_aproximation(vibrational_number, rotational_number, molecule):
