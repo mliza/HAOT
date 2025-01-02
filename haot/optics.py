@@ -14,9 +14,58 @@ from haot import quantum_mechanics as quantum
 from haot import conversions
 
 
+def index_of_refraction_density_temperature(
+    temperature_K: float,
+    mass_density: float,
+    molecule: str = "Air",
+    wavelength_nm: float = 633,
+) -> dict[str, float]:
+    """
+    Calculates dilute and dense index of refraction as a
+    function of mass density and temperature.
+    Uses Kerl approximation for polarizability
+
+    Parameters:
+        temperature_K: reference temperature in [K]
+        mass density in [kg/m^3]
+        molecule: H2, N2, O2, Air(default)
+        wavelength_nm: signal's wavelength in [nm], 633(default) [nm]
+
+    Returns:
+        dict: A dictionary containing
+            - dilute: dilute index of refraction
+            - dense: dense index of refraction
+    """
+    # Calculates polarizability using Kerl
+    pol_kerl_air_m3 = kerl_polarizability_temperature(
+        temperature_K, "Air", wavelength_nm
+    )
+    pol_kerl_SI = conversions.polarizability_cgs_to_si(pol_kerl_air_m3 * 1e6)
+
+    if molecule == "Air":
+        molar_mass_air = (
+            0.78 * molmass.Formula("O2").mass
+            + 0.21 * molmass.Formula("N2").mass
+            + 0.01 * molmass.Formula("Ar").mass
+        )
+        molar_density = mass_density * s_consts.N_A / molar_mass_air * 1e3
+    else:
+        molar_density = conversions.mass_density_to_molar_density(
+            mass_density, molecule
+        )
+    tot_pol_molar = molar_density * pol_kerl_SI
+    n_return = {}
+    n_return["dilute"] = 1 + tot_pol_molar / (2 * s_consts.epsilon_0)
+    n_temp = tot_pol_molar / (3 * s_consts.epsilon_0)
+    n_return["dense"] = ((2 * n_temp + 1) / (1 - n_temp)) ** 0.5
+
+    return n_return
+
+
 def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]:
     """
-    Calculates dilute and dense index of refraction
+    Calculates dilute and dense index of refraction as a
+    function of mass  density
 
     Parameters:
         mass density dictionary in [kg/m^3]

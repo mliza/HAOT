@@ -1,6 +1,8 @@
 Optics
 ======
 
+.. autofunction:: haot.index_of_refraction_density_temperature
+
 .. autofunction:: haot.index_of_refraction
 
 .. autofunction:: haot.dielectric_material_const
