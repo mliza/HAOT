@@ -137,14 +137,15 @@ def optical_path_length(
     return OPL
 
 
-def optical_path_difference(opl: dict[str, float], avg_axis: int) -> dict[str, float]:
+def optical_path_difference(
+    opl_dict: dict[str, float], avg_axis: int
+) -> dict[str, float]:
     """
     Calculates dilute and dense optical path difference
 
     Parameters:
-        n_dict: dilute and dense formulation
-        distance: length
-        sum_axis: axis in which the summation should be perform
+        opl_dict: dilute and dense formulation
+        avg_axis: axis in which the average is performed
 
     Returns:
         dict: A dictionary containing
@@ -152,8 +153,8 @@ def optical_path_difference(opl: dict[str, float], avg_axis: int) -> dict[str, f
             - dense: dense optical path difference
     """
     OPD = {}
-    OPD["dilute"] = opl["dilute"] - np.mean(opl["dilute"], axis=avg_axis)
-    OPD["dense"] = opl["dense"] - np.mean(opl["dense"], axis=avg_axis)
+    OPD["dilute"] = opl_dict["dilute"] - np.mean(opl_dict["dilute"], axis=avg_axis)
+    OPD["dense"] = opl_dict["dense"] - np.mean(opl_dict["dense"], axis=avg_axis)
 
     return OPD
 
