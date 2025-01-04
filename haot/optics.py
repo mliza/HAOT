@@ -114,24 +114,48 @@ def dielectric_material_const(n_dict: dict[str, float]) -> dict[str, float]:
     return dielectric
 
 
-def optical_path_length(n_dict: float, distance: float) -> dict[str, float]:
+def optical_path_length(
+    n_dict: dict[str, float], distance: float, sum_axis: int
+) -> dict[str, float]:
     """
     Calculates dilute and dense optical path length
 
     Parameters:
         n_dict: dilute and dense formulation
         distance: length
+        sum_axis: axis in which the summation should be perform
 
     Returns:
         dict: A dictionary containing
-            - dilute: dilute index of refraction
-            - dense: dense index of refraction
+            - dilute: dilute optical path length
+            - dense: dense optical path length
     """
     OPL = {}
-    OPL["dilute"] = n_dict["dilute"] * distance
-    OPL["dense"] = n_dict["dense"] * distance
+    OPL["dilute"] = np.sum(n_dict["dilute"] * distance, axis=sum_axis)
+    OPL["dense"] = np.sum(n_dict["dense"] * distance, axis=sum_axis)
 
     return OPL
+
+
+def optical_path_difference(opl: dict[str, float], avg_axis: int) -> dict[str, float]:
+    """
+    Calculates dilute and dense optical path difference
+
+    Parameters:
+        n_dict: dilute and dense formulation
+        distance: length
+        sum_axis: axis in which the summation should be perform
+
+    Returns:
+        dict: A dictionary containing
+            - dilute: dilute optical path difference
+            - dense: dense optical path difference
+    """
+    OPD = {}
+    OPD["dilute"] = opl["dilute"] - np.mean(opl["dilute"], axis=avg_axis)
+    OPD["dense"] = opl["dense"] - np.mean(opl["dense"], axis=avg_axis)
+
+    return OPD
 
 
 def tropina_aproximation(vibrational_number, rotational_number, molecule):

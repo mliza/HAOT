@@ -9,6 +9,10 @@ Optics
 
 .. autofunction:: haot.buldakov_expansion
 
+.. autofunction:: haot.optical_path_length
+
+.. autofunction:: haot.optical_path_difference
+
 .. autofunction:: haot.kerl_polarizability_temperature
 
 .. autofunction:: haot.atmospheric_index_of_refraction
