@@ -1,5 +1,6 @@
 Aerodynamics
 ============
+.. _module-aerodynamics-ref:
 
 .. autofunction:: haot.sutherland_law_viscosity
 

@@ -13,7 +13,6 @@ The source code can be found in the `GitHub`_.
 
    user_guide/installation
    user_guide/usage
-   user_guide/examples
 
 .. toctree::
    :maxdepth: 1
