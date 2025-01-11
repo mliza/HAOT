@@ -56,7 +56,7 @@ to the results provided by the module
 
     >> 1043.6666666666667
 
-    print(downstream['density_r'] * 101)
+    print(downstream['density_r'] * 1.23)
 
     >> 4.744285714285715
 
