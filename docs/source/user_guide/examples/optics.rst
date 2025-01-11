@@ -19,7 +19,7 @@ following:
     # Lets plot the results now:
     plt.plot(blue_sky, altitude_m, linewidth=3)
     plt.xlabel('Index of Refraction [ ]')
-    plt.ylabel('Altitude [km]')
+    plt.ylabel('Altitude [m]')
 
 
 The figure below illustrates the variation in the index of refraction as a function of altitude.
