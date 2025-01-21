@@ -1,7 +1,6 @@
+.. _Module aerodynamics target:
 Aerodynamics
 ============
-.. _module-aerodynamics-ref:
-
 .. autofunction:: haot.sutherland_law_viscosity
 
 .. autofunction:: haot.sutherland_law_conductivity
@@ -15,7 +14,3 @@ Aerodynamics
 .. autofunction:: haot.normal_shock_relations
 
 .. autofunction:: haot.oblique_shock_relations 
-
-
-
-
