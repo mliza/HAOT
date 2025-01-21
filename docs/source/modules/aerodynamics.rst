@@ -2,7 +2,7 @@
 Aerodynamics
 ============
 
-This page provides a detailed description of the aerodynamic functions implemented in the **HAOT** package. For additional clarity, these descriptions can also be accessed and explored interactively in a Python session using the ``help()`` function.
+This page provides a detailed description of the aerodynamics functions implemented in the **HAOT** package. For additional clarity, these descriptions can also be accessed and explored interactively in a Python session using the ``help()`` function.
 
 .. autofunction:: haot.sutherland_law_viscosity
 
