@@ -3,7 +3,7 @@ Aerodynamics
 Let pick a problem from the [Anderson]_ textbook.
 
 Consider a normal shock wave in air. The upstream conditions are given by
-:math:`M_1 = 3, P_1 = 101 [kPa]` and :math:`\rho_1=1.23 [kg/m3]`. Calculate the
+:math:`M_1 = 3, P_1 = 101 [kPa]` and :math:`\rho_1 = 1.23 [kg/m3]`. Calculate the
 downstream values :math:`M_2, P_2, rho_2`.
 
 Open your favorite python instance, for this case I will open IPython and in
