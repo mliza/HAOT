@@ -1,3 +1,4 @@
+.. _Module optics target:
 Optics
 ======
 
