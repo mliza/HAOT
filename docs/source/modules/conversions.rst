@@ -1,5 +1,7 @@
+.. _Module conversions target:
 Conversions
 ===========
+This page provides a detailed description of the conversions functions implemented in the **HAOT** package. For additional clarity, these descriptions can also be accessed and explored interactively in a Python session using the ``help()`` function.
 
 .. autofunction:: haot.polarizability_cgs_to_si
 
