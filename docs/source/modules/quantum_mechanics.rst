@@ -1,3 +1,4 @@
+.. _Module quantum mechanics target:
 Quantum Mechanics
 =================
 
@@ -26,4 +27,3 @@ Quantum Mechanics
 .. autofunction:: haot.reduced_mass_kg
 
 .. autofunction:: haot.molecular_spring_constant
-
