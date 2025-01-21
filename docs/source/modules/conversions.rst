@@ -1,3 +1,4 @@
+.. _Module conversions target:
 Conversions
 ===========
 
