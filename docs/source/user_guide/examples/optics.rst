@@ -23,7 +23,7 @@ following:
 
 
 The figure below illustrates the variation in the index of refraction as a function of altitude.
-For specific equations, refer to the source code. You can access this information by exploring the :red:`Optics module<Module optics target>` documentation or using the ``help()`` function within your interactive Python environment.
+For specific equations, refer to the source code. You can access this information by exploring the :ref:`Optics module<Module optics target>` documentation or using the ``help()`` function within your interactive Python environment.
 
 .. image:: images/indexRefraction.png
 
