@@ -23,7 +23,7 @@ IPython I will add the following lines.
         'density_r': 3.857142857142857,
         'pressure_s': 0.32834388819073684}
 
-The output is a dictionary, but the variable names may not be very intuitive. To gather more information, you can use Python's help() function or consult the documentation in the modules section under the :ref:`Aerodynamics module<Module aerodynamics target>`. However, for this example, we will rely solely on standard Python techniques.
+The output is a dictionary, but the variable names may not be very intuitive. To gather more information, you can use Python's ``help()`` function or consult the documentation in the modules section under the :ref:`Aerodynamics module<Module aerodynamics target>`. However, for this example, we will rely solely on standard Python techniques.
 
 .. code:: python
 
