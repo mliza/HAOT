@@ -1,6 +1,7 @@
 .. _Module quantum mechanics target:
 Quantum Mechanics
 =================
+This page provides a detailed description of the quantum mechanics functions implemented in the **HAOT** package. For additional clarity, these descriptions can also be accessed and explored interactively in a Python session using the ``help()`` function.
 
 .. autofunction:: haot.zero_point_energy
 
