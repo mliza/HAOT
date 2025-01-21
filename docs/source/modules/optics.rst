@@ -1,6 +1,7 @@
 .. _Module optics target:
 Optics
 ======
+This page provides a detailed description of the optics functions implemented in the **HAOT** package. For additional clarity, these descriptions can also be accessed and explored interactively in a Python session using the ``help()`` function.
 
 .. autofunction:: haot.index_of_refraction_density_temperature
 
