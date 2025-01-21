@@ -1,3 +1,4 @@
+.. _Module constants target:
 Constants
 =========
 
