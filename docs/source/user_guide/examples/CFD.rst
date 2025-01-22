@@ -35,10 +35,9 @@ Lets now use the ``HAOT`` package to process the results
                                             'Air', 633)
 
     dielectric_constant_dilute = haot.dielectric_material_const(index_of_refraction['dilute'])
-    dielectric_constant_dense = haot.dielectric_material_const(index_of_refraction['dense'])
 
 
-Now, let's plot the index of refraction using ``pyvista``.
+Now, let's plot the dilute index of refraction using ``pyvista``.
 
 .. code:: python
 
@@ -48,7 +47,6 @@ Now, let's plot the index of refraction using ``pyvista``.
     plotter.view_xy()
     plotter.add_mesh(internal_mesh, scalars='n', cmap='plasma',
                      reset_camera='True', show_scalar_bar=False)
-                     #clim='rng', 
     plotter.set_background('white')
     plotter.camera.zoom(2.0)
 
@@ -67,3 +65,59 @@ Now, let's plot the index of refraction using ``pyvista``.
 
 .. image:: images/index_of_refraction.pdf
 
+Now, let's plot the Kerl Polarizability using ``pyvista``.
+
+.. code:: python
+
+    internal_mesh.cell_data['pol'] = kerl_polarizability * 1E30
+
+    plotter = pv.Plotter(window_size=[1800, 900])
+    plotter.view_xy()
+    plotter.add_mesh(internal_mesh, scalars='pol', cmap='plasma',
+                     reset_camera='True', show_scalar_bar=False)
+    plotter.set_background('white')
+    plotter.camera.zoom(2.0)
+
+    plotter.add_scalar_bar(
+        title=f'Polarizability * 1E-30 [kg/m3] at {time_data[i]}',
+        title_font_size=22,
+        label_font_size=18,
+        bold=True,
+        position_x=0.02,
+        position_y=0.6,
+        width=0.3,
+        n_labels=8,
+        height=0.1,
+        vertical=False
+    )
+
+.. image:: images/kerl_polarizability.pdf
+
+
+Now, let's plot the Dielectric's medium constant using ``pyvista``.
+
+.. code:: python
+
+    internal_mesh.cell_data['dielectric_dilute'] = dielectric_constant_dilute * 1E12
+
+    plotter = pv.Plotter(window_size=[1800, 900])
+    plotter.view_xy()
+    plotter.add_mesh(internal_mesh, scalars='dielectric_dilute', cmap='plasma',
+                     reset_camera='True', show_scalar_bar=False)
+    plotter.set_background('white')
+    plotter.camera.zoom(2.0)
+
+    plotter.add_scalar_bar(
+        title=f'Dielectric * 1E-12 [F/m] at {time_data[i]} [s]',
+        title_font_size=22,
+        label_font_size=18,
+        bold=True,
+        position_x=0.02,
+        position_y=0.6,
+        width=0.3,
+        n_labels=8,
+        height=0.1,
+        vertical=False
+    )
+
+.. image:: images/dielectric.pdf

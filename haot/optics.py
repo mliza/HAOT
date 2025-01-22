@@ -97,21 +97,18 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
     return n_return
 
 
-def dielectric_material_const(n_dict: dict[str, float]) -> dict[str, float]:
+def dielectric_material_const(index_of_refraction: float) -> float:
     """
     Calculates the dielectric medium's constant
 
     Parameters:
-        n_dict: dilute and dense formulation
+        index_of_refraction: index of refraction
 
     Returns:
-        dict: A dictionary containing
-            - dilute: dilute dielectric constant
-            - dense: dense dielectric constant
+        material's dielectric constant in [F/m]
     """
     # n ~ sqrt(e_r)
-    dielectric = {key: s_consts.epsilon_0 * n_dict[key] ** 2 for key in n_dict.keys()}
-    return dielectric
+    return s_consts.epsilon_0 * index_of_refraction**2
 
 
 def optical_path_length(index_of_refraction: float, distance: float) -> float:
@@ -119,13 +116,13 @@ def optical_path_length(index_of_refraction: float, distance: float) -> float:
     Calculates a 1D optical path length
 
     Parameters:
-        index_of_refraction: index of refraction 
+        index_of_refraction: index of refraction
         distance: length
 
     Returns:
         Optical Path Length
     """
-    if (np.shape(index_of_refraction) != np.shape(distance)):
+    if np.shape(index_of_refraction) != np.shape(distance):
         raise ValueError("Index of refraction and distance must have the same length")
     index_avg = 0.5 * (index_of_refraction[:-1] + index_of_refraction[1:])
     return np.cumsum(index_avg * np.diff(distance))
