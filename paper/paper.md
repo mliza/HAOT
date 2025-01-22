@@ -9,8 +9,6 @@ authors:
   - name: Martin E. Liza
     orcid: 0009-0000-2231-667X
     affiliation: 1
-  - name: Kyle Hanquist
-    affiliation: 1
 affiliations:
   - index: 1
     name: The University of Arizona
@@ -107,5 +105,7 @@ The results presented so far highlight some of the capabilities of the aerodynam
     \includegraphics[width=0.8\textwidth]{boltzmannDistribution_N2.png}
     \caption{Boltzmann Distribution for $N2$.\label{fig:boltzmannDistribution}}
 \end{figure}
+
+These tools can be applied to the results from a CFD code fairly easy results of calculating the index of refraction, Gladstone Dale Constant and dielectric medium are below. A low speed compressible Large Eddys Simulation was used with OpenFOAM to perform results below, the goal of this is not to go into very especific details of the CFD ssetup but to showcase the ablity of the HAOT tool. 
 
 # References
