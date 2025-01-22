@@ -114,27 +114,21 @@ def dielectric_material_const(n_dict: dict[str, float]) -> dict[str, float]:
     return dielectric
 
 
-def optical_path_length(
-    n_dict: dict[str, float], distance: float, sum_axis: int
-) -> dict[str, float]:
+def optical_path_length(index_of_refraction: float, distance: float) -> float:
     """
-    Calculates dilute and dense optical path length
+    Calculates a 1D optical path length
 
     Parameters:
-        n_dict: dilute and dense formulation
+        index_of_refraction: index of refraction 
         distance: length
-        sum_axis: axis in which the summation should be perform
 
     Returns:
-        dict: A dictionary containing
-            - dilute: dilute optical path length
-            - dense: dense optical path length
+        Optical Path Length
     """
-    OPL = {}
-    OPL["dilute"] = np.sum(n_dict["dilute"] * distance, axis=sum_axis)
-    OPL["dense"] = np.sum(n_dict["dense"] * distance, axis=sum_axis)
-
-    return OPL
+    if (np.shape(index_of_refraction) != np.shape(distance)):
+        raise ValueError("Index of refraction and distance must have the same length")
+    index_avg = 0.5 * (index_of_refraction[:-1] + index_of_refraction[1:])
+    return np.cumsum(index_avg * np.diff(distance))
 
 
 def optical_path_difference(
