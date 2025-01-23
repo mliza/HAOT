@@ -91,7 +91,7 @@ Now, let's plot the Kerl Polarizability using ``pyvista``.
         vertical=False
     )
 
-.. image:: images/kerl_polarizability.pdf
+.. image:: images/kerl_polarizability.png
 
 
 Now, let's plot the Dielectric's medium constant using ``pyvista``.
@@ -120,4 +120,4 @@ Now, let's plot the Dielectric's medium constant using ``pyvista``.
         vertical=False
     )
 
-.. image:: images/dielectric.pdf
+.. image:: images/dielectric.png
