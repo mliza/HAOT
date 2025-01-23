@@ -63,7 +63,7 @@ Now, let's plot the dilute index of refraction using ``pyvista``.
         vertical=False
     )
 
-.. image:: images/index_of_refraction.pdf
+.. image:: images/index_of_refraction.png
 
 Now, let's plot the Kerl Polarizability using ``pyvista``.
 
