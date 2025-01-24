@@ -11,6 +11,10 @@ This page provides a detailed description of the optics functions implemented in
 
 .. autofunction:: haot.buldakov_expansion
 
+.. autofunction:: haot.total_internal_reflection_angle
+
+.. autofunction:: haot.normal_incidence_reflectance
+
 .. autofunction:: haot.optical_path_length
 
 .. autofunction:: haot.optical_path_difference

@@ -332,6 +332,47 @@ def atmospheric_index_of_refraction(
     return refractivity + 1
 
 
+def total_internal_reflection_angle(
+    medium_index_of_refraction: float, vacuum_index_of_refraction: float = 1.0
+) -> float:
+    """
+    Calculates the critical angle that causes total internal reflection. Note,
+    that medium_index_of_refraction should be greater than the
+    vacuum_index_of_refraction
+
+    Parameters:
+        medium_index_of_refraction: medium's index of refraction
+        vacuum_index_of_refraction: vacuum's index of refraction, 1.0 (default)
+
+    Returns:
+        Critical angle in [degs]
+    """
+    return np.rad2deg(
+        np.arcsin(medium_index_of_refraction / vacuum_index_of_refraction)
+    )
+
+
+def normal_incidence_reflectance(
+    medium_index_of_refraction: float, vacuum_index_of_refraction: float = 1.0
+) -> float:
+    """
+    Calculates the reflectance at a normal incidence. Note,
+    that medium_index_of_refraction should be greater than the
+    vacuum_index_of_refraction
+
+    Parameters:
+        medium_index_of_refraction: medium's index of refraction
+        vacuum_index_of_refraction: vacuum's index of refraction, 1.0 (default)
+
+    Returns:
+       Reflectance at normal incidence in [ ]
+    """
+    return (
+        (medium_index_of_refraction - vacuum_index_of_refraction)
+        / (medium_index_of_refraction + vacuum_index_of_refraction)
+    ) ** 2
+
+
 def gladstone_dale_constant(
     mass_density_dict: dict[str, float] = None
 ) -> dict[str, float]:
