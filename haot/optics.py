@@ -331,6 +331,25 @@ def atmospheric_index_of_refraction(
 
     return refractivity + 1
 
+def brewster_angle(
+    medium_index_of_refraction: float, vacuum_index_of_refraction: float = 1.0
+) -> float:
+    """
+    Calculates the Brewster angle. Note,
+    that medium_index_of_refraction should be greater than the
+    vacuum_index_of_refraction
+
+    Parameters:
+        medium_index_of_refraction: medium's index of refraction
+        vacuum_index_of_refraction: vacuum's index of refraction, 1.0 (default)
+
+    Returns:
+        Brewster angle in [degs]
+    """
+    return np.rad2deg(
+        np.arctan(medium_index_of_refraction / vacuum_index_of_refraction)
+        )
+
 
 def total_internal_reflection_angle(
     medium_index_of_refraction: float, vacuum_index_of_refraction: float = 1.0
@@ -347,9 +366,8 @@ def total_internal_reflection_angle(
     Returns:
         Critical angle in [degs]
     """
-    return np.rad2deg(
-        np.arcsin(medium_index_of_refraction / vacuum_index_of_refraction)
-    )
+    return np.rad2deg(np.arcsin(vacuum_index_of_refraction /
+                                medium_index_of_refraction))
 
 
 def normal_incidence_reflectance(
