@@ -120,7 +120,7 @@ def optical_path_length(index_of_refraction: float, distance: float) -> float:
         distance: length
 
     Returns:
-        Optical Path Length
+        Optical Path Length, a summation has to be perform after
     """
     if np.shape(index_of_refraction) != np.shape(distance):
         raise ValueError("Index of refraction and distance must have the same length")
@@ -128,26 +128,18 @@ def optical_path_length(index_of_refraction: float, distance: float) -> float:
     return np.cumsum(index_avg * np.diff(distance))
 
 
-def optical_path_difference(
-    opl_dict: dict[str, float], avg_axis: int
-) -> dict[str, float]:
+def optical_path_difference(opl: numpy.array, sum_ax: int = 0) -> float:
     """
-    Calculates dilute and dense optical path difference
+    Calculates the optical path difference
 
     Parameters:
-        opl_dict: dilute and dense formulation
-        avg_axis: axis in which the average is performed
+        opl: has to be a numpy array of shape [time, x_axis, y_axis]
+        avg_ax: axis where average is performed, 0 (default)
 
     Returns:
-        dict: A dictionary containing
-            - dilute: dilute optical path difference
-            - dense: dense optical path difference
+        numpy.array of size [time, x_axis, y_axis]
     """
-    OPD = {}
-    OPD["dilute"] = opl_dict["dilute"] - np.mean(opl_dict["dilute"], axis=avg_axis)
-    OPD["dense"] = opl_dict["dense"] - np.mean(opl_dict["dense"], axis=avg_axis)
-
-    return OPD
+    return opl - np.mean(opl, axis=sum_ax)
 
 
 def tropina_aproximation(vibrational_number, rotational_number, molecule):
