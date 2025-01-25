@@ -128,7 +128,7 @@ def optical_path_length(index_of_refraction: float, distance: float) -> float:
     return np.cumsum(index_avg * np.diff(distance))
 
 
-def optical_path_difference(opl: numpy.array, sum_ax: int = 0) -> float:
+def optical_path_difference(opl: np.array, sum_ax: int = 0) -> float:
     """
     Calculates the optical path difference
 
