@@ -113,19 +113,49 @@ def dielectric_material_const(index_of_refraction: float) -> float:
 
 def optical_path_length(index_of_refraction: float, distance: float) -> float:
     """
-    Calculates a 1D optical path length
+    Calculates the optical path length
 
     Parameters:
         index_of_refraction: index of refraction
         distance: length
 
     Returns:
-        Optical Path Length, a summation has to be perform after
+        Optical Path Length in units of distance
     """
     if np.shape(index_of_refraction) != np.shape(distance):
         raise ValueError("Index of refraction and distance must have the same length")
     index_avg = 0.5 * (index_of_refraction[:-1] + index_of_refraction[1:])
-    return np.cumsum(index_avg * np.diff(distance))
+    return np.mean(np.cumsum(index_avg * np.diff(distance)))
+
+
+def phase_difference(opd: float, wavelength_nm: float) -> float:
+    """
+    Calculates phase difference
+
+    Parameters:
+        opd: Optical Path Difference in units of [m]
+        wavelength_nm: Wavelength of light in units of [nm]
+
+    Returns:
+        Phase difference
+    """
+    return 2 * np.pi * opd / (wavelength_nm * 1e-9)
+
+
+def strehl_ratio(phase_difference: float) -> float:
+    """
+    Calculates the Strehl ratio
+
+    Parameters:
+        phase_difference: phase difference
+
+    Returns:
+        Strehl ratio
+    """
+
+    # a_rms = sqrt(mean(a - mean(a))^2)
+    phase_difference_rms2 = np.mean((phase_difference - np.mean(phase_difference)) ** 2)
+    return np.exp(-phase_difference_rms2)
 
 
 def optical_path_difference(opl: np.array, sum_ax: int = 0) -> float:

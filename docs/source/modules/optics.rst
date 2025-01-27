@@ -21,6 +21,10 @@ This page provides a detailed description of the optics functions implemented in
 
 .. autofunction:: haot.optical_path_difference
 
+.. autofunction:: haot.optical_phase_difference
+
+.. autofunction:: haot.optical_strehl_ratio
+
 .. autofunction:: haot.kerl_polarizability_temperature
 
 .. autofunction:: haot.atmospheric_index_of_refraction
