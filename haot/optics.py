@@ -128,48 +128,71 @@ def optical_path_length(index_of_refraction: float, distance: float) -> float:
     return np.mean(np.cumsum(index_avg * np.diff(distance)))
 
 
-def phase_difference(opd: float, wavelength_nm: float) -> float:
+def optical_path_difference_rms(opd: float, avg_ax: int = 0) -> float:
     """
-    Calculates phase difference
+    Calculates the optical path difference RMS
 
     Parameters:
-        opd: Optical Path Difference in units of [m]
+        opd: Optical Path Difference
+        avg_ax: axis where average is performed, 0 (default)
+
+    Returns
+        Optical Path Difference Root-Mean-Squared
+    """
+    # Validate the input array
+    if not isinstance(opd, np.ndarray):
+        raise ValueError("opd must be a numpy array")
+
+    if avg_ax not in [0, 1, 2, 3]:
+        raise ValueError("avg_ax must be one of [0, 1, 2, 3]")
+    return np.sqrt(np.mean((opd - np.mean(opd, axis=avg_ax, keepdims=True)) ** 2))
+
+
+def phase_variance(opd_rms: float, wavelength_nm: float) -> float:
+    """
+    Calculates phase variance
+
+    Parameters:
+        opd_rm: Optical Path Difference RMS in units of [m]
         wavelength_nm: Wavelength of light in units of [nm]
 
     Returns:
-        Phase difference
+        Phase difference, unit-less
     """
-    return 2 * np.pi * opd / (wavelength_nm * 1e-9)
+    return (2 * np.pi * opd_rms / (wavelength_nm * 1e-9)) ** 2
 
 
-def strehl_ratio(phase_difference: float) -> float:
+def strehl_ratio(phase_variance: float) -> float:
     """
     Calculates the Strehl ratio
 
     Parameters:
-        phase_difference: phase difference
+        phase_variance: phase variance
 
     Returns:
         Strehl ratio
     """
 
-    # a_rms = sqrt(mean(a - mean(a))^2)
-    phase_difference_rms2 = np.mean((phase_difference - np.mean(phase_difference)) ** 2)
-    return np.exp(-phase_difference_rms2)
+    return np.exp(-phase_variance)
 
 
-def optical_path_difference(opl: np.array, sum_ax: int = 0) -> float:
+def optical_path_difference(opl: np.array, avg_ax: int = 0) -> float:
     """
     Calculates the optical path difference
 
     Parameters:
-        opl: has to be a numpy array of shape [time, x_axis, y_axis]
+        opl: has to be a numpy array of shape [time, x_axis, y_axis, z_axis]
         avg_ax: axis where average is performed, 0 (default)
 
     Returns:
-        numpy.array of size [time, x_axis, y_axis]
+        numpy array of the same shape as the optical path length
     """
-    return opl - np.mean(opl, axis=sum_ax)
+    if not isinstance(opl, np.ndarray):
+        raise ValueError("opl must be a numpy array")
+
+    if avg_ax not in [0, 1, 2, 3]:
+        raise ValueError("avg_ax must be one of [0, 1, 2, 3]")
+    return opl - np.mean(opl, axis=avg_ax, keepdims=True)
 
 
 def tropina_aproximation(vibrational_number, rotational_number, molecule):

@@ -21,7 +21,9 @@ This page provides a detailed description of the optics functions implemented in
 
 .. autofunction:: haot.optical_path_difference
 
-.. autofunction:: haot.optical_phase_difference
+.. autofunction:: haot.optical_path_difference_rms
+
+.. autofunction:: haot.optical_phase_variance
 
 .. autofunction:: haot.optical_strehl_ratio
 
