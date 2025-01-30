@@ -11,9 +11,21 @@ This page provides a detailed description of the optics functions implemented in
 
 .. autofunction:: haot.buldakov_expansion
 
+.. autofunction:: haot.total_internal_reflection_angle
+
+.. autofunction:: haot.normal_incidence_reflectance
+
+.. autofunction:: haot.brewster_angle
+
 .. autofunction:: haot.optical_path_length
 
 .. autofunction:: haot.optical_path_difference
+
+.. autofunction:: haot.optical_path_difference_rms
+
+.. autofunction:: haot.optical_phase_variance
+
+.. autofunction:: haot.optical_strehl_ratio
 
 .. autofunction:: haot.kerl_polarizability_temperature
 

@@ -97,66 +97,102 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
     return n_return
 
 
-def dielectric_material_const(n_dict: dict[str, float]) -> dict[str, float]:
+def dielectric_material_const(index_of_refraction: float) -> float:
     """
     Calculates the dielectric medium's constant
 
     Parameters:
-        n_dict: dilute and dense formulation
+        index_of_refraction: index of refraction
 
     Returns:
-        dict: A dictionary containing
-            - dilute: dilute dielectric constant
-            - dense: dense dielectric constant
+        material's dielectric constant in [F/m]
     """
     # n ~ sqrt(e_r)
-    dielectric = {key: s_consts.epsilon_0 * n_dict[key] ** 2 for key in n_dict.keys()}
-    return dielectric
+    return s_consts.epsilon_0 * index_of_refraction**2
 
 
-def optical_path_length(
-    n_dict: dict[str, float], distance: float, sum_axis: int
-) -> dict[str, float]:
+def optical_path_length(index_of_refraction: float, distance: float) -> float:
     """
-    Calculates dilute and dense optical path length
+    Calculates the optical path length
 
     Parameters:
-        n_dict: dilute and dense formulation
+        index_of_refraction: index of refraction
         distance: length
-        sum_axis: axis in which the summation should be perform
 
     Returns:
-        dict: A dictionary containing
-            - dilute: dilute optical path length
-            - dense: dense optical path length
+        Optical Path Length in units of distance
     """
-    OPL = {}
-    OPL["dilute"] = np.sum(n_dict["dilute"] * distance, axis=sum_axis)
-    OPL["dense"] = np.sum(n_dict["dense"] * distance, axis=sum_axis)
+    if np.shape(index_of_refraction) != np.shape(distance):
+        raise ValueError("Index of refraction and distance must have the same length")
+    index_avg = 0.5 * (index_of_refraction[:-1] + index_of_refraction[1:])
+    return np.mean(np.cumsum(index_avg * np.diff(distance)))
 
-    return OPL
 
-
-def optical_path_difference(
-    opl_dict: dict[str, float], avg_axis: int
-) -> dict[str, float]:
+def optical_path_difference_rms(opd: float, avg_ax: int = 0) -> float:
     """
-    Calculates dilute and dense optical path difference
+    Calculates the optical path difference RMS
 
     Parameters:
-        opl_dict: dilute and dense formulation
-        avg_axis: axis in which the average is performed
+        opd: Optical Path Difference
+        avg_ax: axis where average is performed, 0 (default)
+
+    Returns
+        Optical Path Difference Root-Mean-Squared
+    """
+    # Validate the input array
+    if not isinstance(opd, np.ndarray):
+        raise ValueError("opd must be a numpy array")
+
+    if avg_ax not in [0, 1, 2, 3]:
+        raise ValueError("avg_ax must be one of [0, 1, 2, 3]")
+    return np.sqrt(np.mean((opd - np.mean(opd, axis=avg_ax, keepdims=True)) ** 2))
+
+
+def phase_variance(opd_rms: float, wavelength_nm: float) -> float:
+    """
+    Calculates phase variance
+
+    Parameters:
+        opd_rm: Optical Path Difference RMS in units of [m]
+        wavelength_nm: Wavelength of light in units of [nm]
 
     Returns:
-        dict: A dictionary containing
-            - dilute: dilute optical path difference
-            - dense: dense optical path difference
+        Phase difference, unit-less
     """
-    OPD = {}
-    OPD["dilute"] = opl_dict["dilute"] - np.mean(opl_dict["dilute"], axis=avg_axis)
-    OPD["dense"] = opl_dict["dense"] - np.mean(opl_dict["dense"], axis=avg_axis)
+    return (2 * np.pi * opd_rms / (wavelength_nm * 1e-9)) ** 2
 
-    return OPD
+
+def strehl_ratio(phase_variance: float) -> float:
+    """
+    Calculates the Strehl ratio
+
+    Parameters:
+        phase_variance: phase variance
+
+    Returns:
+        Strehl ratio
+    """
+
+    return np.exp(-phase_variance)
+
+
+def optical_path_difference(opl: np.array, avg_ax: int = 0) -> float:
+    """
+    Calculates the optical path difference
+
+    Parameters:
+        opl: has to be a numpy array of shape [time, x_axis, y_axis, z_axis]
+        avg_ax: axis where average is performed, 0 (default)
+
+    Returns:
+        numpy array of the same shape as the optical path length
+    """
+    if not isinstance(opl, np.ndarray):
+        raise ValueError("opl must be a numpy array")
+
+    if avg_ax not in [0, 1, 2, 3]:
+        raise ValueError("avg_ax must be one of [0, 1, 2, 3]")
+    return opl - np.mean(opl, axis=avg_ax, keepdims=True)
 
 
 def tropina_aproximation(vibrational_number, rotational_number, molecule):
@@ -339,6 +375,67 @@ def atmospheric_index_of_refraction(
     refractivity *= 10**-6
 
     return refractivity + 1
+
+
+def brewster_angle(
+    medium_index_of_refraction: float, vacuum_index_of_refraction: float = 1.0
+) -> float:
+    """
+    Calculates the Brewster angle. Note,
+    that medium_index_of_refraction should be greater than the
+    vacuum_index_of_refraction
+
+    Parameters:
+        medium_index_of_refraction: medium's index of refraction
+        vacuum_index_of_refraction: vacuum's index of refraction, 1.0 (default)
+
+    Returns:
+        Brewster angle in [degs]
+    """
+    return np.rad2deg(
+        np.arctan(medium_index_of_refraction / vacuum_index_of_refraction)
+    )
+
+
+def total_internal_reflection_angle(
+    medium_index_of_refraction: float, vacuum_index_of_refraction: float = 1.0
+) -> float:
+    """
+    Calculates the critical angle that causes total internal reflection. Note,
+    that medium_index_of_refraction should be greater than the
+    vacuum_index_of_refraction
+
+    Parameters:
+        medium_index_of_refraction: medium's index of refraction
+        vacuum_index_of_refraction: vacuum's index of refraction, 1.0 (default)
+
+    Returns:
+        Critical angle in [degs]
+    """
+    return np.rad2deg(
+        np.arcsin(vacuum_index_of_refraction / medium_index_of_refraction)
+    )
+
+
+def normal_incidence_reflectance(
+    medium_index_of_refraction: float, vacuum_index_of_refraction: float = 1.0
+) -> float:
+    """
+    Calculates the reflectance at a normal incidence. Note,
+    that medium_index_of_refraction should be greater than the
+    vacuum_index_of_refraction
+
+    Parameters:
+        medium_index_of_refraction: medium's index of refraction
+        vacuum_index_of_refraction: vacuum's index of refraction, 1.0 (default)
+
+    Returns:
+       Reflectance at normal incidence in [ ]
+    """
+    return (
+        (medium_index_of_refraction - vacuum_index_of_refraction)
+        / (medium_index_of_refraction + vacuum_index_of_refraction)
+    ) ** 2
 
 
 def gladstone_dale_constant(
