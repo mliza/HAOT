@@ -20,7 +20,7 @@ bibliography: paper.bib
 
 Hypersonic flows present unique challenges due to the complex interplay of fluid dynamics, chemical reactions, and optical phenomena. As a signal from a Light Detection and Ranging (LiDAR) system travels through a hypersonic flow field, the beam is affected by the flow, potentially leading to errors in targeting and detection measurements.
 
-`HAOT` is a Hypersonic Aerodynamics Optics Tools Python package developed to calculate different aerodynamic properties in a hypersonic medium. Its source code is available on [GitHub](https://github.com/mliza/HAOT), the documentation is available on [Read the Docs](https://haot.readthedocs.io/en/latest/) and an example on the usage of the package is given on the GitHub repo under the example folder. 
+`HAOT` is a Hypersonic Aerodynamics Optics Tools Python package developed to calculate different aerodynamic properties in a hypersonic medium. Its source code is available on [GitHub](https://github.com/mliza/HAOT), the documentation is available on [Read the Docs](https://haot.readthedocs.io/en/latest/) and example on the usage of the package is given on the documentation side under usage. 
 
 # Statement of Need
 
