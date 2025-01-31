@@ -26,6 +26,7 @@ Lets now use the ``HAOT`` package to process the results
 
     import haot
 
+    # Compute aero-optic properties
     index_of_refraction = haot.index_of_refraction_density_temperature(
                                             internal_mesh['T'],
                                             internal_mesh['rho'], 'Air', 633)
@@ -41,6 +42,7 @@ Now, let's plot the dilute index of refraction using ``pyvista``.
 
 .. code:: python
 
+    # Add the index of refraction to the mesh
     internal_mesh.cell_data['n'] = (index_of_refraction['dilute'] - 1) * 1E3
 
     plotter = pv.Plotter(window_size=[1800, 900])
@@ -69,6 +71,7 @@ Now, let's plot the Kerl Polarizability using ``pyvista``.
 
 .. code:: python
 
+    # Add polarizability to the mesh
     internal_mesh.cell_data['pol'] = kerl_polarizability * 1E30
 
     plotter = pv.Plotter(window_size=[1800, 900])
@@ -98,6 +101,7 @@ Now, let's plot the Dielectric's medium constant using ``pyvista``.
 
 .. code:: python
 
+    # Add Dielectric constant to the mesh
     internal_mesh.cell_data['dielectric_dilute'] = dielectric_constant_dilute * 1E12
 
     plotter = pv.Plotter(window_size=[1800, 900])
