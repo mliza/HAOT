@@ -32,12 +32,11 @@ interest.
 
 # Algorithms
 The `HAOT` package, contains five modules:
-
-    - Aerodynamics
-    - Optics
-    - Quantum Mechanics
-    - Constants
-    - Conversions
+- Aerodynamics
+- Optics
+- Quantum Mechanics
+- Constants
+- Conversions
 
 Each module can be imported independently. The [documentation](https://haot.readthedocs.io/en/latest/) explains the functions in each module as well as their usage. Docstrings are include, so the function prototypes and usage can also be accessible in an interactive Python session. Results from these algorithms were compared with the literature, and a unit test was developed, which is located under the unit_test directory. 
 
