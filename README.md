@@ -4,7 +4,7 @@
 The modules are structured in the following manner:
 
 ```mermaid
-flowchart TD
+flowchart LR
   haot --> aerodynamics
   haot --> optics
   haot --> quantum_mechanics
