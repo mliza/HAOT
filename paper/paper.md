@@ -24,12 +24,9 @@ Hypersonic flows present unique challenges due to the complex interplay of fluid
 
 # Statement of Need
 
-Many techniques used to calculate optical properties are scattered across various papers, but there is no centralized repository containing all these calculations. Furthermore, some of these calculations require spectroscopy constants, which are often unclear or inconsistently presented in the literature. This package includes a constants module that provides and documents numerous spectroscopy constants for diatomic molecules. 
+Many techniques for calculating optical properties are dispersed across various research papers, with no centralized repository consolidating these methods. Additionally, some of these calculations depend on spectroscopy constants, which are often inconsistently presented or unclear in the literature. To address this issue, this package includes a dedicated constants module that provides and documents numerous spectroscopy constants for diatomic molecules, ensuring consistency and accessibility.
 
-`HAOT` was designed with the goal of being used to easily computed aerodynamic
-quantities of interest from CFD results. This package was used by [@Liza2023]. 
-In this work, they investigate nonequilibrium effects on Aero-Optics in
-Hypersonic flows. 
+`HAOT` was developed to facilitate the computation of aerodynamic quantities of interest from CFD results in a streamlined manner. The package has been employed in research, including the work by [@Liza2023], where it was used to investigate nonequilibrium effects on aero-optics in hypersonic flows. By integrating relevant optical and aerodynamic calculations, `HAOT` severs as a valuable tool for researchers serves as a valuable tool for researchers studying the complex interactions between fluid dynamics and optical wave propagation in extreme flow conditions. 
 
 # Algorithms
 The `HAOT` package, contains five modules:
@@ -40,21 +37,25 @@ The `HAOT` package, contains five modules:
 - Constants
 - Conversions
 
-Each module can be imported independently. The [documentation](https://haot.readthedocs.io/en/latest/) explains the functions in each module as well as their usage. Docstrings are include, so the function prototypes and usage can also be accessible in an interactive Python session. Results from these algorithms were compared with the literature, and a unit test was developed, which is located under the unit_test directory. 
 
-This section highlights some of the capabilities of the package but not all of them. For instance, the package can calculate various compressible flow properties, such as isentropic, normal shock, and oblique shock relations. Please refer to the [documentation](https://haot.readthedocs.io/en/latest) for a complete list of available functions.
+Each module can be imported independently, allowing for flexible usage
+depending on the specific computational needs. The [documentation](https://haot.readthedocs.io/en/latest/) provides detailed explanations of the functions within each module, along with their proper usage. Additionally, docstrings are included, making function prototypes and usage accessible within an interactive Python session through built-in help functions.
+
+To ensure accuracy and reliability, results obtained from these algorithms have been validated against published literature. A comprehensive suite of unit tests has been developed to detect potential issues and maintain code integrity.
 
 # Results 
 
-Equation \ref{eq:indexAtmosphere} was introduced by [@Smith1953], and it provides an approximation for the index of refraction as a function of atmospheric altitude.
+This section highlights some of the package’s capabilities but does not encompass all of them. For example `HAOT` can compute various compressible flow properties, including including isentropic flow, normal shock relations, and oblique shock relations. For a complete list of available functions and their descriptions, please refer to the [documentation](https://haot.readthedocs.io/en/latest).
+
+Equation \ref{eq:indexAtmosphere}, introduced by [@Smith1953], provides an approximation for the index of refraction as a function of atmospheric altitude.
 
 \begin{equation}\label{eq:indexAtmosphere}
 n(h) \approx 1 + \frac{K_1}{T(h)} \left( p(h) + K_2\frac{e(h)}{T(h)} \right) 
 \end{equation}
 
-Where: $K_1$ and $K_2$ are constants, $T(h)$ is the temperature as a function of altitude, $p(h)$ is pressure as a function of altitude, and $e(h)$ is the partial pressure of water vapor.
+Where: $K_1$ and $K_2$ are empirically determined constants, $T(h)$ is the temperature as a function of altitude, $p(h)$ is the atmospheric pressure, and $e(h)$ is the partial pressure of water vapor. These constants are documented in the constants module.
 
-Results for Equation \ref{eq:indexAtmosphere} are provided in Figure \ref{fig:atmosphericIndexOfRefraction}. This approximation is a useful way of analyzing the region in which the index of refraction has the greatest impact on a seeker's performance. As expected, the critical region is between $20~\mathrm{[km]}$ and $30~\mathrm{[km]}$ above sea level, which is a region where a seeker's performance is particularly important.
+The results obtained using Equation \ref{eq:indexAtmosphere} are illustrated in Figure \ref{fig:atmosphericIndexOfRefraction}. This approximation provides valuable insight into the altitudes where variations in the index of refraction most significantly affect a seeker's performance. As expected, the critical region lies between $20~\mathrm{[km]}$ and $30~\mathrm{[km]}$ above sea level, a range where atmospheric effects play a crucial role in optical tracking. 
 
 \begin{figure}[h!]
     \centering
@@ -62,36 +63,41 @@ Results for Equation \ref{eq:indexAtmosphere} are provided in Figure \ref{fig:at
     \caption{Atmospheric index of refraction for dry air. \label{fig:atmosphericIndexOfRefraction}}
 \end{figure}
 
-The Gladstone-Dale constant is an important constant used to calculate the index of refraction (equation \ref{eq:indexGD}). For a dilute gas, the index of refraction can be approximated as:
+The Gladstone-Dale constant is a key parameter used to calculate the index of
+refraction as given by Equation \ref{eq:indexGD}. This constant is directly related to the fluid’s density and, in the case of hypersonic flows, must account for the contributions of multiple species due to the high-temperature chemical nonequilibrium effects present in such flows.
+ 
+ For a dilute gas, the index of refraction can be approximated as:
 
 \begin{equation}\label{eq:indexGD}
 n - 1 = \sum\limits_{s = 1}^{N} K_s \rho_s
 \end{equation}
 
-Where: $n$ is the index of refraction, $K_s$ is the species' Gladstone-Dale
-constants, and $\rho_s$ is the species density. 
+Where: $n$ is the index of refraction, $K_s$ represents the Gladstone-Dale
+constant for species $s$, and $\rho_s$ is the corresponding species density. 
 
-Figure \ref{fig:speciesGladstoneDale} shows the Gladstone-Dale constants for a five-species gas. The species density was calculated using the CFD tool, SU2 [@Maier2021], [@Maier2023a]. These densities were then loaded into the `HAOT` tool to calculate Figure \ref{fig:speciesGladstoneDale}.
+Figure \ref{fig:speciesGladstoneDale} presents the Gladstone-Dale constants for a five-species gas. The species densities were computed using the CFD tool, SU2 [@Maier2021], [@Maier2023a]. These computed densities were then imported into the `HAOT` tool to generate Figure \ref{fig:speciesGladstoneDale}.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{3C_speciesGladstoneDale.png}
     \caption{Species Gladstone-Dale constants for a five-species gas.\label{fig:speciesGladstoneDale}}
 \end{figure}
-Another way of calculating the index of refraction is using the polarizability, as shown in equation \ref{eq:indexPolarizability}.
+
+An alternative method for calculating the index of refraction involves using polarizability, as expressed in Equation \ref{eq:indexPolarizability}:
 \begin{equation}\label{eq:indexPolarizability}
     n - 1 = \frac{1}{2\epsilon_0}\sum\limits_{s = 1}\alpha_s N_s
 \end{equation}
-Where: $\epsilon_0$ is the dielectric constant in vacuum, $\alpha_s$ is the species' polarizability constant, and $N_s$ is the partial species mass fraction.
+Where: $\epsilon_0$ is the dielectric constant in vacuum, $\alpha_s$ is the polarizability constant for species $s$, and $N_s$ represents the number density of species $s$.
 
-Figure \ref{fig:kerlPolarizability} uses the extrapolation (equation \ref{eq:kerlExtrapolation}) developed by [@Kerl1992], based on the work of [@Hohm1986].
-
+Figure \ref{fig:kerlPolarizability} presents results obtained using an extrapolation method (Equation \ref{eq:kerlExtrapolation}) developed by [@Kerl1992], based on the work of [@Hohm1986]. This method provides a temperature-dependent correction to the static polarizability, improving accuracy for high-temperature conditions relevant to hypersonic flows and aero-optical calculations.
 \begin{equation}\label{eq:kerlExtrapolation}
 \alpha(\omega, T) = \frac{\alpha(0,0)}{1 - \left(\frac{\omega}{\omega_0}\right)^2} \left( 1 + bT + cT^2\right)
 \end{equation}
-Where: $\alpha$ is the polarizability as a function of the laser's frequency $\omega$ and temperature $T$. $b$ and $c$ are extrapolation constants, all of which are implemented in the `HAOT` package, and $\omega_0$ is the oscillation frequency of the diatomic molecule.
+Where: $\alpha(\omega, T)$ represents the polarizability as a function of
+laser's frequency $\omega$ and temperature $T$. The parameters $b$ and $c$ are
+empirical extrapolation constants, and $\omega_0$ is the characteristic oscillation frequency of the
+diatomic molecule. These values are implemented in the `HAOT` package, allowing for easy computation of temperature-dependent polarizability.
 
-Figure \ref{fig:kerlPolarizability} shows the change of polarizability as a
-function of temperature.
+Figure \ref{fig:kerlPolarizability} illustrates the variation of polarizability with temperature for oxygen $(O_2)$ at a laser wavelength of $633\, nm$, demonstrating the effectiveness of Kerl’s method in modeling optical properties under varying thermodynamic conditions.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{kerlPolarizability_O2_633nm.png}
@@ -99,32 +105,32 @@ function of temperature.
     $633[nm]$.\label{fig:kerlPolarizability}}
 \end{figure}
 
-The results presented so far highlight some of the capabilities of the aerodynamics and optics modules. Figure \ref{fig:boltzmannDistribution} shows the results of the Boltzmann Distribution for $N_2$ (in the quantum mechanics module). Some aero-optics calculations [@Buldakov2000], [@Tropina2018] required a Boltzmann Distribution to calculate the polarizability and index of refraction for diatomic molecules.
-
+The results presented thus far highlight some of the key capabilities of the aerodynamics and optics modules within `HAOT``. Additionally, Figure \ref{fig:boltzmannDistribution} presents the Boltzmann distribution for nitrogen $(N_2)$, implemented in the quantum mechanics module. Several aero-optics studies [@Buldakov2000], [@Tropina2018] have incorporated Boltzmann distribution calculations to determine the polarizability and index of refraction for diatomic molecules, demonstrating its significance in hypersonic flow modeling.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{boltzmannDistribution_N2.png}
     \caption{Boltzmann Distribution for $N2$.\label{fig:boltzmannDistribution}}
 \end{figure}
 
-These tools can be applied to the results from a CFD code fairly easy results of calculating the index of refraction, Gladstone Dale Constant and dielectric medium are below. A low speed compressible Large Eddys Simulation was used with OpenFOAM to perform results below, the goal of this is not to go into very especific details of the CFD ssetup but to showcase the ablity of the HAOT tool. 
+
+These tools can be readily applied to the results obtained from a CFD simulation. Below, we present calculations for the index of refraction, Gladstone-Dale constant, and dielectric properties using the `HAOT` package. A low-speed, compressible Large Eddy Simulation (LES) was performed using OpenFOAM to generate the results shown below. The primary objective here is not to provide a detailed description of the CFD setup, but rather to demonstrate the capabilities of the `HAOT` tool in processing and analyzing flow-field optical properties.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{index_of_refraction.png}
-    \caption{Index of Refraction.\label{fig:contourIndex}
+    \caption{Index of Refraction.\label{fig:contourIndex}}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{kerl_polarizability.png}
-    \caption{Index of Refraction.\label{fig:contourPolarizability}
+    \caption{Index of Refraction.\label{fig:contourPolarizability}}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{dielectric.png}
-    \caption{Dielectric medium.\label{fig:contourDielectric}
+    \caption{Dielectric medium.\label{fig:contourDielectric}}
 \end{figure}
 
 # References
