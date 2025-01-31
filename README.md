@@ -3,7 +3,7 @@
 
 The modules are structured in the following manner:
 
-```
+```mermaid
 flowchart TD
   haot --> aerodynamics
   haot --> optics
