@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "haot"
-version = "1.0.9"
+version = "1.1.0"
 description = "Hypersonic Aerodynamics Optics Tools"
 readme = "README.md"
 authors = [{name = "Martin E. Liza", email = "mliza1191@gmail.com"}]
