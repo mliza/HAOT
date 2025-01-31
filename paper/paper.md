@@ -12,7 +12,7 @@ authors:
 affiliations:
   - index: 1
     name: The University of Arizona
-date: 17 December 2019
+date: 30 January 2025
 bibliography: paper.bib
 ---
 
@@ -26,12 +26,14 @@ Hypersonic flows present unique challenges due to the complex interplay of fluid
 
 Many techniques used to calculate optical properties are scattered across various papers, but there is no centralized repository containing all these calculations. Furthermore, some of these calculations require spectroscopy constants, which are often unclear or inconsistently presented in the literature. This package includes a constants module that provides and documents numerous spectroscopy constants for diatomic molecules. 
 
-This package was used by [@Liza2023]. In this work, they used results from
-Computational Fluid Dynamics (CFD) to calculate optical properties of
-interest.
+`HAOT` was designed with the goal of being used to easily computed aerodynamic
+quantities of interest from CFD results. This package was used by [@Liza2023]. 
+In this work, they investigate nonequilibrium effects on Aero-Optics in
+Hypersonic flows. 
 
 # Algorithms
 The `HAOT` package, contains five modules:
+
 - Aerodynamics
 - Optics
 - Quantum Mechanics
@@ -106,5 +108,23 @@ The results presented so far highlight some of the capabilities of the aerodynam
 \end{figure}
 
 These tools can be applied to the results from a CFD code fairly easy results of calculating the index of refraction, Gladstone Dale Constant and dielectric medium are below. A low speed compressible Large Eddys Simulation was used with OpenFOAM to perform results below, the goal of this is not to go into very especific details of the CFD ssetup but to showcase the ablity of the HAOT tool. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{index_of_refraction.png}
+    \caption{Index of Refraction.\label{fig:contourIndex}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{kerl_polarizability.png}
+    \caption{Index of Refraction.\label{fig:contourPolarizability}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{dielectric.png}
+    \caption{Dielectric medium.\label{fig:contourDielectric}
+\end{figure}
 
 # References
