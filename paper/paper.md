@@ -20,7 +20,7 @@ bibliography: paper.bib
 
 Hypersonic flows present unique challenges due to the complex interplay of fluid dynamics, chemical reactions, and optical phenomena. As a signal from a Light Detection and Ranging (LiDAR) system travels through a hypersonic flow field, the beam is affected by the flow, potentially leading to errors in targeting and detection measurements.
 
-`HAOT` is a Hypersonic Aerodynamics Optics Tools Python package developed to calculate different aerodynamic properties in a hypersonic medium. Its source code is available on [GitHub](https://github.com/mliza/HAOT), the documentation is available on [Read the Docs](https://haot.readthedocs.io/en/latest/) and example on the usage of the package is given on the documentation side under usage. 
+`HAOT` is a Hypersonic Aerodynamics Optics Tools Python package developed to calculate different aerodynamic properties in a hypersonic medium. Its source code is available on [GitHub](https://github.com/mliza/HAOT), the documentation is available on [Read the Docs](https://haot.readthedocs.io/en/latest/) and examples on the usage of the package are given on the documentation site under usage. These examples cover some easy examples such as the basic functionality of the tool and also cover examples using results from Computational Fluid Dynamics (CFD) simulations. 
 
 # Statement of Need
 
@@ -33,11 +33,14 @@ interest.
 # Algorithms
 The `HAOT` package, contains five modules:
 
-    - Aerodynamics
-    - Optics
-    - Quantum Mechanics
-    - Constants
-    - Conversions
+```mermaid
+    graph TD;
+        HAOT-->aerodynamics;
+        HAOT-->optics;
+        HAOT-->quantum_mechanics;
+        HAOT-->constants;
+        HAOT-->conversions;
+```
 
 Each module can be imported independently. The [documentation](https://haot.readthedocs.io/en/latest/) explains the functions in each module as well as their usage. Docstrings are include, so the function prototypes and usage can also be accessible in an interactive Python session. Results from these algorithms were compared with the literature, and a unit test was developed, which is located under the unit_test directory. 
 
