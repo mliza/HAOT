@@ -117,20 +117,25 @@ These tools can be readily applied to the results obtained from a CFD simulation
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{index_of_refraction.png}
-    \caption{Index of Refraction.\label{fig:contourIndex}}
+    \includegraphics[width=1.0\textwidth]{index_of_refraction.png}
+    \caption{Computed index of refraction.\label{fig:contourIndex}}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{kerl_polarizability.png}
-    \caption{Index of Refraction.\label{fig:contourPolarizability}}
+    \includegraphics[width=1.0\textwidth]{kerl_polarizability.png}
+    \caption{Computed polarizability.\label{fig:contourPolarizability}}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{dielectric.png}
-    \caption{Dielectric medium.\label{fig:contourDielectric}}
+    \includegraphics[width=1.0\textwidth]{dielectric.png}
+    \caption{Computed dielectric medium constant.\label{fig:contourDielectric}}
 \end{figure}
+
+# Acknowledgements
+
+The author acknowlege the support from Dr. Kyle Hanquist at the University of
+Arizona and Dr.Ozgur Tumuklu at Rensselaer Polytechnic Institue.
 
 # References
