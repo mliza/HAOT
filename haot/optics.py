@@ -461,21 +461,22 @@ def gladstone_dale_constant(
         key: conversions.polarizability_cgs_to_si(pol_consts[key])
         for key in pol_consts.keys()
     }
-    species_GD = {}
 
     # Calculates species GD
+    const_GD = { }
     for key, val in pol_SI.items():
-        species_GD[key] = val * s_consts.N_A / molmass.Formula(key).mass
-        species_GD[key] /= 2 * s_consts.epsilon_0
-        species_GD[key] *= 1e3  # converts [1/g] to [1/kg]
+        const_GD[key] = val * s_consts.N_A / molmass.Formula(key).mass
+        const_GD[key] /= 2 * s_consts.epsilon_0
+        const_GD[key] *= 1e3  # converts [1/g] to [1/kg]
 
     # Calculate total GD
     if not mass_density_dict:
-        return species_GD
+        return const_GD 
     else:
+        species_GD = {}
         tot_density = sum(mass_density_dict.values())
         for key in mass_density_dict.keys():
-            species_GD[key] *= mass_density_dict[key] / tot_density
+            species_GD[key] = const_GD[key] * mass_density_dict[key] / tot_density
 
         species_GD["gladstone_dale"] = sum(species_GD.values())
         return species_GD  # [m3/kg]
