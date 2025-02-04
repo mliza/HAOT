@@ -69,6 +69,8 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
 
     Parameters:
         mass density dictionary in [kg/m^3]
+        keys should be elements alone. Ex [N2, O2, O, NO]
+        
 
     Returns:
         dict: A dictionary containing
