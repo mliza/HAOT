@@ -70,7 +70,7 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
     Parameters:
         mass density dictionary in [kg/m^3]
         keys should be elements alone. Ex [N2, O2, O, NO]
-        
+
 
     Returns:
         dict: A dictionary containing
@@ -99,18 +99,41 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
     return n_return
 
 
-def dielectric_material_const(index_of_refraction: float) -> float:
+def permittivity_material(index_of_refraction: float) -> float:
     """
-    Calculates the dielectric medium's constant
+    Calculates the permittivity of the material for a linear dielectric
 
     Parameters:
         index_of_refraction: index of refraction
 
     Returns:
-        material's dielectric constant in [F/m]
+        material's permittivity in [F/m]
+
+    Reference:
+        Introduction to Electrodynamics, 4th (Griffiths D., DOI:
+        10.1017/9781108333511)
+
     """
-    # n ~ sqrt(e_r)
+    # n ~ sqrt(e_r), Eq. 4.33
     return s_consts.epsilon_0 * index_of_refraction**2
+
+
+def electric_susceptibility(index_of_refraction: float) -> float:
+    """
+    Calculates the electric susceptibility
+
+    Parameters:
+        index_of_refraction: index of refraction
+
+    Returns:
+        electric susceptibility in [ ]
+
+    Reference:
+        Introduction to Electrodynamics, 4th (Griffiths D., DOI:
+        10.1017/9781108333511)
+    """
+    # Eq 4.34
+    return index_of_refraction**2 - 1
 
 
 def optical_path_length(index_of_refraction: float, distance: float) -> float:
@@ -463,7 +486,7 @@ def gladstone_dale_constant(
     }
 
     # Calculates species GD
-    const_GD = { }
+    const_GD = {}
     for key, val in pol_SI.items():
         const_GD[key] = val * s_consts.N_A / molmass.Formula(key).mass
         const_GD[key] /= 2 * s_consts.epsilon_0
@@ -471,7 +494,7 @@ def gladstone_dale_constant(
 
     # Calculate total GD
     if not mass_density_dict:
-        return const_GD 
+        return const_GD
     else:
         species_GD = {}
         tot_density = sum(mass_density_dict.values())
