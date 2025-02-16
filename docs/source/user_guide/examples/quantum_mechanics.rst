@@ -3,9 +3,10 @@ Quantum Mechanics
 For this example, we will calculate the Boltzmann Distribution for a diatomic
 Nitrogen molecule. Lets open a Python instance and type the following.
 
-..code:: python
+.. code:: python
     
     import haot
+    import numpy as np
 
     # Ranges where distribution is calculated 
     vibrational_number = 1
@@ -28,4 +29,4 @@ Nitrogen molecule. Lets open a Python instance and type the following.
 Please refer to the source code for more more details of the function. You can
 access this information by exploring the :ref:`Quantum Mechanics module<Module quantum mechanics target>` documentation or using the ``hel()`` function within your interactive Python environment.
 
-.. images:: images/boltzmannDistribution_N2.png
+.. image:: images/boltzmannDistribution_N2.png
