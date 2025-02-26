@@ -41,6 +41,8 @@ def index_of_refraction_density_temperature(
         temperature_K, "Air", wavelength_nm
     )
     pol_kerl_SI = conversions.polarizability_cgs_to_si(pol_kerl_air_m3 * 1e6)
+    if molecule not in ["Air", "H2", "N2", "O2"]:
+        raise ValueError("This function only supports Air, H2, N2 or O2")
 
     if molecule == "Air":
         molar_mass_air = (
