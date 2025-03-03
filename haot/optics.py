@@ -41,6 +41,8 @@ def index_of_refraction_density_temperature(
         temperature_K, "Air", wavelength_nm
     )
     pol_kerl_SI = conversions.polarizability_cgs_to_si(pol_kerl_air_m3 * 1e6)
+    if molecule not in ["Air", "H2", "N2", "O2"]:
+        raise ValueError("This function only supports Air, H2, N2 or O2")
 
     if molecule == "Air":
         molar_mass_air = (
@@ -65,10 +67,12 @@ def index_of_refraction_density_temperature(
 def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]:
     """
     Calculates dilute and dense index of refraction as a
-    function of mass  density
+    function of mass density
 
     Parameters:
         mass density dictionary in [kg/m^3]
+        keys should be elements alone. Ex [N2, O2, O, NO]
+
 
     Returns:
         dict: A dictionary containing
@@ -97,18 +101,41 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
     return n_return
 
 
-def dielectric_material_const(index_of_refraction: float) -> float:
+def permittivity_material(index_of_refraction: float) -> float:
     """
-    Calculates the dielectric medium's constant
+    Calculates the permittivity of the material for a linear dielectric.
 
     Parameters:
         index_of_refraction: index of refraction
 
     Returns:
-        material's dielectric constant in [F/m]
+        material's permittivity in [F/m]
+
+    Reference:
+        Introduction to Electrodynamics, 4th (Griffiths D., DOI:
+        10.1017/9781108333511)
+
     """
-    # n ~ sqrt(e_r)
+    # n ~ sqrt(e_r), Eq. 4.33
     return s_consts.epsilon_0 * index_of_refraction**2
+
+
+def electric_susceptibility(index_of_refraction: float) -> float:
+    """
+    Calculates the electric susceptibility for a linear dielectric.
+
+    Parameters:
+        index_of_refraction: index of refraction
+
+    Returns:
+        electric susceptibility in [ ]
+
+    Reference:
+        Introduction to Electrodynamics, 4th (Griffiths D., DOI:
+        10.1017/9781108333511)
+    """
+    # Eq 4.34
+    return index_of_refraction**2 - 1
 
 
 def optical_path_length(index_of_refraction: float, distance: float) -> float:
@@ -130,7 +157,7 @@ def optical_path_length(index_of_refraction: float, distance: float) -> float:
 
 def optical_path_difference_rms(opd: float, avg_ax: int = 0) -> float:
     """
-    Calculates the optical path difference RMS
+    Calculates the optical path difference RMS.
 
     Parameters:
         opd: Optical Path Difference
@@ -150,7 +177,7 @@ def optical_path_difference_rms(opd: float, avg_ax: int = 0) -> float:
 
 def phase_variance(opd_rms: float, wavelength_nm: float) -> float:
     """
-    Calculates phase variance
+    Calculates phase variance.
 
     Parameters:
         opd_rm: Optical Path Difference RMS in units of [m]
@@ -164,7 +191,7 @@ def phase_variance(opd_rms: float, wavelength_nm: float) -> float:
 
 def strehl_ratio(phase_variance: float) -> float:
     """
-    Calculates the Strehl ratio
+    Calculates the Strehl ratio.
 
     Parameters:
         phase_variance: phase variance
@@ -178,7 +205,7 @@ def strehl_ratio(phase_variance: float) -> float:
 
 def optical_path_difference(opl: np.array, avg_ax: int = 0) -> float:
     """
-    Calculates the optical path difference
+    Calculates the optical path difference.
 
     Parameters:
         opl: has to be a numpy array of shape [time, x_axis, y_axis, z_axis]
@@ -308,7 +335,7 @@ def kerl_polarizability_temperature(
     temperature_K: float, molecule: str, wavelength_nm: float
 ) -> float:
     """
-    Calculates the polarizability using Kerl's extrapolation
+    Calculates the polarizability using Kerl's extrapolation.
 
     Parameters:
         temperature_K: reference temperature in [K]
@@ -459,21 +486,42 @@ def gladstone_dale_constant(
         key: conversions.polarizability_cgs_to_si(pol_consts[key])
         for key in pol_consts.keys()
     }
-    species_GD = {}
 
     # Calculates species GD
+    const_GD = {}
     for key, val in pol_SI.items():
-        species_GD[key] = val * s_consts.N_A / molmass.Formula(key).mass
-        species_GD[key] /= 2 * s_consts.epsilon_0
-        species_GD[key] *= 1e3  # converts [1/g] to [1/kg]
+        const_GD[key] = val * s_consts.N_A / molmass.Formula(key).mass
+        const_GD[key] /= 2 * s_consts.epsilon_0
+        const_GD[key] *= 1e3  # converts [1/g] to [1/kg]
 
     # Calculate total GD
     if not mass_density_dict:
-        return species_GD
+        return const_GD
     else:
+        species_GD = {}
         tot_density = sum(mass_density_dict.values())
         for key in mass_density_dict.keys():
-            species_GD[key] *= mass_density_dict[key] / tot_density
+            species_GD[key] = const_GD[key] * mass_density_dict[key] / tot_density
 
         species_GD["gladstone_dale"] = sum(species_GD.values())
         return species_GD  # [m3/kg]
+
+
+def gladstone_dale_air_wavelength(wavelength_nm: float) -> float:
+    """
+    Calculates the Gladstone Dale constant of air using approximation (see reference).
+
+    Parameters:
+        wavelength_nm: laser's wavelength [nm]
+        
+    Returns:
+        Gladstone Dale constant in [m3/kg]
+
+    Reference:
+        An Aero-Optical Effect Analysis Method in Hypersonic Turbulence Based on Photon Monte Carlo Simulation (https://doi.org/10.3390/photonics10020172)
+    """
+    # Equatin (3) from paper
+    gd_const = (6.7132 * 1E-8 / wavelength_nm)**2
+    gd_const += 1
+    
+    return 2.2244 * 1E-4 * gd_const # [m3/kg]

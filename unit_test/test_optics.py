@@ -8,6 +8,7 @@ class TestOptics(unittest.TestCase):
         """Initialize test parameters."""
         self.error_precision = 4
         self.valid_temperature = 200.0
+        self.mass_density = 0.5
         self.invalid_temperature = -20.0
         self.valid_molecule = "H2"
         self.invalid_molecule = "Argon"
@@ -42,7 +43,14 @@ class TestOptics(unittest.TestCase):
                 self.valid_temperature, self.valid_molecule, self.invalid_wavelength
             )
 
-    # Test kerl_polarizability_temperature #
+    def test_index_of_refraction_density_temperature_invalid_molecule(self):
+        """Test invalid molecule."""
+        with self.assertRaises(ValueError):
+            index_of_refraction_density_temperature(self.valid_temperature,
+                                                    self.mass_density,
+                                                    self.invalid_molecule,
+                                                    self.valid_wavelength
+            )
 
 
 if __name__ == "__main__":

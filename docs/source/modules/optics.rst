@@ -7,7 +7,9 @@ This page provides a detailed description of the optics functions implemented in
 
 .. autofunction:: haot.index_of_refraction
 
-.. autofunction:: haot.dielectric_material_const
+.. autofunction:: haot.permittivity_material
+
+.. autofunction:: haot.electric_susceptibility
 
 .. autofunction:: haot.buldakov_expansion
 
@@ -32,3 +34,5 @@ This page provides a detailed description of the optics functions implemented in
 .. autofunction:: haot.atmospheric_index_of_refraction
 
 .. autofunction:: haot.gladstone_dale_constant
+
+.. autofunction:: haot.gladstone_dale_air_wavelength
