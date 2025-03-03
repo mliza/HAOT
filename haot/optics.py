@@ -513,7 +513,7 @@ def gladstone_dale_air_wavelength(wavelength_nm: float) -> float:
 
     Parameters:
         wavelength_nm: laser's wavelength [nm]
-        
+
     Returns:
         Gladstone Dale constant in [m3/kg]
 
@@ -521,7 +521,7 @@ def gladstone_dale_air_wavelength(wavelength_nm: float) -> float:
         An Aero-Optical Effect Analysis Method in Hypersonic Turbulence Based on Photon Monte Carlo Simulation (https://doi.org/10.3390/photonics10020172)
     """
     # Equatin (3) from paper
-    gd_const = (6.7132 * 1E-8 / wavelength_nm)**2
+    gd_const = (6.7132 * 1e-8 / wavelength_nm) ** 2
     gd_const += 1
-    
-    return 2.2244 * 1E-4 * gd_const # [m3/kg]
+
+    return 2.2244 * 1e-4 * gd_const  # [m3/kg]
