@@ -34,3 +34,5 @@ This page provides a detailed description of the optics functions implemented in
 .. autofunction:: haot.atmospheric_index_of_refraction
 
 .. autofunction:: haot.gladstone_dale_constant
+
+.. autofunction:: haot.gladstone_dale_air_wavelength
