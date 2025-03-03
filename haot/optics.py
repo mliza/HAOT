@@ -67,7 +67,7 @@ def index_of_refraction_density_temperature(
 def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]:
     """
     Calculates dilute and dense index of refraction as a
-    function of mass  density
+    function of mass density
 
     Parameters:
         mass density dictionary in [kg/m^3]
@@ -103,7 +103,7 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
 
 def permittivity_material(index_of_refraction: float) -> float:
     """
-    Calculates the permittivity of the material for a linear dielectric
+    Calculates the permittivity of the material for a linear dielectric.
 
     Parameters:
         index_of_refraction: index of refraction
@@ -122,7 +122,7 @@ def permittivity_material(index_of_refraction: float) -> float:
 
 def electric_susceptibility(index_of_refraction: float) -> float:
     """
-    Calculates the electric susceptibility
+    Calculates the electric susceptibility for a linear dielectric.
 
     Parameters:
         index_of_refraction: index of refraction
@@ -157,7 +157,7 @@ def optical_path_length(index_of_refraction: float, distance: float) -> float:
 
 def optical_path_difference_rms(opd: float, avg_ax: int = 0) -> float:
     """
-    Calculates the optical path difference RMS
+    Calculates the optical path difference RMS.
 
     Parameters:
         opd: Optical Path Difference
@@ -177,7 +177,7 @@ def optical_path_difference_rms(opd: float, avg_ax: int = 0) -> float:
 
 def phase_variance(opd_rms: float, wavelength_nm: float) -> float:
     """
-    Calculates phase variance
+    Calculates phase variance.
 
     Parameters:
         opd_rm: Optical Path Difference RMS in units of [m]
@@ -191,7 +191,7 @@ def phase_variance(opd_rms: float, wavelength_nm: float) -> float:
 
 def strehl_ratio(phase_variance: float) -> float:
     """
-    Calculates the Strehl ratio
+    Calculates the Strehl ratio.
 
     Parameters:
         phase_variance: phase variance
@@ -205,7 +205,7 @@ def strehl_ratio(phase_variance: float) -> float:
 
 def optical_path_difference(opl: np.array, avg_ax: int = 0) -> float:
     """
-    Calculates the optical path difference
+    Calculates the optical path difference.
 
     Parameters:
         opl: has to be a numpy array of shape [time, x_axis, y_axis, z_axis]
@@ -335,7 +335,7 @@ def kerl_polarizability_temperature(
     temperature_K: float, molecule: str, wavelength_nm: float
 ) -> float:
     """
-    Calculates the polarizability using Kerl's extrapolation
+    Calculates the polarizability using Kerl's extrapolation.
 
     Parameters:
         temperature_K: reference temperature in [K]
@@ -505,3 +505,23 @@ def gladstone_dale_constant(
 
         species_GD["gladstone_dale"] = sum(species_GD.values())
         return species_GD  # [m3/kg]
+
+
+def gladstone_dale_air_wavelength(wavelength_nm: float) -> float:
+    """
+    Calculates the Gladstone Dale constant of air using approximation (see reference).
+
+    Parameters:
+        wavelength_nm: laser's wavelength [nm]
+        
+    Returns:
+        Gladstone Dale constant in [m3/kg]
+
+    Reference:
+        An Aero-Optical Effect Analysis Method in Hypersonic Turbulence Based on Photon Monte Carlo Simulation (https://doi.org/10.3390/photonics10020172)
+    """
+    # Equatin (3) from paper
+    gd_const = (6.7132 * 1E-8 / wavelength_nm)**2
+    gd_const += 1
+    
+    return 2.2244 * 1E-4 * gd_const # [m3/kg]
