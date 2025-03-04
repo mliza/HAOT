@@ -46,10 +46,31 @@ class TestOptics(unittest.TestCase):
     def test_index_of_refraction_density_temperature_invalid_molecule(self):
         """Test invalid molecule."""
         with self.assertRaises(ValueError):
-            index_of_refraction_density_temperature(self.valid_temperature,
-                                                    self.mass_density,
-                                                    self.invalid_molecule,
-                                                    self.valid_wavelength
+            index_of_refraction_density_temperature(
+                self.valid_temperature,
+                self.mass_density,
+                self.invalid_molecule,
+                self.valid_wavelength,
+            )
+
+    def test_index_of_refraction_density_temperature(self):
+        """Test invalid temperature."""
+        with self.assertRaises(ValueError):
+            index_of_refraction_density_temperature(
+                self.invalid_temperature,
+                self.mass_density,
+                self.valid_molecule,
+                self.valid_wavelength,
+            )
+
+    def test_index_of_refraction_density_temperature(self):
+        """Test invalid wavelength."""
+        with self.assertRaises(ValueError):
+            index_of_refraction_density_temperature(
+                self.valid_temperature,
+                self.mass_density,
+                self.valid_molecule,
+                self.invalid_wavelength,
             )
 
 

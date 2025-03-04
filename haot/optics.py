@@ -36,13 +36,20 @@ def index_of_refraction_density_temperature(
             - dilute: dilute index of refraction
             - dense: dense index of refraction
     """
+    # Checks
+    if molecule not in ["Air", "H2", "N2", "O2"]:
+        raise ValueError("This function only supports Air, H2, N2 or O2")
+    if type(temperature_K) is float and temperature_K < 0:
+        raise ValueError("Temperature must be greater than 0 Kelvin!")
+    if type(temperature_K) is np.ndarray and (temperature_K < 0).any():
+        raise ValueError("Temperature must be greater than 0 Kelvin!")
+    if wavelength_nm <= 0:
+        raise ValueError("Wavelength must be greater than 0 nanometers!")
     # Calculates polarizability using Kerl
     pol_kerl_air_m3 = kerl_polarizability_temperature(
         temperature_K, "Air", wavelength_nm
     )
     pol_kerl_SI = conversions.polarizability_cgs_to_si(pol_kerl_air_m3 * 1e6)
-    if molecule not in ["Air", "H2", "N2", "O2"]:
-        raise ValueError("This function only supports Air, H2, N2 or O2")
 
     if molecule == "Air":
         molar_mass_air = (
@@ -513,7 +520,7 @@ def gladstone_dale_air_wavelength(wavelength_nm: float) -> float:
 
     Parameters:
         wavelength_nm: laser's wavelength [nm]
-        
+
     Returns:
         Gladstone Dale constant in [m3/kg]
 
@@ -521,7 +528,7 @@ def gladstone_dale_air_wavelength(wavelength_nm: float) -> float:
         An Aero-Optical Effect Analysis Method in Hypersonic Turbulence Based on Photon Monte Carlo Simulation (https://doi.org/10.3390/photonics10020172)
     """
     # Equatin (3) from paper
-    gd_const = (6.7132 * 1E-8 / wavelength_nm)**2
+    gd_const = (6.7132 * 1e-8 / wavelength_nm) ** 2
     gd_const += 1
-    
-    return 2.2244 * 1E-4 * gd_const # [m3/kg]
+
+    return 2.2244 * 1e-4 * gd_const  # [m3/kg]
