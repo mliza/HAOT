@@ -18,7 +18,7 @@ def index_of_refraction_density_temperature(
     temperature_K: float,
     mass_density: float,
     molecule: str = "Air",
-    wavelength_nm: float = 633,
+    wavelength_nm: float = 633.0,
 ) -> dict[str, float]:
     """
     Calculates dilute and dense index of refraction as a
