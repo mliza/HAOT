@@ -78,7 +78,7 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
 
     Parameters:
         mass density dictionary in [kg/m^3]
-        keys should be elements alone. Ex [N2, O2, O, NO]
+        keys should be elements alone. Ex [N2, O2, O, N, NO]
 
 
     Returns:
@@ -86,6 +86,12 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
             - dilute: dilute index of refraction
             - dense: dense index of refraction
     """
+    # Unit Test
+    if not isinstance(mass_density_dict, dict):
+        raise ValueError("Mass density should be a dictionary!")
+    if mass_density_dict.keys() not in ["N2", "O2", "O", "N", "NO"]:
+        raise ValueError("Keys should be named: N2, O2, O, N, NO")
+
     pol_consts = constants_tables.polarizability()  # [cm3]
     molar_density = {
         key: conversions.mass_density_to_molar_density(value, key)
