@@ -144,6 +144,19 @@ def born_oppenheimer_partition_function(
     Examples:
         >> born_oppenheimer_partition_function(2, 4, 500.0, 'O2')
     """
+    # Unit Test
+    if not isinstance(vibrational_number, int):
+        raise ValueError("Vibrational quantum number should be a positive integer")
+    if vibrational_number < 0.0:
+        raise ValueError("Vibrational number should be a positive integer!")
+    if not isinstance(rotational_number, int):
+        raise ValueError("Vibrational quantum number should be a positive integer")
+    if rotational_number < 0.0:
+        raise ValueError("Rotational number should be a positive integer!")
+    if temperature_K < 0.0:
+        raise ValueError("Temperature should be positive!")
+    if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
+        raise ValueError("This function only supports NO+, N2+, O2+, NO, N2, O2, H2")
     z_bo = 0.0
     for j in range(rotational_number + 1):
         for v in range(vibrational_number + 1):

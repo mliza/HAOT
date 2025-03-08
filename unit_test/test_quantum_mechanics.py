@@ -65,6 +65,46 @@ class TestOptics(unittest.TestCase):
                 self.valid_rotational, self.valid_temperature, self.invalid_molecule
             )
 
+    def test_born_oppenheimer_partition_function_invalid_vibrational(self):
+        """Test invalid vibrational number."""
+        with self.assertRaises(ValueError):
+            born_oppenheimer_partition_function(
+                self.invalid_vibrational,
+                self.valid_rotational,
+                self.valid_temperature,
+                self.valid_molecule,
+            )
+
+    def test_born_oppenheimer_partition_function_invalid_rotational(self):
+        """Test invalid rotational number."""
+        with self.assertRaises(ValueError):
+            born_oppenheimer_partition_function(
+                self.valid_vibrational,
+                self.invalid_rotational,
+                self.valid_temperature,
+                self.valid_molecule,
+            )
+
+    def test_born_oppenheimer_partition_function_invalid_temperature(self):
+        """Test invalid temperature."""
+        with self.assertRaises(ValueError):
+            born_oppenheimer_partition_function(
+                self.valid_vibrational,
+                self.valid_rotational,
+                self.invalid_temperature,
+                self.valid_molecule,
+            )
+
+    def test_born_oppenheimer_partition_function_invalid_molecule(self):
+        """Test invalid molecule."""
+        with self.assertRaises(ValueError):
+            born_oppenheimer_partition_function(
+                self.valid_vibrational,
+                self.valid_rotational,
+                self.valid_temperature,
+                self.invalid_molecule,
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
