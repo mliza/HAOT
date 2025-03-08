@@ -69,6 +69,8 @@ def vibrational_partition_function(
     # Unit Test
     if not isinstance(vibrational_number, int):
         raise ValueError("Vibrational quantum number should be a positive integer")
+    if vibrational_number < 0.0:
+        raise ValueError("Vibrational number should be a positive integer!")
     if temperature_K < 0.0:
         raise ValueError("Temperature should be positive!")
     if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
@@ -106,6 +108,8 @@ def rotational_partition_function(
     # Unit Test
     if not isinstance(rotational_number, int):
         raise ValueError("Vibrational quantum number should be a positive integer")
+    if rotational_number < 0.0:
+        raise ValueError("Rotational number should be a positive integer!")
     if temperature_K < 0.0:
         raise ValueError("Temperature should be positive!")
     if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
