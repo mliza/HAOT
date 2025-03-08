@@ -18,7 +18,7 @@ def index_of_refraction_density_temperature(
     temperature_K: float,
     mass_density: float,
     molecule: str = "Air",
-    wavelength_nm: float = 633,
+    wavelength_nm: float = 633.0,
 ) -> dict[str, float]:
     """
     Calculates dilute and dense index of refraction as a
@@ -78,7 +78,7 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
 
     Parameters:
         mass density dictionary in [kg/m^3]
-        keys should be elements alone. Ex [N2, O2, O, NO]
+        keys should be elements alone. Ex [N2, O2, O, N, NO]
 
 
     Returns:
@@ -86,6 +86,12 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
             - dilute: dilute index of refraction
             - dense: dense index of refraction
     """
+    # Unit Test
+    if not isinstance(mass_density_dict, dict):
+        raise ValueError("Mass density should be a dictionary!")
+    if mass_density_dict.keys() not in ["N2", "O2", "O", "N", "NO"]:
+        raise ValueError("Keys should be named: N2, O2, O, N, NO")
+
     pol_consts = constants_tables.polarizability()  # [cm3]
     molar_density = {
         key: conversions.mass_density_to_molar_density(value, key)
@@ -123,6 +129,20 @@ def permittivity_material(index_of_refraction: float) -> float:
         10.1017/9781108333511)
 
     """
+    # Unit Test
+    if not (
+        isinstance(index_of_refraction, np.ndarray)
+        or isinstance(index_of_refraction, float)
+        or isinstance(index_of_refraction, int)
+    ):
+        raise ValueError(
+            "Index of refraction must be a numpy.ndarray, float or integer"
+        )
+    if type(index_of_refraction) is float and index_of_refraction < 0:
+        raise ValueError("Index of refraction must be greater than 0!")
+    if type(index_of_refraction) is np.ndarray and (index_of_refraction < 0).any():
+        raise ValueError("Index of must be greater than 0!")
+
     # n ~ sqrt(e_r), Eq. 4.33
     return s_consts.epsilon_0 * index_of_refraction**2
 
@@ -141,6 +161,19 @@ def electric_susceptibility(index_of_refraction: float) -> float:
         Introduction to Electrodynamics, 4th (Griffiths D., DOI:
         10.1017/9781108333511)
     """
+    # Unit Test
+    if not (
+        isinstance(index_of_refraction, np.ndarray)
+        or isinstance(index_of_refraction, float)
+        or isinstance(index_of_refraction, int)
+    ):
+        raise ValueError(
+            "Index of refraction must be a numpy.ndarray, float or integer"
+        )
+    if type(index_of_refraction) is float and index_of_refraction < 0:
+        raise ValueError("Index of refraction must be greater than 0!")
+    if type(index_of_refraction) is np.ndarray and (index_of_refraction < 0).any():
+        raise ValueError("Index of must be greater than 0!")
     # Eq 4.34
     return index_of_refraction**2 - 1
 
@@ -156,6 +189,23 @@ def optical_path_length(index_of_refraction: float, distance: float) -> float:
     Returns:
         Optical Path Length in units of distance
     """
+    # Unit Test
+    if not (
+        isinstance(index_of_refraction, np.ndarray)
+        or isinstance(index_of_refraction, float)
+        or isinstance(index_of_refraction, int)
+    ):
+        raise ValueError(
+            "Index of refraction must be a numpy.ndarray, float or integer"
+        )
+    if type(index_of_refraction) is float and index_of_refraction < 0:
+        raise ValueError("Index of refraction must be greater than 0!")
+    if type(index_of_refraction) is np.ndarray and (index_of_refraction < 0).any():
+        raise ValueError("Index of must be greater than 0!")
+    if type(distance) is float and distance < 0:
+        raise ValueError("Distance must be greater than 0!")
+    if type(distance) is np.ndarray and (distance < 0).any():
+        raise ValueError("Distance of must be greater than 0!")
     if np.shape(index_of_refraction) != np.shape(distance):
         raise ValueError("Index of refraction and distance must have the same length")
     index_avg = 0.5 * (index_of_refraction[:-1] + index_of_refraction[1:])

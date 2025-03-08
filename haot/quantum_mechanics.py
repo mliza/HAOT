@@ -30,6 +30,7 @@ def zero_point_energy(molecule: str) -> float:
         Experimental Vibrational Zero-Point Energies Diatomic Molecules
         (https://doi.org/10.1063/1.2436891)
     """
+    # Unit Test
     if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
         raise ValueError("This function only supports NO+, N2+, O2+, NO, N2, O2, H2")
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
@@ -65,6 +66,13 @@ def vibrational_partition_function(
     Examples:
         >> vibrational_partition_function(2, 350.0, 'N2')
     """
+    # Unit Test
+    if not isinstance(vibrational_number, int):
+        raise ValueError("Vibrational quantum number should be a positive integer")
+    if temperature_K < 0.0:
+        raise ValueError("Temperature should be positive!")
+    if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
+        raise ValueError("This function only supports NO+, N2+, O2+, NO, N2, O2, H2")
     z_vib = 0.0
     for v in range(vibrational_number + 1):
         z_vib += boltzmann_factor(
@@ -95,6 +103,13 @@ def rotational_partition_function(
     Examples:
         >> rotational_partition_function(2, 350.0, 'N2')
     """
+    # Unit Test
+    if not isinstance(rotational_number, int):
+        raise ValueError("Vibrational quantum number should be a positive integer")
+    if temperature_K < 0.0:
+        raise ValueError("Temperature should be positive!")
+    if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
+        raise ValueError("This function only supports NO+, N2+, O2+, NO, N2, O2, H2")
     z_rot = 0.0
     for j in range(rotational_number + 1):
         z_rot += boltzmann_factor(
