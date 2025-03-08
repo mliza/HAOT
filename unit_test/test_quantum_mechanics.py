@@ -15,6 +15,8 @@ class TestOptics(unittest.TestCase):
         self.invalid_wavelength = -2300.0
         self.valid_vibrational = 2
         self.invalid_vibrational = -2
+        self.invalid_rotational = -1
+        self.valid_rotational = 6
 
     def test_zero_point_energy_invalid_molecule(self):
         """Test invalid molecule."""
