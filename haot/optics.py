@@ -129,6 +129,20 @@ def permittivity_material(index_of_refraction: float) -> float:
         10.1017/9781108333511)
 
     """
+    # Unit Test
+    if not (
+        isinstance(index_of_refraction, np.ndarray)
+        or isinstance(index_of_refraction, float)
+        or isinstance(index_of_refraction, int)
+    ):
+        raise ValueError(
+            "Index of refraction must be a numpy.ndarray, float or integer"
+        )
+    if type(index_of_refraction) is float and index_of_refraction < 0:
+        raise ValueError("Index of refraction must be greater than 0!")
+    if type(index_of_refraction) is np.ndarray and (index_of_refraction < 0).any():
+        raise ValueError("Index of must be greater than 0!")
+
     # n ~ sqrt(e_r), Eq. 4.33
     return s_consts.epsilon_0 * index_of_refraction**2
 
@@ -147,6 +161,19 @@ def electric_susceptibility(index_of_refraction: float) -> float:
         Introduction to Electrodynamics, 4th (Griffiths D., DOI:
         10.1017/9781108333511)
     """
+    # Unit Test
+    if not (
+        isinstance(index_of_refraction, np.ndarray)
+        or isinstance(index_of_refraction, float)
+        or isinstance(index_of_refraction, int)
+    ):
+        raise ValueError(
+            "Index of refraction must be a numpy.ndarray, float or integer"
+        )
+    if type(index_of_refraction) is float and index_of_refraction < 0:
+        raise ValueError("Index of refraction must be greater than 0!")
+    if type(index_of_refraction) is np.ndarray and (index_of_refraction < 0).any():
+        raise ValueError("Index of must be greater than 0!")
     # Eq 4.34
     return index_of_refraction**2 - 1
 
@@ -162,6 +189,23 @@ def optical_path_length(index_of_refraction: float, distance: float) -> float:
     Returns:
         Optical Path Length in units of distance
     """
+    # Unit Test
+    if not (
+        isinstance(index_of_refraction, np.ndarray)
+        or isinstance(index_of_refraction, float)
+        or isinstance(index_of_refraction, int)
+    ):
+        raise ValueError(
+            "Index of refraction must be a numpy.ndarray, float or integer"
+        )
+    if type(index_of_refraction) is float and index_of_refraction < 0:
+        raise ValueError("Index of refraction must be greater than 0!")
+    if type(index_of_refraction) is np.ndarray and (index_of_refraction < 0).any():
+        raise ValueError("Index of must be greater than 0!")
+    if type(distance) is float and distance < 0:
+        raise ValueError("Distance must be greater than 0!")
+    if type(distance) is np.ndarray and (distance < 0).any():
+        raise ValueError("Distance of must be greater than 0!")
     if np.shape(index_of_refraction) != np.shape(distance):
         raise ValueError("Index of refraction and distance must have the same length")
     index_avg = 0.5 * (index_of_refraction[:-1] + index_of_refraction[1:])

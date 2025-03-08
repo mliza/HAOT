@@ -10,19 +10,76 @@ class TestOptics(unittest.TestCase):
         self.valid_temperature = 200.0
         self.mass_density = 0.5
         self.invalid_temperature = -20.0
+        self.invalid_index = -2.5
+        self.valid_index = np.array([2.5, 2.0])
         self.valid_molecule = "H2"
         self.invalid_molecule = "Argon"
         self.valid_wavelength = 633.0
         self.invalid_wavelength = -2300.0
-        self.valid_mass_density_dict = {
-            "N2": 0.5,
-            "O2": 0.1,
-            "O": 0.2,
-            "N": 2.1,
-            "NO": 1.2,
-        }
-
         self.invalid_mass_density_dict = {"N2": 0.5, "H2": 0.1}
+        self.invalid_distance = -2
+        self.invalid_distance_dimension = np.array([2, 1, -4])
+        self.valid_distance = 2.0
+
+    # Test permittivity_material, invalid data type
+    def test_permittivity_material_invalid_data_type(self):
+        """Test invalid index of refraction data type."""
+        with self.assertRaises(ValueError):
+            permittivity_material(self.valid_molecule)
+
+    # Test permittivity_material, invalid index
+    def test_permittivity_material_invalid_index(self):
+        """Test invalid index of refraction."""
+        with self.assertRaises(ValueError):
+            permittivity_material(self.invalid_index)
+
+    # Test electric_susceptibility, invalid data type
+    def test_electric_susceptibility_invalid_data_type(self):
+        """Test invalid index of refraction data type."""
+        with self.assertRaises(ValueError):
+            electric_susceptibility(self.valid_molecule)
+
+    # Test electric_susceptibility, invalid index
+    def test_electric_susceptibility_invalid_index(self):
+        """Test invalid index of refraction."""
+        with self.assertRaises(ValueError):
+            electric_susceptibility(self.invalid_index)
+
+    # Test optical_path_length, invalid data type
+    def test_optical_path_length_invalid_data_type(self):
+        """Test invalid index of refraction data type."""
+        with self.assertRaises(ValueError):
+            optical_path_length(self.valid_molecule, self.valid_distance)
+
+    # Test optical_path_length, invalid index
+    def test_optical_path_length_invalid_index(self):
+        """Test invalid index of refraction."""
+        with self.assertRaises(ValueError):
+            optical_path_length(self.invalid_index, self.valid_distance)
+
+    # Test optical_path_length, invalid index
+    def test_optical_path_length_invalid_distance(self):
+        """Test invalid distance."""
+        with self.assertRaises(ValueError):
+            optical_path_length(self.invalid_index, self.invalid_distance)
+
+    # Test optical_path_length, invalid index
+    def test_optical_path_length_invalid_index(self):
+        """Test invalid index of refraction."""
+        with self.assertRaises(ValueError):
+            optical_path_length(self.invalid_index, self.valid_distance)
+
+    # Test optical_path_length, invalid index
+    def test_optical_path_length_invalid_distance(self):
+        """Test invalid distance."""
+        with self.assertRaises(ValueError):
+            optical_path_length(self.valid_index, self.invalid_distance)
+
+    # Test optical_path_length, invalid index
+    def test_optical_path_length_invalid_distance_dimension(self):
+        """Test invalid dimensions."""
+        with self.assertRaises(ValueError):
+            optical_path_length(self.valid_index, self.invalid_distance_dimension)
 
     # Test index_of_refraction invalid mass density format
     def test_kerl_index_of_refraction_invalid_input(self):
