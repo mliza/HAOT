@@ -17,6 +17,7 @@ Next, lets load the `*.foam` file. For additional details, please refer to the `
 
     import pyvista as pv
 
+    # Loading results data
     reader = pv.POpenFOAMReader('results.foam')
     mesh = reader.read()
     internal_mesh = mesh['internalMesh']
@@ -30,12 +31,13 @@ Lets now use the ``HAOT`` package to process the results
     # Compute index of refraction as a function of temperature and density
     index_of_refraction = haot.index_of_refraction_density_temperature(
                                             internal_mesh['T'],
-                                            internal_mesh['rho'], 'Air', 633)
+                                            internal_mesh['rho'],
+                                            'Air', 633)
 
     # Compute Kerl polarizability for air as a function of temperature
     kerl_polarizability = haot.kerl_polarizability_temperature(
                                             internal_mesh['T'],
-                                            'Air', 633.0)
+                                            'Air', 633)
 
     # Compute permittivity of the medium using dilute index of refraction
     permittivity_dilute = haot.permittivity_material(index_of_refraction['dilute'])
@@ -49,17 +51,17 @@ Now, let's plot the dilute index of refraction using ``pyvista``.
 .. code:: python
 
     # Add the index of refraction to the mesh
-    internal_mesh.cell_data['n'] = (index_of_refraction['dilute'] - 1) * 1E3
+    internal_mesh.cell_data['n'] = index_of_refraction['dilute']
 
     plotter = pv.Plotter(window_size=[1800, 900])
     plotter.view_xy()
-    plotter.add_mesh(internal_mesh, scalars='n', cmap='plasma',
+    plotter.add_mesh(internal_mesh, scalars='n', cmap='turbo',
                      reset_camera='True', show_scalar_bar=False)
     plotter.set_background('white')
     plotter.camera.zoom(2.0)
 
     plotter.add_scalar_bar(
-        title=f'(n - 1) * 1E3 at {time_data[i]} [s]',
+        title=f'Dilute Index of Refraction',
         title_font_size=22,
         label_font_size=18,
         bold=True,
@@ -68,8 +70,11 @@ Now, let's plot the dilute index of refraction using ``pyvista``.
         width=0.3,
         n_labels=8,
         height=0.1,
-        vertical=False
+        vertical=False,
+        fmt=""
     )
+
+    plotter.show()
 
 .. image:: images/index_of_refraction.png
 
@@ -130,4 +135,4 @@ Now, let's plot the Dielectric's medium constant using ``pyvista``.
         vertical=False
     )
 
-.. image:: images/dielectric.png
+.. image:: images/permittivity.png
