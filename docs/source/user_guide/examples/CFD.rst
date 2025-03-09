@@ -35,7 +35,7 @@ Lets now use the ``HAOT`` package to process the results
                                             internal_mesh['T'],
                                             'Air', 633)
 
-    dielectric_constant_dilute = haot.dielectric_material_const(index_of_refraction['dilute'])
+    dielectric_constant_dilute = haot.permittivity_material(index_of_refraction['dilute'])
 
 
 Now, let's plot the dilute index of refraction using ``pyvista``.
