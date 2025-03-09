@@ -18,6 +18,7 @@ Next, lets load the `*.foam` file. For additional details, please refer to the `
     import pyvista as pv
 
     reader = pv.POpenFOAMReader('results.foam')
+    mesh = reader.read()
     internal_mesh = mesh['internalMesh']
 
 Lets now use the ``HAOT`` package to process the results
@@ -26,16 +27,21 @@ Lets now use the ``HAOT`` package to process the results
 
     import haot
 
-    # Compute aero-optic properties
+    # Compute index of refraction as a function of temperature and density
     index_of_refraction = haot.index_of_refraction_density_temperature(
                                             internal_mesh['T'],
                                             internal_mesh['rho'], 'Air', 633)
 
+    # Compute Kerl polarizability for air as a function of temperature
     kerl_polarizability = haot.kerl_polarizability_temperature(
                                             internal_mesh['T'],
-                                            'Air', 633)
+                                            'Air', 633.0)
 
-    dielectric_constant_dilute = haot.permittivity_material(index_of_refraction['dilute'])
+    # Compute permittivity of the medium using dilute index of refraction
+    permittivity_dilute = haot.permittivity_material(index_of_refraction['dilute'])
+
+    # Compute electric susceptibility using dilute index of refraction
+    susceptibility_dilute = haot.electric_susceptibility(index_of_refraction['dilute'])
 
 
 Now, let's plot the dilute index of refraction using ``pyvista``.
