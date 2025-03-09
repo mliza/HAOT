@@ -1,4 +1,5 @@
 dist/
+sample_data/
 *.egg-info/
 build/
 _static/
