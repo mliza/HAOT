@@ -61,7 +61,7 @@ Now, let's plot the dilute index of refraction using ``pyvista``.
     plotter.camera.zoom(2.0)
 
     plotter.add_scalar_bar(
-        title=f'Dilute Index of Refraction',
+        title='Dilute Index of refraction',
         title_font_size=22,
         label_font_size=18,
         bold=True,
@@ -76,24 +76,24 @@ Now, let's plot the dilute index of refraction using ``pyvista``.
 
     plotter.show()
 
-.. image:: images/index_of_refraction.png
+.. image:: images/index_of_refraction_dilute.png
 
-Now, let's plot the Kerl Polarizability using ``pyvista``.
+Now, let's plot the Kerl polarizability using ``pyvista``.
 
 .. code:: python
 
     # Add polarizability to the mesh
-    internal_mesh.cell_data['pol'] = kerl_polarizability * 1E30
+    internal_mesh.cell_data['pol'] = kerl_polarizability
 
     plotter = pv.Plotter(window_size=[1800, 900])
     plotter.view_xy()
-    plotter.add_mesh(internal_mesh, scalars='pol', cmap='plasma',
+    plotter.add_mesh(internal_mesh, scalars='pol', cmap='turbo',
                      reset_camera='True', show_scalar_bar=False)
     plotter.set_background('white')
     plotter.camera.zoom(2.0)
 
     plotter.add_scalar_bar(
-        title=f'Polarizability * 1E-30 [kg/m3] at {time_data[i]}',
+        title='Polarizability',
         title_font_size=22,
         label_font_size=18,
         bold=True,
@@ -102,28 +102,31 @@ Now, let's plot the Kerl Polarizability using ``pyvista``.
         width=0.3,
         n_labels=8,
         height=0.1,
-        vertical=False
+        vertical=False,
+        fmt=""
     )
 
-.. image:: images/kerl_polarizability.png
+    plotter.show()
+
+.. image:: images/polarizability_kerl.png
 
 
-Now, let's plot the Dielectric's medium constant using ``pyvista``.
+Now, let's plot the permittivity of the medium using ``pyvista``.
 
 .. code:: python
 
-    # Add Dielectric constant to the mesh
-    internal_mesh.cell_data['dielectric_dilute'] = dielectric_constant_dilute * 1E12
+    # Add Permittivity constant to the mesh
+    internal_mesh.cell_data['permittivity_dilute'] = permittivity_dilute
 
     plotter = pv.Plotter(window_size=[1800, 900])
     plotter.view_xy()
-    plotter.add_mesh(internal_mesh, scalars='dielectric_dilute', cmap='plasma',
+    plotter.add_mesh(internal_mesh, scalars='dielectric_dilute', cmap='turbo',
                      reset_camera='True', show_scalar_bar=False)
     plotter.set_background('white')
     plotter.camera.zoom(2.0)
 
     plotter.add_scalar_bar(
-        title=f'Dielectric * 1E-12 [F/m] at {time_data[i]} [s]',
+        title='Permittivity',
         title_font_size=22,
         label_font_size=18,
         bold=True,
@@ -132,7 +135,10 @@ Now, let's plot the Dielectric's medium constant using ``pyvista``.
         width=0.3,
         n_labels=8,
         height=0.1,
-        vertical=False
+        vertical=False,
+        fmt=""
     )
+
+    plotter.show()
 
 .. image:: images/permittivity.png
