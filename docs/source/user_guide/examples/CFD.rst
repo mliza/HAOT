@@ -4,6 +4,6 @@ Let’s explore a more complex example by using the results from a Computational
 
 .. toctree::
    :maxdepth: 2
-   :caption: CFD:
+   :caption: Solvers:
 
    openFoam

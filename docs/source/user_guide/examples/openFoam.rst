@@ -45,6 +45,6 @@ Lets now use the ``HAOT`` package to process the results
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contour:
+   :caption: Contour Plots:
 
    openFoamContour
