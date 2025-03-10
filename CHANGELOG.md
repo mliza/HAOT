@@ -1,4 +1,4 @@
- # 1.1.1 (unreleased)
+ # 1.1.1 (February 9, 2025)
 * Added additional unit tests
 * Added optics.gladstone_dale_air_wavelength 
 * Added optics.normal_incidence_reflectance
