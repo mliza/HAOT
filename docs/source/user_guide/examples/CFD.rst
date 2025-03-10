@@ -6,4 +6,4 @@ Let’s explore a more complex example by using the results from a Computational
    :maxdepth: 1
    :caption: CFD:
 
-    openFoam
+   openFoam

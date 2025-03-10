@@ -1,7 +1,6 @@
 OpenFOAM
 ========
-We will not delve into the details of setting up a CFD simulation; instead, the following example will use results generated with OpenFOAM.
-
+We will not delve into the details of setting up a CFD simulation; instead, the following example will use results generated with OpenFOAM. This example is using turbulent flow in equilibrium.
 
 For this example, an additional module, ``pyvista``, is required to parse the CFD results data. Please follow the instructions in the next section to install ``pyvista``. If you already have ``pyvista`` installed, you can skip the next code lines.
 
