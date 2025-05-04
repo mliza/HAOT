@@ -25,6 +25,8 @@ This page provides a detailed description of the quantum mechanics functions imp
 
 .. autofunction:: haot.rotational_energy_k
 
+.. autofunction:: haot.characteristic_temperatures_K
+
 .. autofunction:: haot.reduced_mass_kg
 
 .. autofunction:: haot.molecular_spring_constant
