@@ -105,6 +105,16 @@ class TestOptics(unittest.TestCase):
                 self.invalid_molecule,
             )
 
+    def test_molecular_spring_constant_invalid_molecule(self):
+        """Test invalid molecule."""
+        with self.assertRaises(ValueError):
+            molecular_spring_constant(self.invalid_molecule)
+
+    def test_characteristic_temperatures_K_invalid_molecule(self):
+        """Test invalid molecule."""
+        with self.assertRaises(ValueError):
+            characteristic_temperatures_K(self.invalid_molecule)
+
 
 if __name__ == "__main__":
     unittest.main()

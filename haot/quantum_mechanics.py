@@ -465,12 +465,42 @@ def reduced_mass_kg(molecule_1: str, molecule_2: str) -> float:
     return conversions.molar_mass_to_kilogram(mu)
 
 
+def characteristic_temperatures_K(molecule: str) -> tuple[float, float]:
+    """
+    Calculates the Translational and Vibrational temperature for diatomic
+    molecules
+
+    Parameters:
+        molecule: NO+, N2+, O2+, NO, N2, O2, H2
+
+    Returns:
+        Translation and Vibrational characteristic temperatures in [K]
+
+    Reference:
+        Statistical Thermodynamics An Engineering Approach (John W. Daily),
+        DOI: 10.1017/9781108233194
+
+    Examples:
+        >> [T_tr, T_vib] = characteristic_temperatures_K('N2')
+    """
+    if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
+        raise ValueError("This function only supports NO+, N2+, O2+, NO, N2, O2, H2")
+
+    spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
+
+    # Eq 4.110
+    T_tr = spectroscopy_const["B_e"] * 1e2 * (s_consts.h * s_consts.c) / s_consts.k
+    T_vib = spectroscopy_const["omega_e"] * 1e2 * s_consts.c * s_consts.h / s_consts.k
+
+    return [T_tr, T_vib]
+
+
 def molecular_spring_constant(molecule: str) -> float:
     """
     Calculates the molecular spring constant in [N/m]
 
     Parameters:
-        molecule: NO+, N2+, O2+, NO, N2, O2
+        molecule: NO+, N2+, O2+, NO, N2, O2, H2
 
     Returns:
         spring force constant in [N/m]
@@ -479,6 +509,8 @@ def molecular_spring_constant(molecule: str) -> float:
         >> molecular_spring_constant('N2')
     """
     # Split masses
+    if molecule not in ["NO+", "N2+", "O2+", "NO", "N2", "O2", "H2"]:
+        raise ValueError("This function only supports NO+, N2+, O2+, NO, N2, O2, H2")
     m_1 = molecule[0]
     m_2 = m_1 if molecule[1] == str(2) else molecule[1]
     spectroscopy_const = constants_tables.spectroscopy_constants(molecule)
