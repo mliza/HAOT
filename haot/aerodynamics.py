@@ -241,6 +241,41 @@ def normal_shock_relations(
     return normal_shock_dict  # [ ]
 
 
+def oblique_shock_angle(
+    mach_1: float, deflection_angle_deg: float, adiabatic_indx: float = 1.4
+) -> float:
+    """
+    Calculates oblique shock angle for weak shocks
+
+    Parameters:
+        mach_1: pre-shock mach number
+        deflection_angle_deg: deflection angle in degrees
+        adiabatic_indx: adiabatic index, 1.4 (default)
+
+    Returns:
+        oblique shock angle in [degs]
+
+    Examples:
+        >> oblique_shock_angle(3.0, 45.0)
+
+    Reference:
+        Modern Compressible Flow With Historic Perspective, International
+        Edition 4th (Anderson J., ISBN 978 1 260 57082 3)
+    """
+    # Check mach number validity
+    if mach_1 < 1:
+        raise ValueError("Pre-shock mach number should be greater than 1.0!")
+
+    # Theta - Beta - Mach relation (Eq. 4.17)
+    deflection_ang_rads = np.radians(deflection_angle_deg)
+    mach_11 = mach_1**2
+
+    # Calculate numerator and denominator
+    num = mach_11 * np.sin(deflection_ang_rads) ** 2 - 1
+    den = mach_11 * (adiabatic_indx + np.cos(2 * deflection_ang_rads) + 2)
+    return np.degrees(np.arctan2(2, np.tan(num / den)))
+
+
 def oblique_shock_relations(
     mach_1: float, shock_angle_deg: float, adiabatic_indx: float = 1.4
 ) -> dict[str, float]:
@@ -268,6 +303,10 @@ def oblique_shock_relations(
         Modern Compressible Flow With Historic Perspective, International
         Edition 4th (Anderson J., ISBN 978 1 260 57082 3)
     """
+    # Check mach number validity
+    if mach_1 < 1:
+        raise ValueError("Pre-shock mach number should be greater than 1.0!")
+
     shock_angle = np.radians(shock_angle_deg)
     gamma_minus = adiabatic_indx - 1
     gamma_plus = adiabatic_indx + 1

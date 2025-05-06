@@ -15,4 +15,6 @@ This page provides a detailed description of the aerodynamics functions implemen
 
 .. autofunction:: haot.normal_shock_relations
 
+.. autofunction:: haot.oblique_shock_angle 
+
 .. autofunction:: haot.oblique_shock_relations 
