@@ -87,10 +87,14 @@ def index_of_refraction(mass_density_dict: dict[str, float]) -> dict[str, float]
             - dense: dense index of refraction
     """
     # Unit Test
+    allowed_keys = {"N2", "O2", "O", "N", "NO", "N2+", "O2+", "O+", "N+", "NO+"}
     if not isinstance(mass_density_dict, dict):
         raise ValueError("Mass density should be a dictionary!")
-    if mass_density_dict.keys() not in ["N2", "O2", "O", "N", "NO"]:
-        raise ValueError("Keys should be named: N2, O2, O, N, NO")
+    for key in mass_density_dict:
+        if key not in allowed_keys:
+            raise ValueError(
+                f"Invalid key '{key}'. Keys should be named: N2, O2, O, N, NO"
+            )
 
     pol_consts = constants_tables.polarizability()  # [cm3]
     molar_density = {
@@ -140,6 +144,7 @@ def permittivity_material(index_of_refraction: float) -> float:
         )
     if type(index_of_refraction) is float and index_of_refraction < 0:
         raise ValueError("Index of refraction must be greater than 0!")
+    allowed_keys = {"N2", "O2", "O", "N", "NO"}
     if type(index_of_refraction) is np.ndarray and (index_of_refraction < 0).any():
         raise ValueError("Index of must be greater than 0!")
 
@@ -162,6 +167,8 @@ def electric_susceptibility(index_of_refraction: float) -> float:
         10.1017/9781108333511)
     """
     # Unit Test
+    if isinstance(index_of_refraction, list):
+        index_of_refraction = np.array(index_of_refraction)
     if not (
         isinstance(index_of_refraction, np.ndarray)
         or isinstance(index_of_refraction, float)
