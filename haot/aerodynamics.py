@@ -6,8 +6,8 @@ Def:    Contains aerodynamics helper functions.
 """
 
 import molmass
+import scipy
 import numpy as np
-import scipy.constants as s_consts
 from haot import constants as constants_tables
 
 
@@ -124,7 +124,7 @@ def speed_of_sound(temperature_K: float, adiabatic_indx: float = 1.4) -> float:
     if type(temperature_K) is np.ndarray and (temperature_K < 0).any():
         raise ValueError("Temperature must be greater than 0 Kelvin!")
 
-    gas_const = s_consts.R  # [J/mol*K]
+    gas_const = scipy.constants.R  # [J/mol*K]
     air_atomic_mass = air_atomic_molar_mass(["N2", "O2", "Ar", "CO2"])  # [g/mol]
 
     air_molecular_mass = (
@@ -241,41 +241,6 @@ def normal_shock_relations(
     return normal_shock_dict  # [ ]
 
 
-def oblique_shock_angle(
-    mach_1: float, deflection_angle_deg: float, adiabatic_indx: float = 1.4
-) -> float:
-    """
-    Calculates oblique shock angle for weak shocks
-
-    Parameters:
-        mach_1: pre-shock mach number
-        deflection_angle_deg: deflection angle in degrees
-        adiabatic_indx: adiabatic index, 1.4 (default)
-
-    Returns:
-        oblique shock angle in [degs]
-
-    Examples:
-        >> oblique_shock_angle(3.0, 45.0)
-
-    Reference:
-        Modern Compressible Flow With Historic Perspective, International
-        Edition 4th (Anderson J., ISBN 978 1 260 57082 3)
-    """
-    # Check mach number validity
-    if mach_1 < 1:
-        raise ValueError("Pre-shock mach number should be greater than 1.0!")
-
-    # Theta - Beta - Mach relation (Eq. 4.17)
-    deflection_ang_rads = np.radians(deflection_angle_deg)
-    mach_11 = mach_1**2
-
-    # Calculate numerator and denominator
-    num = mach_11 * np.sin(deflection_ang_rads) ** 2 - 1
-    den = mach_11 * (adiabatic_indx + np.cos(2 * deflection_ang_rads) + 2)
-    return np.degrees(np.arctan2(2, np.tan(num / den)))
-
-
 def oblique_shock_relations(
     mach_1: float, shock_angle_deg: float, adiabatic_indx: float = 1.4
 ) -> dict[str, float]:
@@ -353,3 +318,54 @@ def oblique_shock_relations(
         "mach_n1": mach_n1,
     }
     return oblique_shock_dict
+
+
+def _theta_beta_mach_equation(beta_rad, mach_1, theta_rad, gamma):
+    """
+    Helper function to calculate deflection angle
+    """
+    lhs = np.tan(theta_rad)
+    rhs = 2 / np.tan(beta_rad)
+    rhs *= mach_1**2 * np.sin(beta_rad) ** 2 - 1
+    rhs /= mach_1**2 * (gamma + np.cos(2 * beta_rad)) + 2
+
+    return lhs - rhs
+
+
+def oblique_shock_angle(
+    mach_1: float, deflection_angle_deg: float, adiabatic_indx: float = 1.4
+) -> float:
+    """
+    Calculates oblique shock angle for weak shocks
+
+    Parameters:
+        mach_1: pre-shock mach number
+        deflection_angle_deg: deflection angle in degrees
+        adiabatic_indx: adiabatic index, 1.4 (default)
+
+    Returns:
+        oblique shock angle in [degs]
+
+    Examples:
+        >> oblique_shock_angle(3.0, 45.0)
+
+    Reference:
+        Modern Compressible Flow With Historic Perspective, International
+        Edition 4th (Anderson J., ISBN 978 1 260 57082 3)
+    """
+    # Check mach number validity
+    if np.any(mach_1 < 1):
+        raise ValueError("Pre-shock mach number should be greater than 1.0!")
+
+    # Theta - Beta - Mach relation (Eq. 4.17)
+    theta_rad = np.radians(deflection_angle_deg)
+    beta_guess = 1.1 * theta_rad
+
+    beta_solution_rad = scipy.optimize.fsolve(
+        _theta_beta_mach_equation,
+        x0=beta_guess,
+        args=(mach_1, theta_rad, adiabatic_indx),
+        xtol=1e-10,
+    )[0]
+
+    return np.degrees(beta_solution_rad)
