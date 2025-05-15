@@ -334,9 +334,9 @@ def _theta_beta_mach_equation(beta_rad, mach_1, theta_rad, gamma):
 
 def oblique_shock_angle(
     mach_1: float, deflection_angle_deg: float, adiabatic_indx: float = 1.4
-) -> float:
+) -> tuple[float, float]:
     """
-    Calculates oblique shock angle for weak shocks
+    Calculates oblique shock angle for weak shocks and strong shocks
 
     Parameters:
         mach_1: pre-shock mach number
@@ -354,18 +354,27 @@ def oblique_shock_angle(
         Edition 4th (Anderson J., ISBN 978 1 260 57082 3)
     """
     # Check mach number validity
-    if np.any(mach_1 < 1):
+    if mach_1 < 1:
         raise ValueError("Pre-shock mach number should be greater than 1.0!")
 
-    # Theta - Beta - Mach relation (Eq. 4.17)
     theta_rad = np.radians(deflection_angle_deg)
-    beta_guess = 1.1 * theta_rad
 
-    beta_solution_rad = scipy.optimize.fsolve(
+    # --- Weak Shock Guess (just above theta)
+    beta_weak_guess = 1.1 * theta_rad
+    beta_weak_rad = scipy.optimize.fsolve(
         _theta_beta_mach_equation,
-        x0=beta_guess,
+        x0=beta_weak_guess,
         args=(mach_1, theta_rad, adiabatic_indx),
         xtol=1e-10,
     )[0]
 
-    return np.degrees(beta_solution_rad)
+    # --- Strong Shock Guess (closer to 90 deg)
+    beta_strong_guess = np.radians(85.0)
+    beta_strong_rad = scipy.optimize.fsolve(
+        _theta_beta_mach_equation,
+        x0=beta_strong_guess,
+        args=(mach_1, theta_rad, adiabatic_indx),
+        xtol=1e-10,
+    )[0]
+
+    return np.degrees(beta_weak_rad), np.degrees(beta_strong_rad)
