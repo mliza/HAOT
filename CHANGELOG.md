@@ -1,4 +1,4 @@
-# 1.1.2 ( )
+# 1.1.2 (July 6, 2025)
 * Added quantum_mechanics.characteristic_temperatures_K
 * Added aerodynamics.oblique_shock_angle
 

@@ -361,6 +361,15 @@ def boltzmann_distribution(
                 rotational_number=j,
                 born_opp_flag=False,
             )
+    else:
+        tmp = boltzmann_factor(
+            temperature_K=temperature_K,
+            molecule=molecule,
+            vibrational_number=None,
+            rotational_number=None,
+            born_opp_flag=False,
+        )
+
     return tmp / z_tot
 
 
