@@ -53,8 +53,8 @@ def index_of_refraction_density_temperature(
 
     if molecule == "Air":
         molar_mass_air = (
-            0.78 * molmass.Formula("O2").mass
-            + 0.21 * molmass.Formula("N2").mass
+            0.78 * molmass.Formula("N2").mass
+            + 0.21 * molmass.Formula("O2").mass
             + 0.01 * molmass.Formula("Ar").mass
         )
         molar_density = mass_density * s_consts.N_A / molar_mass_air * 1e3
@@ -584,7 +584,7 @@ def gladstone_dale_air_wavelength(wavelength_nm: float) -> float:
     Reference:
         An Aero-Optical Effect Analysis Method in Hypersonic Turbulence Based on Photon Monte Carlo Simulation (https://doi.org/10.3390/photonics10020172)
     """
-    # Equatin (3) from paper
+    # Equation (3) from paper
     gd_const = (6.7132 * 1e-8 / wavelength_nm) ** 2
     gd_const += 1
 
