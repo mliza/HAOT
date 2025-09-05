@@ -588,7 +588,7 @@ def air_gladstone_dale_polarizability(polarizability: float):
     )
     molar_mass_air = molar_mass_air_g * 1e-3
 
-    return (s_consts.N_A * polarizability) / molar_mass_air
+    return 4 * np.pi * (s_consts.N_A * polarizability) / (3 * molar_mass_air)
 
 
 def gladstone_dale_air_wavelength(wavelength_nm: float) -> float:
