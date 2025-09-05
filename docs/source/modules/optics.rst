@@ -36,3 +36,5 @@ This page provides a detailed description of the optics functions implemented in
 .. autofunction:: haot.gladstone_dale_constant
 
 .. autofunction:: haot.gladstone_dale_air_wavelength
+
+.. autofunction:: haot.air_gladstone_dale_polarizability

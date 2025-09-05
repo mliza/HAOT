@@ -27,7 +27,7 @@ def index_of_refraction_density_temperature(
 
     Parameters:
         temperature_K: reference temperature in [K]
-        mass density in [kg/m^3]
+        mass_density: mass density in [kg/m^3]
         molecule: H2, N2, O2, Air(default)
         wavelength_nm: signal's wavelength in [nm], 633(default) [nm]
 
@@ -569,6 +569,26 @@ def gladstone_dale_constant(
 
         species_GD["gladstone_dale"] = sum(species_GD.values())
         return species_GD  # [m3/kg]
+
+
+def air_gladstone_dale_polarizability(polarizability: float):
+    """
+    Calculates the Air Gladstone Dale constant for a polarizability
+
+    Parameters:
+        polarizability: polarizability in [m3]
+
+    Returns:
+        Gladstone Dale constant in [m3/kg]
+    """
+    molar_mass_air_g = (
+        0.78 * molmass.Formula("N2").mass
+        + 0.21 * molmass.Formula("O2").mass
+        + 0.01 * molmass.Formula("Ar").mass
+    )
+    molar_mass_air = molar_mass_air_g * 1e-3
+
+    return (s_consts.N_A * polarizability) / molar_mass_air
 
 
 def gladstone_dale_air_wavelength(wavelength_nm: float) -> float:

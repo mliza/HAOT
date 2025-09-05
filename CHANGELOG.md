@@ -1,3 +1,6 @@
+# 1.1.3 
+* Added optics.air_gladstone_dale_polarizability
+
 # 1.1.2 (July 6, 2025)
 * Added quantum_mechanics.characteristic_temperatures_K
 * Added aerodynamics.oblique_shock_angle
