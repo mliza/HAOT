@@ -1,5 +1,6 @@
-# 1.1.3 
+# 1.1.3 (September 6, 2025)
 * Added optics.air_gladstone_dale_polarizability
+* Fixed error on optics.index_of_refraction_density_temperature
 
 # 1.1.2 (July 6, 2025)
 * Added quantum_mechanics.characteristic_temperatures_K
