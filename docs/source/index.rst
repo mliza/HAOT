@@ -21,5 +21,6 @@ The source code can be found in the `GitHub`_.
    modules/aerodynamics
    modules/optics
    modules/quantum_mechanics
+   modules/coordinates
    modules/constants
    modules/conversions

@@ -4,6 +4,7 @@ from .quantum_mechanics import *
 from .optics import *
 from .constants import *
 from .conversions import *
+from .coordinates import *
 
 # Printing Version
 from importlib.metadata import version

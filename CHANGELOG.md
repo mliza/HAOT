@@ -1,3 +1,8 @@
+# 1.2.0 ()
+* Added coordinates module
+* Added coordinates.haversine_distance
+
+
 # 1.1.3 (September 6, 2025)
 * Added optics.air_gladstone_dale_polarizability
 * Fixed error on optics.index_of_refraction_density_temperature

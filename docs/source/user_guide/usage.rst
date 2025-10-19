@@ -12,8 +12,9 @@ Or you can import the modules individually as:
 .. code:: python
 
    from haot import aerodynamics
-   from haot import optics 
-   from haot import quantum_mechanics 
+   from haot import optics
+   from haot import quantum_mechanics
+   from haot import coordinates
    from haot import constants
    from haot import conversions
 
