@@ -157,7 +157,7 @@ def ecef_to_lla(*args) -> np.ndarray:
     latitude_deg = np.degrees(latitude_rad + p)
     altitude_m = f + (0.5 * m * p)
     if ecef_z < 0:
-        lat_deg *= -1
+        latitude_deg *= -1
     return np.array([latitude_deg, longitude_deg, altitude_m])
 
 
