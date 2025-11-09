@@ -1,7 +1,13 @@
 # 1.2.0 ()
 * Added coordinates module
 * Added coordinates.haversine_distance
-
+* Added coordinates.lla_to_ecef
+* Added coordinates.ecef_to_lla
+* Added coordinates.roll_dcm
+* Added coordinates.pitch_dcm
+* Added coordinates.yaw_dcm
+* Added coordinates.euler_321_dcm
+* Added coordinates.euler_angles_from_dcm
 
 # 1.1.3 (September 6, 2025)
 * Added optics.air_gladstone_dale_polarizability
