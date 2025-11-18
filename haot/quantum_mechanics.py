@@ -1,8 +1,8 @@
 """
-    Date:   11/26/2024
-    Author: Martin E. Liza
-    File:   quantum_mechanics.py
-    Def:    Contains Quantum Mechanics functions.
+Date:   11/26/2024
+Author: Martin E. Liza
+File:   quantum_mechanics.py
+Def:    Contains Quantum Mechanics functions.
 """
 
 import molmass

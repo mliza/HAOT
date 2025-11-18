@@ -1,3 +1,10 @@
+"""
+Date:   11/11/2024
+Author: Martin E. Liza
+File:   coordinates.py
+Def:    Contains coordinates functions.
+"""
+
 import numpy as np
 
 

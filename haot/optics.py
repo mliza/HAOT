@@ -1,8 +1,8 @@
 """
-    Date:   03/26/2023
-    Author: Martin E. Liza
-    File:   optics.py
-    Def:    Contains aero optics functions.
+Date:   03/26/2023
+Author: Martin E. Liza
+File:   optics.py
+Def:    Contains aero optics functions.
 """
 
 from ambiance import Atmosphere

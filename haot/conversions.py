@@ -1,8 +1,8 @@
 """
-    Date:   12/11/2024
-    Author: Martin E. Liza
-    File:   conversions.py
-    Def:    Contains conversion functions.
+Date:   12/11/2024
+Author: Martin E. Liza
+File:   conversions.py
+Def:    Contains conversion functions.
 """
 
 import numpy as np
