@@ -29,7 +29,9 @@ The source code can be found in the `GitHub`_.
 Citing HAOT
 ===========
 
-If you use **HAOT** in your research, please cite the following dissertation:
+If you use **HAOT** in your research, please cite the following dissertation,
+which provides the primary description of the methodology, implementation,
+and validation of the software package:
 
 .. code-block:: bibtex
 
@@ -41,3 +43,6 @@ If you use **HAOT** in your research, please cite the following dissertation:
      type   = {PhD dissertation},
      url    = {https://www.proquest.com/docview/3283728727}
    }
+
+The complete open-access dissertation is available at
+`https://github.com/mliza/dissertation <https://github.com/mliza/dissertation>`_.
