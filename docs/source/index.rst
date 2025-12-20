@@ -24,3 +24,20 @@ The source code can be found in the `GitHub`_.
    modules/coordinates
    modules/constants
    modules/conversions
+
+
+Citing HAOT
+===========
+
+If you use **HAOT** in your research, please cite the following dissertation:
+
+.. code-block:: bibtex
+
+   @phdthesis{liza2025aerooptical,
+     author = {Liza, Martin E.},
+     title  = {Aero-Optical Effects in High-Enthalpy Flows},
+     year   = {2025},
+     school = {University of Arizona},
+     type   = {PhD dissertation},
+     url    = {https://www.proquest.com/docview/3283728727}
+   }
