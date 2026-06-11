@@ -1,4 +1,5 @@
 import scipy
+import molmass
 import numpy as np
 from haot import constants as constants_tables
 
