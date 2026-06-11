@@ -1,11 +1,3 @@
-"""
-Date:   08/27/2023
-Author: Martin E. Liza
-File:   aerodynamics.py
-Def:    Contains aerodynamics helper functions.
-"""
-
-import molmass
 import scipy
 import numpy as np
 from haot import constants as constants_tables
